@@ -1,0 +1,260 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('../webfonts/Poppins-Medium.woff2') format('woff2'),
+        url('../webfonts/Poppins-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../webfonts/Poppins-Bold.woff2') format('woff2'),
+        url('../webfonts/Poppins-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../webfonts/Poppins-Regular.woff2') format('woff2'),
+        url('../webfonts/Poppins-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../webfonts/Poppins-SemiBold.woff2') format('woff2'),
+        url('../webfonts/Poppins-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../webfonts/Poppins-Light.woff2') format('woff2'),
+        url('../webfonts/Poppins-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1100px;
+    }
+}
+
+* {
+    font-family: 'Poppins' !important;
+    font-weight: normal;
+}
+
+h1 {
+    font-family: 'Poppins' !important;
+    font-weight: bold;
+    font-size: 70px;
+}
+
+h2 {
+    font-family: 'Poppins' !important;
+    font-weight: 500;
+    font-size: 25px;
+}
+
+p {
+    font-family: 'Poppins' !important;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+nav {
+    background-color: white !important;
+}
+
+nav a,
+nav button {
+    font-family: 'Poppins' !important;
+    font-weight: 300;
+    font-size: 13px !important;
+}
+
+.jumbotron {
+    position: relative;
+    padding: 3em 1em;
+}
+
+.jumbotron:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    background-image: url("../assets/Heading - Produc.png");
+    background-position: 50% 0;
+    background-size: cover;
+}
+
+div#main:before {
+    background-image: url("../assets/Heading.png") !important;
+}
+
+.jumbotron-content {
+    position: relative;
+}
+
+.dashboard .card.primary:hover {
+    filter: brightness(65%);
+}
+
+.dashboard .card.secondary:hover {
+    filter: brightness(90%);
+    border-color: #fff;
+    -webkit-box-shadow: inset 0px 0px 0px 2px #004242;
+    -moz-box-shadow: inset 0px 0px 0px 2px #004242;
+    box-shadow: inset 0px 0px 0px 2px #004242;
+}
+
+.card.primary.mb-4.text-dark:hover {
+    filter: brightness(90%);
+    border-color: #fff;
+    -webkit-box-shadow: inset 0px 0px 0px 2px #004242;
+    -moz-box-shadow: inset 0px 0px 0px 2px #004242;
+    box-shadow: inset 0px 0px 0px 2px #004242;
+}
+
+.card.mb-4 i.bi,
+.card.mb-4.bg-warning i.bi,
+.card.mb-2 i.bi,
+.card.mb-2.bg-warning.col-6 i.bi {
+    font-size: 16px;
+    float: right;
+    display: inline;
+    vertical-align: middle;
+    line-height: 40px;
+    position: absolute;
+    margin-left: 7px;
+    color: #FE7F00;
+}
+
+.col-xs-12 .card.mb-2.bg-warning i.bi {
+    line-height: 35px;
+}
+
+.card {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+.card.mb-4.bg-warning i.bi,
+.card.mb-2.bg-warning i.bi,
+.card.mb-2.bg-warning.col-6 i.bi {
+    color: #212529;
+}
+
+.sublevel .card i.bi {
+    line-height: 75px;
+}
+
+.farmer .card i.bi {
+    line-height: 60px;
+}
+
+.dashboard .card.primary i.bi {
+    float: right;
+    display: inline;
+    vertical-align: middle;
+    line-height: 70px;
+    position: absolute;
+    margin-left: 5px;
+    color: #FE7F00;
+}
+
+.dashboard .card.secondary i.bi {
+    font-size: 12px;
+    float: right;
+    display: inline;
+    vertical-align: middle;
+    line-height: 30px;
+    position: absolute;
+    margin-left: 5px;
+    color: #FE7F00
+}
+
+.card.bg-alternate {
+    background: #9EC5D9;
+}
+
+.card.bg-alternate i.bi {
+    color: #2138B7;
+}
+
+.card.primary h1 {
+    font-family: 'Poppins' !important;
+    font-weight: 600;
+    font-size: 60px;
+}
+
+.card.primary h1.smaller {
+    font-size: 40px !important;
+}
+
+.card.primary h1.smaller i.bi {
+    font-size: 12px !important;
+    line-height: 50px !important;
+    ;
+}
+
+.card.primary h2 {
+    margin-left: -15px;
+    font-size: 45px;
+}
+
+.farmer .card.primary h2 {
+    margin-left: -15px;
+    font-size: 52px;
+    margin-top: 22px;
+    margin-bottom: 23px;
+}
+
+.card.primary p {
+    font-family: 'Poppins' !important;
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+}
+
+.card.primary h2 i.bi {
+    line-height: 50px;
+}
+
+.farmer .card.primary h1 {
+    font-size: 48px;
+}
+
+.card.primary i {
+    font-size: 30px;
+}
+
+.card.primary h5 {
+    font-family: 'Poppins' !important;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.card.primary p {
+    font-family: 'Poppins' !important;
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: uppercase;
+}

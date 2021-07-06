@@ -1,0 +1,477 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Header --->
+<div id="main" class="jumbotron text-center">
+    <div class="jumbotron-content">
+        <h2>State of the Rice Sector in the</h2>
+        <h1>Philippines</h1>
+        <p class="lead">Explore the status of the rice industry in terms of production, area, yield, <br /> income, total use of rice, imports, per capita rice consumption, and prices.</p>
+        <div class="card-note w-25 mx-auto rounded-pill bg-light">
+            <h6 class="text-dark p-1">Population: <strong>108.8 MILLION</strong> (PSA, 2021)</h6>
+        </div>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="container dashboard">
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center text-white">
+                <div class="card primary mb-4 bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-left"><a href="{% url 'RiceProductions' %}" class="text-white stretched-link text-decoration-none">Rice Production (2020)</a></h5>
+                        <h1 class="card-text font-weight-bold">19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                            <p class="text-white">million metric tons</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-left"><a href="{% url 'HarvestAreas' %}" class="text-white stretched-link text-decoration-none">Area Harvested (2020)</a></h5>
+                        <h1 class="card-text font-weight-bold">4.72 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                            <p class="text-white">million hectares</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title text-left"><a href="{% url 'EstYields' %}" class="text-white stretched-link text-decoration-none">Yield per Hectare (2020)</a></h5>
+                        <h1 class="card-text font-weight-bold">4.09 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                            <p class="text-white">metric tons/ha</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card-group">
+                        <div class="card secondary text-center">
+                            <div class="card-body">
+                                <h6 class="card-title text-left"><a href="{% url 'SupplyUtilization' %}" class="text-black stretched-link text-decoration-none">Supply</a></h6>
+                                <h2 class="card-text">17.97<i class="bi bi-caret-up-fill"></i></h2>
+                                <p>million MT</p>
+                            </div>
+                        </div>
+                        <div class="card secondary text-center">
+                            <div class="card-body">
+                                <h6 class="card-title text-left"><a href="{% url 'SupplyUtilization' %}" class="text-black stretched-link text-decoration-none">Utilization</a></h6>
+                                <h2 class="card-text">15.30<i class="bi bi-caret-up-fill"></i></h2>
+                                <p>million MT</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card secondary mb-0 text-center border-top-0">
+                            <div class="card-body">
+                                <h6 class="card-title text-left"><a href="{% url 'Consumption' %}" class="text-black stretched-link text-decoration-none">Locally Produced</a></h6>
+                                <h2 class="card-text">12.31<i class="bi bi-caret-down-fill"></i></h2>
+                                <p>million MT</p>
+                            </div>
+                        </div>
+                        <div class="card secondary mb-0 text-center border-top-0">
+                            <div class="card-body">
+                                <h6 class="card-title text-left"><a href="{% url 'Consumption' %}" class="text-black stretched-link text-decoration-none">Net Food Disposable</a></h6>
+                                <h2 class="card-text">13.78<i class="bi bi-caret-up-fill"></i></h2>
+                                <p>million MT</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card secondary text-center border-top-0">
+                            <div class="card-body">
+                                <h6 class="card-title text-left"><a href="{% url 'ImportExport' %}" class="text-black stretched-link text-decoration-none">Imported</a></h6>
+                                <h2 class="card-text">3.12<i class="bi bi-caret-up-fill"></i></h2>
+                                <p>million MT</p>
+                            </div>
+                        </div>
+                        <div class="card secondary text-center border-top-0">
+                            <div class="card-body">
+                                <h6 class="card-title text-left"><a href="{% url 'ImportExport' %}" class="text-black stretched-link text-decoration-none">Exported</a></h6>
+                                <h2 class="card-text">&lt; 1<i class="bi bi-dash"></i></h2>
+                                <p>'000 tons</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card secondary text-center mt-2">
+                        <div class="card-body">
+                            <h6 class="card-title text-left"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Farmgate Price (PhP/kg)</a></h6>
+                            <h2 class="card-text">16.72<i class="bi bi-caret-up-fill"></i></h2>
+                        </div>
+                    </div>
+                    <div class="card secondary mb-0 text-center border-top-0">
+                        <div class="card-body">
+                            <h6 class="card-title text-left"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Wholesale Price (PhP/kg)</a></h6>
+                            <h2 class="card-text">33.94<i class="bi bi-caret-down-fill"></i></h2>
+                        </div>
+                    </div>
+                    <div class="card secondary mb-0 text-center border-top-0">
+                        <div class="card-body">
+                            <h6 class="card-title text-left"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Retail Price (PhP/kg)</a></h6>
+                            <h2 class="card-text">36.93<i class="bi bi-caret-down-fill"></i></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0">
+                                <div class="card secondary text-center">
+                                    <div class="card-body">
+                                        <h6 class="card-title text-left"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Gross Value Added (Rice)</a></h6>
+                                        <h2 class="card-text">369.21<i class="bi bi-caret-up-fill"></i></h2>
+                                        <p>Billion Pesos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0">
+                                <div class="card-group">
+                                    <div class="card secondary text-center border-top-0">
+                                        <div class="card-body pl-3 pr-3">
+                                            <h6 class="card-title text-center"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Share to Agri. GVA</a></h6>
+                                            <div><canvas id="ctxAgriShare"></canvas></div>
+                                            <!--<h2 class="card-text">20.7%<i class="bi bi-caret-up-fill"></i></h2>-->
+                                        </div>
+                                    </div>
+                                    <div class="card secondary text-center border-top-0">
+                                        <div class="card-body pl-3 pr-3">
+                                            <h6 class="card-title text-center"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Share to Nat. GDP</a></h6>
+                                            <div><canvas id="ctxNationalShare"></canvas></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0">
+                                <div class="card secondary m-0 p-0 text-center">
+                                    <div class="card-body pb-1">
+                                        <h6 class="card-title text-left"><a href="{% url 'Incomes' %}" class="text-black stretched-link text-decoration-none">Net Returns (PhP)</a></h6>
+                                        <h2 class="card-text">21,237<i class="bi bi-caret-down-fill"></i></h2>
+                                        <p>per hectare</p>
+                                        <h6 class="mt-3 card-title text-left"><a href="{% url 'Incomes' %}" class="text-black stretched-link text-decoration-none">Gross Returns (PhP)</a></h6>
+                                        <h2 class="card-text mb-2">66,539<i class="bi bi-caret-down-fill"></i></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-0">
+                                <div class="card secondary mb-2 text-center border-top-0">
+                                    <div class="card-body mb-2">
+                                        <h6 class="card-title text-left"><a href="{% url 'YieldCost' %}" class="text-black stretched-link text-decoration-none">Unit Cost (PhP)</a></h6>
+                                        <h2 class="card-text">11.20<i class="bi bi-caret-down-fill"></i></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h6 class="mt-3 mb-1"><a href="productions">Top 10 Rice Producing Provinces</a></h6>
+                            <p>million metric tons (PSA, 2020)</p>
+                            <div class="card mb-0">
+                                <div class="card-body text-center">
+                                    <div><canvas id="ctxTopProv"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card mb-0">
+                <img class="card-img-top" src="{% static 'assets/prism_sample.jpg' %}" alt="Card image cap">
+            </div>
+            <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
+        </div>
+    </div>
+
+
+    <!-- Footer --->
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                <small class="text-muted">Philippine Rice Research Institute.</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>State of the Rice Sector</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Rice Production</a></li>
+                    <li><a class="text-muted" href="#">Area Harvested</a></li>
+                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Rice Farmer Characteristics</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                    <li><a class="text-muted" href="#">Farm Details</a></li>
+                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>RCEF Updates</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                    <li><a class="text-muted" href="#">Machineries</a></li>
+                    <li><a class="text-muted" href="#">Extension</a></li>
+                    <li><a class="text-muted" href="#">Credit</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.pluginService.register({
+        beforeDraw: function(chart) {
+            if (chart.config.options.elements.center) {
+                // Get ctx from string
+                var ctx = chart.chart.ctx;
+
+                // Get options from the center object in options
+                var centerConfig = chart.config.options.elements.center;
+                var fontStyle = centerConfig.fontStyle || 'Arial';
+                var txt = centerConfig.text;
+                var color = centerConfig.color || '#000';
+                var maxFontSize = centerConfig.maxFontSize || 75;
+                var sidePadding = centerConfig.sidePadding || 20;
+                var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+                // Start with a base font of 30px
+                ctx.font = "30px " + fontStyle;
+
+                // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                var stringWidth = ctx.measureText(txt).width;
+                var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                // Find out how much the font can grow in width.
+                var widthRatio = elementWidth / stringWidth;
+                var newFontSize = Math.floor(30 * widthRatio);
+                var elementHeight = (chart.innerRadius * 2);
+
+                // Pick a new font size so it will not be larger than the height of label.
+                var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                var minFontSize = centerConfig.minFontSize;
+                var lineHeight = centerConfig.lineHeight || 25;
+                var wrapText = false;
+
+                if (minFontSize === undefined) {
+                    minFontSize = 20;
+                }
+
+                if (minFontSize && fontSizeToUse < minFontSize) {
+                    fontSizeToUse = minFontSize;
+                    wrapText = true;
+                }
+
+                // Set font settings to draw it correctly.
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                ctx.font = fontSizeToUse + "px " + fontStyle;
+                ctx.fillStyle = color;
+
+                if (!wrapText) {
+                    ctx.fillText(txt, centerX, centerY);
+                    return;
+                }
+
+                var words = txt.split(' ');
+                var line = '';
+                var lines = [];
+
+                // Break words up into multiple lines if necessary
+                for (var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = ctx.measureText(testLine);
+                    var testWidth = metrics.width;
+                    if (testWidth > elementWidth && n > 0) {
+                        lines.push(line);
+                        line = words[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+
+                // Move the center up depending on line height and number of lines
+                centerY -= (lines.length / 2) * lineHeight;
+
+                for (var n = 0; n < lines.length; n++) {
+                    ctx.fillText(lines[n], centerX, centerY);
+                    centerY += lineHeight;
+                }
+                //Draw text in center
+                ctx.fillText(line, centerX, centerY);
+            }
+        }
+    });
+
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 12;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // CHART 1
+
+    var dbProvs = JSON.parse('[{"location_name":"Nueva Ecija","year":"2020","value":"1.90"},{"location_name":"Isabela","year":"2020","value":"1.36"},{"location_name":"Pangasinan","year":"2020","value":"1.14"},{"location_name":"Iloilo","year":"2020","value":"0.99"},{"location_name":"Cagayan","year":"2020","value":"0.92"},{"location_name":"Camarines Sur","year":"2020","value":"0.65"},{"location_name":"Tarlac","year":"2020","value":"0.57"},{"location_name":"North Cotabato","year":"2020","value":"0.52"},{"location_name":"Maguindanao","year":"2020","value":"0.51"},{"location_name":"Negros Occidental","year":"2020","value":"0.49"}]');
+
+    let provinces = [];
+    let values = [];
+
+    try {
+        dbProvs.map((item) => {
+            provinces.push(item.location_name);
+            values.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempPrLabels = [...provinces];
+    var topProvData = [...values];
+
+    var topProv = document.getElementById('ctxTopProv').getContext('2d');
+    var topProvChart = new Chart(topProv, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempPrLabels,
+            datasets: [{
+                label: 'Provincial total production',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData
+            }]
+        },
+
+        options: {
+            aspectRatio: 1.5,
+            scales: {
+                xAxes: [{
+                    display: true,
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    // CHART 2
+
+    var ctx = document.getElementById("ctxAgriShare");
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [79.3, 20.7],
+                backgroundColor: [
+                    '#A6CEE3', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ],
+                borderColor: [
+                    '#A6CEE3', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 1.1,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: 0
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '20.7%',
+                    color: '#212529', // Default is #000000
+                    fontStyle: 'Poppins', // Default is Arial
+                    sidePadding: 20, // Default is 20 (as a percentage)
+                    minFontSize: 12, // Default is 20 (in px), set to false and text will not wrap.
+                    lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                }
+            }
+        }
+    });
+
+    // CHART 3
+
+    var ctx2 = document.getElementById("ctxNationalShare");
+    var myChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [97.9, 2.1],
+                backgroundColor: [
+                    '#A6CEE3', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ],
+                borderColor: [
+                    '#A6CEE3', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 1.1,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: 0
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '2.11%',
+                    color: '#212529', // Default is #000000
+                    fontStyle: 'Poppins', // Default is Arial
+                    sidePadding: 20, // Default is 20 (as a percentage)
+                    minFontSize: 12, // Default is 20 (in px), set to false and text will not wrap.
+                    lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                }
+            }
+        }
+    });
+
+</script>
+
+{% endblock script %}

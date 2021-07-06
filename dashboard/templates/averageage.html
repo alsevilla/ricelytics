@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Average Age</title>
+    <meta name="description" content="Production Charts">
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <!-- Navigation --->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="btn btn-secondary mr-2 text-white" href="profile.html" role="button"><i class="bi bi-list"></i></a>
+        <a class="btn btn-warning mr-2 text-white" href="profile.html" role="button"><i class="bi bi-caret-left"></i> Back to Main</a>
+    </nav>
+
+    <!-- Header --->
+    <div class="jumbotron text-center">
+        <div class="jumbotron-content">
+            <h2>Profile of the Filipino Rice Farmer</h2>
+            <h1>Average Age</h1>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor<br />incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="sublevel container">
+        <div class="row">
+            <div class="col">
+                <div class="card-deck mb-2 text-center">
+                    <div class="card primary mb-4 bg-alternate-2">
+                        <div class="card-body">
+                            <h5 class="card-title p-2">Irrigated Areas (2017)</h5>
+                            <h1 class="card-text font-weight-bold">56<i class="bi bi-caret-up-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">years</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-primary bg-primary-2 text-white">
+                        <div class="card-body">
+                            <h5 class="card-title p-2">Average Farmers Age (2017)</h5>
+                            <h1 class="card-text font-weight-bold">56<i class="bi bi-caret-up-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill">
+                                <p class="text-light">years</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-alternate-2">
+                        <div class="card-body">
+                            <h5 class="card-title p-2">Non-Irrigated Areas (2017)</h5>
+                            <h1 class="card-text font-weight-bold">56<i class="bi bi-caret-up-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">years</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 p-2">Mean age of rice farmers (1997-2017)</h5>
+                        <p class="my-0 font-weight-normal text-muted">in years (RBFHS, PhilRice-SED, 2019)</p>
+                    </div>
+                    <div class="card-body">
+                        <div><canvas id="ctxMeanAge"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 p-2">Mean age of rice farmers, by province (2017)</h5>
+                        <p class="my-0 font-weight-normal text-muted">in years (RBFHS, PhilRice-SED, 2019)</p>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Region/Province</th>
+                                    <th scope="col">Average Age (Overall)</th>
+                                    <th scope="col">Average Age (Irrigated)</th>
+                                    <th scope="col">Average Age (Rainfed)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Ilocos Region</td>
+                                </tr>
+                                <tr>
+                                    <td>Ilocos Norte</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">42</td>
+                                </tr>
+                                <tr>
+                                    <td>Pangasinan</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-success">58</td>
+                                    <td class="table-warning">56</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">CAR</td>
+                                </tr>
+                                <tr>
+                                    <td>Apayao</td>
+                                    <td class="table-danger">52</td>
+                                    <td class="table-danger">51</td>
+                                    <td class="table-success">58</td>
+                                </tr>
+                                <tr>
+                                    <td>Kalinga</td>
+                                    <td class="table-danger">50</td>
+                                    <td class="table-danger">51</td>
+                                    <td class="table-danger">43</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Cagayan Valley</td>
+                                </tr>
+                                <tr>
+                                    <td>Cagayan</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td>Isabela</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-success">60</td>
+                                </tr>
+                                <tr>
+                                    <td>Nueva Vizcaya</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-success">67</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Central Luzon</td>
+                                </tr>
+                                <tr>
+                                    <td>Aurora</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger"></td>
+                                </tr>
+                                <tr>
+                                    <td>Bulacan</td>
+                                    <td class="table-success">61</td>
+                                    <td class="table-success">63</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td>Nueva Ecija</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td>Pampanga</td>
+                                    <td class="table-success">63</td>
+                                    <td class="table-success">63</td>
+                                    <td class="table-danger"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tarlac</td>
+                                    <td class="table-success">59</td>
+                                    <td class="table-success">59</td>
+                                    <td class="table-warning">56</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">CALABARZON</td>
+                                </tr>
+                                <tr>
+                                    <td>Laguna</td>
+                                    <td class="table-success">59</td>
+                                    <td class="table-success">60</td>
+                                    <td class="table-danger">54</td>
+                                </tr>
+                                <tr>
+                                    <td>Quezon</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-success">60</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">MIMAROPA</td>
+                                </tr>
+                                <tr>
+                                    <td>Occidental Mindoro</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td>Oriental Mindoro</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td>Palawan</td>
+                                    <td class="table-danger">51</td>
+                                    <td class="table-danger">51</td>
+                                    <td class="table-danger">52</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Bicol Region</td>
+                                </tr>
+                                <tr>
+                                    <td>Albay</td>
+                                    <td class="table-success">58</td>
+                                    <td class="table-success">58</td>
+                                    <td class="table-success">60</td>
+                                </tr>
+                                <tr>
+                                    <td>Camarines Sur</td>
+                                    <td class="table-success">58</td>
+                                    <td class="table-success">59</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Western Visayas</td>
+                                </tr>
+                                <tr>
+                                    <td>Antique</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-success">58</td>
+                                    <td class="table-warning">56</td>
+                                </tr>
+                                <tr>
+                                    <td>Capiz</td>
+                                    <td class="table-success">62</td>
+                                    <td class="table-success">63</td>
+                                    <td class="table-success">61</td>
+                                </tr>
+                                <tr>
+                                    <td>Iloilo</td>
+                                    <td class="table-success">61</td>
+                                    <td class="table-success">58</td>
+                                    <td class="table-success">65</td>
+                                </tr>
+                                <tr>
+                                    <td>Negros Occidental</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">54</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Central Visayas</td>
+                                </tr>
+                                <tr>
+                                    <td>Bohol</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Eastern Visayas</td>
+                                </tr>
+                                <tr>
+                                    <td>Leyte</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-danger">54</td>
+                                </tr>
+                                <tr>
+                                    <td>Northern Samar</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td>Western Samar</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">52</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Zamboanga Peninsula</td>
+                                </tr>
+                                <tr>
+                                    <td>Zamboanga del Norte</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td>Zamboanga del Sur</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">53</td>
+                                </tr>
+                                <tr>
+                                    <td>Zamboanga Sibugay</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-success">57</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Northern Mindanao</td>
+                                </tr>
+                                <tr>
+                                    <td>Bukidnon</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">51</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">Davao Region</td>
+                                </tr>
+                                <tr>
+                                    <td>Davao de Oro</td>
+                                    <td class="table-danger">51</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-danger">44</td>
+                                </tr>
+                                <tr>
+                                    <td>Davao del Norte</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-danger">54</td>
+                                </tr>
+                                <tr>
+                                    <td>Davao del Sur</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-danger"></td>
+                                </tr>
+                                <tr>
+                                    <td>Davao Oriental</td>
+                                    <td class="table-success">60</td>
+                                    <td class="table-success">60</td>
+                                    <td class="table-danger"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">SOCCSKSARGEN</td>
+                                </tr>
+                                <tr>
+                                    <td>North Cotabato</td>
+                                    <td class="table-success">57</td>
+                                    <td class="table-success">58</td>
+                                    <td class="table-danger">54</td>
+                                </tr>
+                                <tr>
+                                    <td>South Cotabato</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-danger">55</td>
+                                </tr>
+                                <tr>
+                                    <td>Sultan Kudarat</td>
+                                    <td class="table-danger">52</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">52</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">CARAGA</td>
+                                </tr>
+                                <tr>
+                                    <td>Agusan del Norte</td>
+                                    <td class="table-danger">54</td>
+                                    <td class="table-danger">53</td>
+                                    <td class="table-danger">54</td>
+                                </tr>
+                                <tr>
+                                    <td>Agusan del Sur</td>
+                                    <td class="table-warning">56</td>
+                                    <td class="table-danger">55</td>
+                                    <td class="table-success">58</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="font-weight-bold">BARMM</td>
+                                </tr>
+                                <tr>
+                                    <td>Maguindanao</td>
+                                    <td class="table-danger">51</td>
+                                    <td class="table-danger">50</td>
+                                    <td class="table-danger">51</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer text-muted">Note: [blank] = no samples in indicated ecosystem </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer --->
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                    <small class="text-muted">Philippine Rice Research Institute.</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>State of the Rice Sector</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Rice Production</a></li>
+                        <li><a class="text-muted" href="#">Area Harvested</a></li>
+                        <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                        <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                        <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                        <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                        <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Rice Farmer Characteristics</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                        <li><a class="text-muted" href="#">Farm Details</a></li>
+                        <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>RCEF Updates</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                        <li><a class="text-muted" href="#">Machineries</a></li>
+                        <li><a class="text-muted" href="#">Extension</a></li>
+                        <li><a class="text-muted" href="#">Credit</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/chart.js"></script>
+    <script>
+        Chart.defaults.global.responsive = true;
+        Chart.defaults.global.tooltips.mode = 'index';
+        Chart.defaults.global.tooltips.intersect = false;
+        Chart.defaults.global.defaultFontFamily = 'Poppins';
+        Chart.defaults.global.defaultFontSize = 13;
+        Chart.defaults.global.animation.duration = 3000;
+
+        // CHART 1
+
+        var dbTotal = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"48"},{"location_name":"Philippines","year":"2002","value":"50"},{"location_name":"Philippines","year":"2007","value":"53"},{"location_name":"Philippines","year":"2012","value":"54"},{"location_name":"Philippines","year":"2017","value":"56"}]');
+        var dbIrrigated = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"48"},{"location_name":"Philippines","year":"2002","value":"50"},{"location_name":"Philippines","year":"2007","value":"53"},{"location_name":"Philippines","year":"2012","value":"54"},{"location_name":"Philippines","year":"2017","value":"56"}]');
+        var dbRainfed = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"47"},{"location_name":"Philippines","year":"2002","value":"50"},{"location_name":"Philippines","year":"2007","value":"52"},{"location_name":"Philippines","year":"2012","value":"55"},{"location_name":"Philippines","year":"2017","value":"56"}]');
+
+        let years = [];
+        let values_total = [];
+        let values_irrig = [];
+        let values_rain = [];
+
+        try {
+            dbTotal.map((item) => {
+                years.push(item.year);
+                values_total.push(item.value);
+            });
+            dbIrrigated.map((item) => {
+                values_irrig.push(item.value);
+            });
+            dbRainfed.map((item) => {
+                values_rain.push(item.value);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+        var meanAge = document.getElementById('ctxMeanAge').getContext('2d');
+        var tempPLabels = [...years];
+        var prodAllData = [...values_total];
+        var prodIrrigData = [...values_irrig];
+        var prodRainData = [...values_rain];
+        var meanAgeChart = new Chart(meanAge, {
+
+            type: 'bar',
+
+            data: {
+                labels: tempPLabels,
+                datasets: [{
+                        label: 'All ecosystems',
+                        backgroundColor: '#007FFE', // COLOR 1
+                        borderColor: '#007FFE', // COLOR 1
+                        data: prodAllData
+                    },
+                    {
+                        label: 'Irrigated',
+                        backgroundColor: '#2138B7', // COLOR 2
+                        borderColor: '#2138B7', // COLOR 2
+                        data: prodIrrigData
+                    },
+                    {
+                        label: 'Rainfed',
+                        backgroundColor: '#A6CEE3', // COLOR 3
+                        borderColor: '#A6CEE3', // COLOR 3
+                        data: prodRainData
+                    }
+                ]
+            },
+
+            options: {
+                aspectRatio: 2.5,
+                scales: {
+                    xAxes: [{
+                        stacked: false,
+                        display: true,
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)"
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: false,
+                        display: true,
+                        ticks: {
+                            suggestedMin: 0,
+                            stepSize: 10
+
+                        }
+                    }]
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

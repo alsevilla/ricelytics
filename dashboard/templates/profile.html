@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Profile of the Filipino Farmer</title>
+    <meta name="description" content="Main Page">
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <!-- Navigation --->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="btn btn-secondary mr-2 text-white" href="#" role="button"><i class="bi bi-list"></i></a>
+        <a class="btn btn-warning mr-2 text-white" href="index.html" role="button"><i class="bi bi-tags-fill"></i> Industry</a>
+        <a class="btn btn-warning mr-2 text-white" href="profile.html" role="button"><i class="bi bi-person-fill"></i> Farmer</a>
+        <a class="btn btn-warning mr-2 text-white" href="#" role="button"><i class="bi bi-info-square"></i> RCEP</a>
+        <div class="dropdown mr-2">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Region
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+            </div>
+        </div>
+        <div class="dropdown mr-2">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Province
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+            </div>
+        </div>
+        <div class="dropdown mr-2">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Municipality
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button class="dropdown-item" type="button">Municipality</button>
+                <button class="dropdown-item" type="button">Municipality</button>
+                <button class="dropdown-item" type="button">Municipality</button>
+            </div>
+        </div>
+        <a class="btn btn-info rounded-pill mr-2" href="valuations" role="button">Get Data</a>
+        <a class="btn border-info rounded-pill btn-light mr-2 text-info" href="incomes" role="button">Clear Filter</a>
+    </nav>
+
+    <!-- Header --->
+    <div id="main" class="jumbotron text-center">
+        <div class="jumbotron-content">
+            <h2>Profile of the </h2>
+            <h1>Filipino Rice Farmer</h1>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor<br />incididunt ut labore et dolore magna aliqua.</p>
+            <div class="card-note w-25 mx-auto rounded-pill bg-light">
+                <h6 class="text-dark p-1">Rice Farmers: <strong>2.1 MILLION</strong> (IRRI, 2013)</h6>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="farmer container dashboard">
+        <div class="row">
+            <div class="col-3">
+                <div class="card mb-0">
+                    <img class="card-img-top" src="assets/filipino_rice_farmer.jpg" alt="Card image cap">
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="card-deck text-center mb-0 text-white">
+                    <div class="card primary mb-4 bg-warning">
+                        <div class="card-body">
+                            <h5 class="card-title text-left"><a href="averageage.html" class="text-white stretched-link text-decoration-none">Average Age</a></h5>
+                            <h1 class="card-text font-weight-bold">56 <i class="bi bi-caret-up-fill text-primary"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">years</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-warning">
+                        <div class="card-body">
+                            <h5 class="card-title text-left"><a href="monthlyincome.html" class="text-white stretched-link text-decoration-none">Per Capita Income</a></h5>
+                            <h1 class="card-text font-weight-bold">6,534 <i class="bi bi-caret-up-fill text-primary"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">pesos</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-warning">
+                        <div class="card-body">
+                            <h5 class="card-title text-left"><a href="povertythreshold.html" class="text-white stretched-link text-decoration-none">Above Poverty Threshold</a></h5>
+                            <h1 class="card-text font-weight-bold">72%<i class="bi bi-caret-up-fill text-primary"></i></h1>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">of farm households</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-deck mt-0 text-center text-white">
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body pl-3 pr-3 pb-0">
+                            <h6 class="card-title text-left mb-2"><a href="malefemale.html" class="text-dark stretched-link text-decoration-none">Sex</a></h6>
+                            <div><canvas id="ctxSex"></canvas></div>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
+                                <p class="text-white">male</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body pl-3 pr-3 pb-0">
+                            <h6 class="card-title text-left mb-2"><a href="civilstatus.html" class="text-dark stretched-link text-decoration-none">Civil Status</a></h6>
+                            <div><canvas id="ctxCivil"></canvas></div>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
+                                <p class="text-white">Married</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body pl-3 pr-3 pb-0">
+                            <h6 class="card-title text-left mb-2"><a href="sourcesofincome.html" class="text-dark stretched-link text-decoration-none">Income Source</a></h6>
+                            <div><canvas id="ctxIncome"></canvas></div>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1 p-0">
+                                <p class="text-white">Rice Farming</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body">
+                            <h6 class="card-title text-left"><a href="householdsize.html" class="text-dark stretched-link text-decoration-none">Household Size</a></h6>
+                            <h2 class="card-text">5<i class="bi bi-caret-up-fill text-primary"></i></h2>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-warning">
+                                <p class="text-white">Members</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body">
+                            <h6 class="card-title text-left"><a href="schooling.html" class="text-dark stretched-link text-decoration-none">Schooling</a></h6>
+                            <h2 class="card-text">8<i class="bi bi-dash text-primary"></i></h2>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                                <p class="text-white">Years</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-deck mt-0 text-center text-dark">
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body pl-3 pr-3 pb-0">
+                            <h6 class="card-title text-left mb-2"><a href="training.html" class="text-dark stretched-link text-decoration-none">Training</a></h6>
+                            <div><canvas id="ctxTraining"></canvas></div>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
+                                <p class="text-white">Attended</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body pl-3 pr-3 pb-0">
+                            <h6 class="card-title text-left mb-2"><a href="orgmembers.html" class="text-dark stretched-link text-decoration-none">Organization</a></h6>
+                            <div><canvas id="ctxMembers"></canvas></div>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
+                                <p class="text-white">members</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body pl-3 pr-3 pb-0">
+                            <h6 class="card-title text-left mb-2"><a href="tenurialstatus.html" class="text-dark stretched-link text-decoration-none">Tenurial Status</a></h6>
+                            <h2 class="card-text">62%<i class="bi bi-caret-up-fill text-primary"></i></h2>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
+                                <p class="text-white">Owners</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body">
+                            <h6 class="card-title text-left"><a href="farmsize.html" class="text-dark stretched-link text-decoration-none">Farm Size</a></h6>
+                            <h2 class="card-text">1.52<i class="bi bi-caret-up-fill text-primary"></i></h2>
+                            <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                                <p class="text-white">hectare</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 text-dark">
+                        <div class="card-body">
+                            <h6 class="card-title text-left"><a href="farmingexp.html" class="text-dark stretched-link text-decoration-none">Farming Exp.</a></h6>
+                            <h2 class="card-text">32<i class="bi bi-caret-up-fill text-primary"></i></h2>
+                            <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                                <p class="text-white">Years</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer --->
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                    <small class="text-muted">Philippine Rice Research Institute.</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>State of the Rice Sector</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Rice Production</a></li>
+                        <li><a class="text-muted" href="#">Area Harvested</a></li>
+                        <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                        <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                        <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                        <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                        <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Rice Farmer Characteristics</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                        <li><a class="text-muted" href="#">Farm Details</a></li>
+                        <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>RCEF Updates</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                        <li><a class="text-muted" href="#">Machineries</a></li>
+                        <li><a class="text-muted" href="#">Extension</a></li>
+                        <li><a class="text-muted" href="#">Credit</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/chart.js"></script>
+    <script type="text/javascript" src="js/chartjs-plugin-labels.min.js"></script>
+    <script>
+        Chart.pluginService.register({
+            beforeDraw: function(chart) {
+                if (chart.config.options.elements.center) {
+                    // Get ctx from string
+                    var ctx = chart.chart.ctx;
+
+                    // Get options from the center object in options
+                    var centerConfig = chart.config.options.elements.center;
+                    var fontStyle = centerConfig.fontStyle || 'Arial';
+                    var txt = centerConfig.text;
+                    var color = centerConfig.color || '#000';
+                    var maxFontSize = centerConfig.maxFontSize || 75;
+                    var sidePadding = centerConfig.sidePadding || 20;
+                    var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+                    // Start with a base font of 30px
+                    ctx.font = "30px " + fontStyle;
+
+                    // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                    var stringWidth = ctx.measureText(txt).width;
+                    var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                    // Find out how much the font can grow in width.
+                    var widthRatio = elementWidth / stringWidth;
+                    var newFontSize = Math.floor(30 * widthRatio);
+                    var elementHeight = (chart.innerRadius * 2);
+
+                    // Pick a new font size so it will not be larger than the height of label.
+                    var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                    var minFontSize = centerConfig.minFontSize;
+                    var lineHeight = centerConfig.lineHeight || 25;
+                    var wrapText = false;
+
+                    if (minFontSize === undefined) {
+                        minFontSize = 20;
+                    }
+
+                    if (minFontSize && fontSizeToUse < minFontSize) {
+                        fontSizeToUse = minFontSize;
+                        wrapText = true;
+                    }
+
+                    // Set font settings to draw it correctly.
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                    var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                    ctx.font = fontSizeToUse + "px " + fontStyle;
+                    ctx.fillStyle = color;
+
+                    if (!wrapText) {
+                        ctx.fillText(txt, centerX, centerY);
+                        return;
+                    }
+
+                    var words = txt.split(' ');
+                    var line = '';
+                    var lines = [];
+
+                    // Break words up into multiple lines if necessary
+                    for (var n = 0; n < words.length; n++) {
+                        var testLine = line + words[n] + ' ';
+                        var metrics = ctx.measureText(testLine);
+                        var testWidth = metrics.width;
+                        if (testWidth > elementWidth && n > 0) {
+                            lines.push(line);
+                            line = words[n] + ' ';
+                        } else {
+                            line = testLine;
+                        }
+                    }
+
+                    // Move the center up depending on line height and number of lines
+                    centerY -= (lines.length / 2) * lineHeight;
+
+                    for (var n = 0; n < lines.length; n++) {
+                        ctx.fillText(lines[n], centerX, centerY);
+                        centerY += lineHeight;
+                    }
+                    //Draw text in center
+                    ctx.fillText(line, centerX, centerY);
+                }
+            }
+        });
+
+        Chart.defaults.global.responsive = true;
+        Chart.defaults.global.tooltips.mode = 'index';
+        Chart.defaults.global.tooltips.intersect = false;
+        Chart.defaults.global.defaultFontFamily = 'Poppins';
+        Chart.defaults.global.defaultFontSize = 12;
+        Chart.defaults.global.animation.duration = 3000;
+
+        // CHART 1
+
+        var ctx = document.getElementById("ctxSex");
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [82, 18],
+                    backgroundColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ],
+                    borderColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ]
+                }]
+            },
+            options: {
+                cutoutPercentage: 60,
+                aspectRatio: 1.2,
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 2
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    labels: false
+                },
+                elements: {
+                    center: {
+                        text: '82%',
+                        color: '#212529',
+                        fontStyle: 'Poppins',
+                        sidePadding: 20,
+                        minFontSize: 12,
+                        lineHeight: 25
+                    }
+                }
+            }
+        });
+
+        // CHART 2
+
+        var ctx2 = document.getElementById("ctxCivil");
+        var myChart2 = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [85, 15],
+                    backgroundColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ],
+                    borderColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ]
+                }]
+            },
+            options: {
+                cutoutPercentage: 60,
+                aspectRatio: 1.2,
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 2
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    labels: false
+                },
+                elements: {
+                    center: {
+                        text: '85%',
+                        color: '#212529',
+                        fontStyle: 'Poppins',
+                        sidePadding: 20,
+                        minFontSize: 12,
+                        lineHeight: 25
+                    }
+                }
+            }
+        });
+
+        // CHART 3
+
+        var ctx3 = document.getElementById("ctxIncome");
+        var myChart3 = new Chart(ctx3, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [84, 1, 5, 1, 4, 5],
+                    backgroundColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6', // COLOR 2
+                        '#DBF968', // COLOR 3
+                        '#CF56C0', // COLOR 4
+                        '#4FCEB9', // COLOR 5
+                        '#794486' // COLOR 6
+                    ],
+                    borderColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6', // COLOR 2
+                        '#DBF968', // COLOR 3
+                        '#CF56C0', // COLOR 4
+                        '#4FCEB9', // COLOR 5
+                        '#794486' // COLOR 6
+                    ]
+                }]
+            },
+            options: {
+                cutoutPercentage: 60,
+                aspectRatio: 1.2,
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 2
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    labels: false
+                },
+                elements: {
+                    center: {
+                        text: '84%',
+                        color: '#212529',
+                        fontStyle: 'Poppins',
+                        sidePadding: 20,
+                        minFontSize: 12,
+                        lineHeight: 25
+                    }
+                }
+            }
+        });
+
+        // CHART 4
+
+        var ctx4 = document.getElementById("ctxTraining");
+        var myChart = new Chart(ctx4, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [65, 35],
+                    backgroundColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ],
+                    borderColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ]
+                }]
+            },
+            options: {
+                cutoutPercentage: 60,
+                aspectRatio: 1.2,
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 2
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    labels: false
+                },
+                elements: {
+                    center: {
+                        text: '65%',
+                        color: '#212529',
+                        fontStyle: 'Poppins',
+                        sidePadding: 20,
+                        minFontSize: 12,
+                        lineHeight: 25
+                    }
+                }
+            }
+        });
+
+        // CHART 5
+
+        var ctx5 = document.getElementById("ctxMembers");
+        var myChart = new Chart(ctx5, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [58, 42],
+                    backgroundColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ],
+                    borderColor: [
+                        '#2138B7', // COLOR 1
+                        '#F0EAD6' // COLOR 2
+                    ]
+                }]
+            },
+            options: {
+                cutoutPercentage: 60,
+                aspectRatio: 1.2,
+                legend: {
+                    display: false
+                },
+                layout: {
+                    padding: {
+                        bottom: 2
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    labels: false
+                },
+                elements: {
+                    center: {
+                        text: '58%',
+                        color: '#212529',
+                        fontStyle: 'Poppins',
+                        sidePadding: 20,
+                        minFontSize: 12,
+                        lineHeight: 10
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

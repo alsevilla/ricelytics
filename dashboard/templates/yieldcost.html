@@ -1,0 +1,544 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Header --->
+<div class="jumbotron text-center">
+    <div class="jumbotron-content">
+        <h2>State of the Rice Sector in the Philippines</h2>
+        <h1>Yield and Production Cost</h1>
+        <p class="lead">Comparison of provincial average yield and production hectare using the <br />Rice Based Farm Household Survey, 2016-2017</p>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="sublevel container">
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Yield per Hectare (2019)</h5>
+                        <h1 class="card-text font-weight-bold">4.04<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill">
+                            <p class="text-dark">metric tons/ha</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Unit Cost (2019)</h5>
+                        <h1 class="card-text font-weight-bold">PhP 11.20<i class="bi bi-caret-down-fill"></i></h1>
+                        <div class="card-note w-25 mx-auto rounded-pill">
+                            <p class="text-dark">per kilogram</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Average fertilizer use by N-P-K component, high-yielding provinces, 2019</h5>
+                    <p class="my-0 font-weight-normal text-muted">in kilograms/hectare (%) (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxNPKUse"></canvas></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Percentage breakdown of costs of rice production, Philippines, 2009-2019</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Percentage (%) (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxBreakdownPh"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Yield and unit cost of top rice-producing provinces, 2017</h5>
+                    <p class="my-0 font-weight-normal text-muted">in PhP per kilogram (PhP/kg), metric tons (mt/ha) (RBFHS, PHILRICE-SED, 2019)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxYieldCost"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer --->
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                <small class="text-muted">Philippine Rice Research Institute.</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>State of the Rice Sector</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Rice Production</a></li>
+                    <li><a class="text-muted" href="#">Area Harvested</a></li>
+                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Rice Farmer Characteristics</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                    <li><a class="text-muted" href="#">Farm Details</a></li>
+                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>RCEF Updates</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                    <li><a class="text-muted" href="#">Machineries</a></li>
+                    <li><a class="text-muted" href="#">Extension</a></li>
+                    <li><a class="text-muted" href="#">Credit</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock content %}
+{% block script %}
+{% endblock script %}
+{% block scriptChart %}
+
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // Chart 1
+
+    var dbNPK = JSON.parse('[{"location_name":"Aurora","year":"2019","n_value":"67.50","p_value":"8.86","k_value":"14.71"},{"location_name":"Bataan","year":"2019","n_value":"104.93","p_value":"9.17","k_value":"17.44"},{"location_name":"Biliran","year":"2019","n_value":"74.91","p_value":"13.51","k_value":"9.07"},{"location_name":"Bukidnon","year":"2019","n_value":"70.39","p_value":"7.88","k_value":"6.31"},{"location_name":"Bulacan","year":"2019","n_value":"68.13","p_value":"11.69","k_value":"16.40"},{"location_name":"Cagayan","year":"2019","n_value":"97.45","p_value":"9.56","k_value":"8.81"},{"location_name":"Camarines Norte","year":"2019","n_value":"65.85","p_value":"8.50","k_value":"10.43"},{"location_name":"Camiguin","year":"2019","n_value":"91.63","p_value":"8.95","k_value":"14.65"},{"location_name":"Davao de Oro","year":"2019","n_value":"60.12","p_value":"5.54","k_value":"7.86"},{"location_name":"Davao del Norte","year":"2019","n_value":"73.99","p_value":"6.17","k_value":"9.31"},{"location_name":"Davao del Sur","year":"2019","n_value":"124.89","p_value":"8.65","k_value":"15.34"},{"location_name":"Davao Oriental","year":"2019","n_value":"70.85","p_value":"6.36","k_value":"8.63"},{"location_name":"Ilocos Norte","year":"2019","n_value":"119.18","p_value":"11.53","k_value":"20.33"},{"location_name":"Ilocos Sur","year":"2019","n_value":"144.13","p_value":"16.27","k_value":"18.73"},{"location_name":"Isabela","year":"2019","n_value":"96.32","p_value":"10.82","k_value":"11.30"},{"location_name":"Kalinga","year":"2019","n_value":"121.62","p_value":"7.17","k_value":"9.72"},{"location_name":"La Union","year":"2019","n_value":"83.96","p_value":"5.82","k_value":"9.35"},{"location_name":"Laguna","year":"2019","n_value":"88.43","p_value":"5.17","k_value":"9.60"},{"location_name":"Lanao Del Norte","year":"2019","n_value":"79.56","p_value":"5.93","k_value":"8.72"},{"location_name":"Leyte","year":"2019","n_value":"43.82","p_value":"4.22","k_value":"7.94"},{"location_name":"Misamis Occidental","year":"2019","n_value":"70.87","p_value":"8.57","k_value":"9.22"},{"location_name":"Misamis Oriental","year":"2019","n_value":"83.71","p_value":"6.48","k_value":"8.95"},{"location_name":"Nueva Ecija","year":"2019","n_value":"99.61","p_value":"15.06","k_value":"18.48"},{"location_name":"Nueva Vizcaya","year":"2019","n_value":"115.00","p_value":"11.98","k_value":"16.86"},{"location_name":"Occidental Mindoro","year":"2019","n_value":"85.44","p_value":"7.41","k_value":"13.55"},{"location_name":"Oriental Mindoro","year":"2019","n_value":"86.80","p_value":"9.57","k_value":"16.78"},{"location_name":"Palawan","year":"2019","n_value":"106.27","p_value":"14.34","k_value":"16.01"},{"location_name":"Pampanga","year":"2019","n_value":"132.84","p_value":"9.06","k_value":"15.73"},{"location_name":"Pangasinan","year":"2019","n_value":"80.25","p_value":"5.82","k_value":"10.10"},{"location_name":"Quirino","year":"2019","n_value":"87.19","p_value":"14.05","k_value":"10.47"},{"location_name":"Sorsogon","year":"2019","n_value":"56.12","p_value":"7.68","k_value":"10.79"},{"location_name":"South Cotabato","year":"2019","n_value":"91.65","p_value":"7.68","k_value":"13.29"},{"location_name":"Southern Leyte","year":"2019","n_value":"72.99","p_value":"8.33","k_value":"12.05"},{"location_name":"Tarlac","year":"2019","n_value":"78.55","p_value":"7.30","k_value":"12.59"},{"location_name":"Zambales","year":"2019","n_value":"96.09","p_value":"10.52","k_value":"18.39"},{"location_name":"Zamboanga del Sur","year":"2019","n_value":"63.46","p_value":"7.47","k_value":"4.26"},{"location_name":"Zamboanga Sibugay","year":"2019","n_value":"89.33","p_value":"10.64","k_value":"13.25"}]');
+
+    let provinces = [];
+    let nUse = [];
+    let pUse = [];
+    let kUse = [];
+
+    try {
+        dbNPK.map((item) => {
+            provinces.push(item.location_name);
+            nUse.push(item.n_value);
+            pUse.push(item.p_value);
+            kUse.push(item.k_value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var npkLabels = [...provinces];
+    var nUseData = [...nUse];
+    var pUseData = [...pUse];
+    var kUseData = [...kUse];
+
+    var NPKUse = document.getElementById('ctxNPKUse').getContext('2d');
+
+    var NPKUseChart = new Chart(NPKUse, {
+
+        type: 'bar',
+
+        data: {
+            labels: npkLabels,
+            datasets: [{
+                    label: 'Nitrogen (N)',
+                    backgroundColor: '#2037B4', // COLOR 1
+                    borderColor: '#2037B4', // COLOR 1
+                    data: nUseData
+                },
+                {
+                    label: 'Phosphorus (P)',
+                    backgroundColor: '#FF6800', // COLOR 2
+                    borderColor: '#FF6800', // COLOR 2
+                    data: pUseData
+                },
+                {
+                    label: 'Potassium (K)',
+                    backgroundColor: '#FFC900', // COLOR 2
+                    borderColor: '#FFC900', // COLOR 2
+                    data: kUseData
+                }
+            ]
+        },
+
+        options: {
+            aspectRatio: 1.3,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    barPercentage: 0.7,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true
+                }]
+            },
+            legend: {
+                position: 'bottom'
+            },
+            plugins: {
+                labels: false
+            }
+        }
+    });
+
+    // Chart 1
+
+    var dbCostItems = JSON.parse('[{"locName":"Philippines","year":"2009","materialInputs":"21.00","hiredLabor":"31.00","OFELabor":"10.00","machine":"7.00","irrigation":"2.00","landRent":"16.00","interestCapital":"6.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2010","materialInputs":"19.00","hiredLabor":"31.00","OFELabor":"12.00","machine":"7.00","irrigation":"2.00","landRent":"16.00","interestCapital":"6.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2011","materialInputs":"20.00","hiredLabor":"31.00","OFELabor":"12.00","machine":"7.00","irrigation":"2.00","landRent":"15.00","interestCapital":"6.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2012","materialInputs":"20.00","hiredLabor":"33.00","OFELabor":"12.00","machine":"7.00","irrigation":"2.00","landRent":"16.00","interestCapital":"3.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2013","materialInputs":"20.00","hiredLabor":"37.00","OFELabor":"9.00","machine":"7.00","irrigation":"1.00","landRent":"19.00","interestCapital":"3.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2014","materialInputs":"18.00","hiredLabor":"39.00","OFELabor":"10.00","machine":"6.00","irrigation":"1.00","landRent":"19.00","interestCapital":"3.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2015","materialInputs":"18.00","hiredLabor":"37.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"16.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2016","materialInputs":"18.00","hiredLabor":"37.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"16.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2017","materialInputs":"16.00","hiredLabor":"38.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"17.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2018","materialInputs":"16.00","hiredLabor":"38.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"17.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2019","materialInputs":"16.00","hiredLabor":"38.00","OFELabor":"14.00","machine":"7.00","irrigation":"1.00","landRent":"15.00","interestCapital":"5.00","otherInputs":"4.00"}]');
+
+    let yearsPH = [];
+    let materialInputsPH = [];
+    let hiredLaborPH = [];
+    let OFELaborPH = [];
+    let machinePH = [];
+    let irrigationPH = [];
+    let landRentPH = [];
+    let interestCapitalPH = [];
+    let otherInputsPH = [];
+
+    try {
+        dbCostItems.map((item) => {
+            yearsPH.push(item.year);
+            materialInputsPH.push(item.materialInputs);
+            hiredLaborPH.push(item.hiredLabor);
+            OFELaborPH.push(item.OFELabor);
+            machinePH.push(item.machine);
+            irrigationPH.push(item.irrigation);
+            landRentPH.push(item.landRent);
+            interestCapitalPH.push(item.interestCapital);
+            otherInputsPH.push(item.otherInputs);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var costLabels = [...yearsPH];
+    var materialInputsPHData = [...materialInputsPH];
+    var hiredLaborPHData = [...hiredLaborPH];
+    var OFELaborPHData = [...OFELaborPH];
+    var machinePHData = [...machinePH];
+    var irrigationPHData = [...irrigationPH];
+    var landRentPHData = [...landRentPH];
+    var interestCapitalPHData = [...interestCapitalPH];
+    var otherInputsPHData = [...otherInputsPH];
+
+    var BreakdownPh = document.getElementById('ctxBreakdownPh').getContext('2d');
+
+    var ctxBreakdownPhChart = new Chart(BreakdownPh, {
+
+        type: 'bar',
+
+        data: {
+            labels: costLabels,
+            datasets: [{
+                    label: 'Material Inputs (%)',
+                    backgroundColor: '#2037B4', // COLOR 1
+                    borderColor: '#2037B4', // COLOR 1
+                    data: materialInputsPHData
+                },
+                {
+                    label: 'Hired Labor (%)',
+                    backgroundColor: '#FF6800', // COLOR 2
+                    borderColor: '#FF6800', // COLOR 2
+                    data: hiredLaborPHData
+                },
+                {
+                    label: 'Operator, Family, and Exchange Labor (%)',
+                    backgroundColor: '#939393', // COLOR 2
+                    borderColor: '#939393', // COLOR 2
+                    data: OFELaborPHData
+                },
+                {
+                    label: 'Animal, Machine, Fuel and Oil (%)',
+                    backgroundColor: '#FFC900', // COLOR 2
+                    borderColor: '#FFC900', // COLOR 2
+                    data: machinePHData
+                },
+                {
+                    label: 'Irrigation (%)',
+                    backgroundColor: '#205ECD', // COLOR 2
+                    borderColor: '#205ECD', // COLOR 2
+                    data: irrigationPHData
+                },
+                {
+                    label: 'Machine and Land Rent (%)',
+                    backgroundColor: '#60B328', // COLOR 2
+                    borderColor: '#60B328', // COLOR 2
+                    data: landRentPHData
+                },
+                {
+                    label: 'Interest on Capital (%)',
+                    backgroundColor: '#08549B', // COLOR 2
+                    borderColor: '#08549B', // COLOR 2
+                    data: interestCapitalPHData
+                },
+                {
+                    label: 'Others (%)',
+                    backgroundColor: '#AD3A00', // COLOR 3
+                    borderColor: '#AD3A00', // COLOR 3
+                    data: otherInputsPHData
+                }
+            ]
+        },
+
+        options: {
+            aspectRatio: 1.3,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    barPercentage: 0.6,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        max: 100
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom'
+            },
+            plugins: {
+                labels: false
+            }
+        }
+    });
+
+    var yieldCost = document.getElementById('ctxYieldCost').getContext('2d');
+
+    var tempCategLabels = ['Agusan del Norte', 'Agusan del Sur', 'Albay', 'Antique', 'Apayao', 'Aurora', 'Bohol', 'Bukidnon', 'Bulacan', 'Cagayan', 'Camarines Sur', 'Capiz', 'Davao de Oro (Compostela Valley)', 'Davao del Norte', 'Davao del Sur', 'Davao Oriental', 'Ilocos Norte', 'Iloilo', 'Isabela', 'Kalinga', 'Laguna', 'Leyte', 'Maguindanao', 'Negros Occidental', 'North Cotabato', 'Northern Samar', 'Nueva Ecija', 'Nueva Vizcaya', 'Occidental Mindoro', 'Oriental Mindoro', 'Palawan', 'Pampanga', 'Pangasinan', 'Quezon', 'Samar (Western Samar)', 'South Cotabato', 'Sultan Kudarat', 'Tarlac', 'Zamboanga del Norte', 'Zamboanga del Sur', 'Zamboanga Sibugay'];
+
+    var yieldCostData = [{
+        x: 3.92,
+        y: 17.36
+    }, {
+        x: 2.87,
+        y: 17.37
+    }, {
+        x: 4.33,
+        y: 15.9
+    }, {
+        x: 3.06,
+        y: 13.6
+    }, {
+        x: 5.55,
+        y: 15.6
+    }, {
+        x: 5.11,
+        y: 15.92
+    }, {
+        x: 2.48,
+        y: 16.24
+    }, {
+        x: 3.4,
+        y: 18.11
+    }, {
+        x: 4.67,
+        y: 17.5
+    }, {
+        x: 4.67,
+        y: 15.25
+    }, {
+        x: 3.66,
+        y: 15.26
+    }, {
+        x: 3.51,
+        y: 12.84
+    }, {
+        x: 4.64,
+        y: 19.01
+    }, {
+        x: 4,
+        y: 18.96
+    }, {
+        x: 4.93,
+        y: 19.37
+    }, {
+        x: 5.83,
+        y: 20.07
+    }, {
+        x: 4.94,
+        y: 14.81
+    }, {
+        x: 2.55,
+        y: 13.48
+    }, {
+        x: 5.13,
+        y: 15.39
+    }, {
+        x: 4.81,
+        y: 15.33
+    }, {
+        x: 5.03,
+        y: 15.98
+    }, {
+        x: 2.9,
+        y: 16.53
+    }, {
+        x: 3.67,
+        y: 16.8
+    }, {
+        x: 3.3,
+        y: 15.51
+    }, {
+        x: 3.55,
+        y: 17.52
+    }, {
+        x: 2.04,
+        y: 14.85
+    }, {
+        x: 6.31,
+        y: 16.9
+    }, {
+        x: 4.78,
+        y: 16.1
+    }, {
+        x: 4.98,
+        y: 16.93
+    }, {
+        x: 4.04,
+        y: 16.14
+    }, {
+        x: 3.06,
+        y: 12.47
+    }, {
+        x: 4.96,
+        y: 17.13
+    }, {
+        x: 4.43,
+        y: 16.99
+    }, {
+        x: 3.65,
+        y: 16.01
+    }, {
+        x: 2.36,
+        y: 15.91
+    }, {
+        x: 4.16,
+        y: 17.88
+    }, {
+        x: 3.58,
+        y: 18.18
+    }, {
+        x: 4.79,
+        y: 16.38
+    }, {
+        x: 3.25,
+        y: 16.19
+    }, {
+        x: 4.37,
+        y: 18.42
+    }, {
+        x: 3.49,
+        y: 16.51
+    }];
+
+    var yieldCostScat = new Chart(yieldCost, {
+        // The type of chart we want to create
+        type: 'scatter',
+
+        // The data for our dataset
+        data: {
+            labels: tempCategLabels,
+            datasets: [{
+                data: yieldCostData,
+                backgroundColor: '#2037B2',
+                borderColor: '#2037B2',
+                pointRadius: 3,
+                pointHoverRadius: 3
+            }]
+        },
+        // Configuration options go here
+        options: {
+            aspectRatio: 2,
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var label = data.labels[tooltipItem.index];
+                        return label + ': (Yield: ' + tooltipItem.xLabel + ' mt/ha, Cost/kg: PhP ' + tooltipItem.yLabel + ')';
+                    }
+                }
+            },
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        reverse: true,
+                        min: 10
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        //                              reverse: true,
+                        min: 1,
+                        max: 7
+                    }
+                }]
+            },
+            annotation: {
+                annotations: [{
+                    id: 'hline',
+                    type: 'line',
+                    mode: 'horizontal',
+                    scaleID: 'y-axis-1',
+                    value: 16,
+                    borderColor: 'tomato',
+                    borderWidth: 1,
+                    fontName: 'Poppins',
+                    label: {
+                        content: 'PhP 16/kg',
+                        position: 'right',
+                        enabled: true
+                    }
+                }, {
+                    id: 'vline',
+                    type: 'line',
+                    mode: 'vertical',
+                    scaleID: 'x-axis-1',
+                    value: 4,
+                    borderColor: 'tomato',
+                    borderWidth: 1,
+                    fontName: 'Poppins',
+                    label: {
+                        content: '4 mt/ha',
+                        position: 'bottom',
+                        enabled: true
+                    }
+                }],
+                drawTime: "afterDraw" // (default)
+            }
+        }
+    });
+
+</script>
+{% endblock scriptChart %}

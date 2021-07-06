@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ title }}</title>
+    <meta name="description" content="Main Page">
+    <link href="{% static 'css/bootstrap-reboot.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/bootstrap-grid.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+
+    <!-- Navigation --->
+    {% if searchbartype == '1'%}
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="btn btn-secondary mr-2 text-white" href="#" role="button"><i class="bi bi-list"></i></a>
+        <a class="btn btn-warning mr-2 text-white" href="" role="button"><i class="bi bi-tags-fill"></i> Industry</a>
+        <a class="btn btn-warning mr-2 text-white" href="profile.html" role="button"><i class="bi bi-person-fill"></i> Farmer</a>
+        <a class="btn btn-warning mr-2 text-white" href="rcep" role="button"><i class="bi bi-info-square"></i> RCEP</a>
+        <div class="dropdown mr-2">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Region
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+            </div>
+        </div>
+        <div class="dropdown mr-2">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Province
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+            </div>
+        </div>
+        <div class="dropdown mr-2">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Municipality
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button class="dropdown-item" type="button">Municipality</button>
+                <button class="dropdown-item" type="button">Municipality</button>
+                <button class="dropdown-item" type="button">Municipality</button>
+            </div>
+        </div>
+        <a class="btn btn-info rounded-pill mr-2" href="#" role="button">Get Data</a>
+        <a class="btn border-info rounded-pill btn-light mr-2 text-info" href="#" role="button">Clear Filter</a>
+    </nav>
+
+    {% else %}
+    <!-- Navigation --->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="btn btn-secondary mr-2 text-white" href="" role="button"><i class="bi bi-list"></i></a>
+        <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage'%}" role="button"><i class="bi bi-caret-left"></i> Back to Main</a>
+    </nav>
+    {% endif %}
+    {% block content %}
+
+    {% endblock %}
+    <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/chart.js' %}"></script>
+    {% block script %}
+
+    {% endblock%}
+    <script type="text/javascript" src="js/chartjs-plugin-labels.min.js"></script>
+    <script type="text/javascript" src="js/chartjs-plugin-annotation.min.js"></script>
+    {% block scriptChart%}
+
+    {% endblock %}
+  </body>
+</html>

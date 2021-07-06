@@ -1,0 +1,302 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Header --->
+<div class="jumbotron text-center">
+    <div class="jumbotron-content">
+        <h2>State of the Rice Sector in the Philippines</h2>
+        <h1>Farmer's Income</h1>
+        <p class="lead">Total costs, gross and net returns of paddy rice production, 2000-2019</p>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="sublevel container">
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-alternate">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Gross Returns (2019)</h5>
+                        <h2 class="card-text font-weight-bold">PhP 66,539<i class="bi bi-caret-down-fill"></i></h2>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">per hectare</p>
+                        </div>
+                        <p class="mb-0 text-capitalize">Yield (mt/ha) x Farmgate price (pesos/kg)</p>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Net Returns (2019)</h5>
+                        <h2 class="card-text font-weight-bold">PhP 21,237<i class="bi bi-caret-down-fill"></i></h2>
+                        <div class="card-note w-50 mx-auto rounded-pill">
+                            <p class="text-dark">per hectare</p>
+                        </div>
+                        <p class="mb-0 text-capitalize">Gross returns - Production Costs (pesos)</p>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-alternate">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Production Costs (2019)</h5>
+                        <h2 class="card-text font-weight-bold">PhP 45,302<i class="bi bi-caret-down-fill"></i></h2>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">per hectare</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Yearly average gross returns on rice production (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PhP) (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxGrossReturns"></canvas></div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Average costs and net returns on rice production by region (2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PhP) (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxTopRegions"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer --->
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                <small class="text-muted">Philippine Rice Research Institute.</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>State of the Rice Sector</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Rice Production</a></li>
+                    <li><a class="text-muted" href="#">Area Harvested</a></li>
+                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Rice Farmer Characteristics</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                    <li><a class="text-muted" href="#">Farm Details</a></li>
+                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>RCEF Updates</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                    <li><a class="text-muted" href="#">Machineries</a></li>
+                    <li><a class="text-muted" href="#">Extension</a></li>
+                    <li><a class="text-muted" href="#">Credit</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    var dbNetReturns = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"1567.42"},{"location_name":"Philippines","year":"2001","value":"3051.38"},{"location_name":"Philippines","year":"2002","value":"5416.75"},{"location_name":"Philippines","year":"2003","value":"5844.80"},{"location_name":"Philippines","year":"2004","value":"6930.70"},{"location_name":"Philippines","year":"2005","value":"8226.30"},{"location_name":"Philippines","year":"2006","value":"9975.40"},{"location_name":"Philippines","year":"2007","value":"11943.80"},{"location_name":"Philippines","year":"2008","value":"16073.10"},{"location_name":"Philippines","year":"2009","value":"15316.05"},{"location_name":"Philippines","year":"2010","value":"14603.75"},{"location_name":"Philippines","year":"2011","value":"14761.40"},{"location_name":"Philippines","year":"2012","value":"19972.00"},{"location_name":"Philippines","year":"2013","value":"23712.05"},{"location_name":"Philippines","year":"2014","value":"31596.00"},{"location_name":"Philippines","year":"2015","value":"25464.95"},{"location_name":"Philippines","year":"2016","value":"24920.12"},{"location_name":"Philippines","year":"2017","value":"28871.63"},{"location_name":"Philippines","year":"2018","value":"33619.09"},{"location_name":"Philippines","year":"2019","value":"21236.80"}]');
+
+    let years_net = [];
+    let values_net = [];
+
+    try {
+        dbNetReturns.map((item) => {
+            years_net.push(item.year);
+            values_net.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var dbGrossReturns = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"23062.50"},{"location_name":"Philippines","year":"2001","value":"25201.00"},{"location_name":"Philippines","year":"2002","value":"27280.75"},{"location_name":"Philippines","year":"2003","value":"28718.80"},{"location_name":"Philippines","year":"2004","value":"32186.70"},{"location_name":"Philippines","year":"2005","value":"36151.30"},{"location_name":"Philippines","year":"2006","value":"38597.40"},{"location_name":"Philippines","year":"2007","value":"42523.80"},{"location_name":"Philippines","year":"2008","value":"53270.10"},{"location_name":"Philippines","year":"2009","value":"53032.05"},{"location_name":"Philippines","year":"2010","value":"53903.75"},{"location_name":"Philippines","year":"2011","value":"55940.40"},{"location_name":"Philippines","year":"2012","value":"62447.00"},{"location_name":"Philippines","year":"2013","value":"65773.05"},{"location_name":"Philippines","year":"2014","value":"80280.00"},{"location_name":"Philippines","year":"2015","value":"67846.95"},{"location_name":"Philippines","year":"2016","value":"67628.40"},{"location_name":"Philippines","year":"2017","value":"73113.15"},{"location_name":"Philippines","year":"2018","value":"81294.00"},{"location_name":"Philippines","year":"2019","value":"66538.80"}]');
+
+    let years_gross = [];
+    let values_gross = [];
+
+    try {
+        dbGrossReturns.map((item) => {
+            years_gross.push(item.year);
+            values_gross.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var dbCosts = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"21495.08"},{"location_name":"Philippines","year":"2001","value":"22149.62"},{"location_name":"Philippines","year":"2002","value":"21864.00"},{"location_name":"Philippines","year":"2003","value":"22874.00"},{"location_name":"Philippines","year":"2004","value":"25256.00"},{"location_name":"Philippines","year":"2005","value":"27925.00"},{"location_name":"Philippines","year":"2006","value":"28622.00"},{"location_name":"Philippines","year":"2007","value":"30580.00"},{"location_name":"Philippines","year":"2008","value":"37197.00"},{"location_name":"Philippines","year":"2009","value":"37716.00"},{"location_name":"Philippines","year":"2010","value":"39300.00"},{"location_name":"Philippines","year":"2011","value":"41179.00"},{"location_name":"Philippines","year":"2012","value":"42475.00"},{"location_name":"Philippines","year":"2013","value":"42061.00"},{"location_name":"Philippines","year":"2014","value":"48684.00"},{"location_name":"Philippines","year":"2015","value":"42382.00"},{"location_name":"Philippines","year":"2016","value":"42708.28"},{"location_name":"Philippines","year":"2017","value":"44241.52"},{"location_name":"Philippines","year":"2018","value":"47674.91"},{"location_name":"Philippines","year":"2019","value":"45302.00"}]');
+
+    let years_costs = [];
+    let values_costs = [];
+
+    try {
+        dbCosts.map((item) => {
+            years_costs.push(item.year);
+            values_costs.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var grossReturns = document.getElementById('ctxGrossReturns').getContext('2d');
+    var tempGrossReturns = [...years_gross];
+    var grossNetData = [...values_net];
+    var grossReturnsData = [...values_gross];
+    var costsData = [...values_costs];
+    var grossReturnsChart = new Chart(grossReturns, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempGrossReturns,
+            datasets: [{
+                label: 'Average gross returns',
+                backgroundColor: '#2E382E', // COLOR 1
+                borderColor: '#2E382E', // COLOR 1
+                type: 'line',
+                lineTension: 0,
+                fill: false,
+                data: grossReturnsData
+            }, {
+                label: 'Average costs',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                fill: false,
+                data: costsData
+            }, {
+                label: 'Average net returns',
+                backgroundColor: '#2138B7', // COLOR 2
+                borderColor: '#2138B7', // COLOR 2
+                fill: false,
+                data: grossNetData
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 2,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 90000
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            plugins: {
+                labels: false
+            }
+        }
+    });
+
+
+    // CHART 2
+
+    var dbRegs = JSON.parse('[{"location_name":"Ilocos Region","year":"2019","costs":"62659","net":"17261"},{"location_name":"CAR","year":"2019","costs":"48098","net":"15786"},{"location_name":"Cagayan Valley","year":"2019","costs":"60353","net":"13377"},{"location_name":"Central Luzon","year":"2019","costs":"56928","net":"23050"},{"location_name":"CALABARZON","year":"2019","costs":"49837","net":"6662"},{"location_name":"MIMAROPA","year":"2019","costs":"55989","net":"12786"},{"location_name":"Bicol Region","year":"2019","costs":"40251","net":"12698"},{"location_name":"Western Visayas","year":"2019","costs":"41760","net":"12886"},{"location_name":"Central Visayas","year":"2019","costs":"49919","net":"3127"},{"location_name":"Eastern Visayas","year":"2019","costs":"44960","net":"16568"},{"location_name":"Zamboanga Peninsula","year":"2019","costs":"50867","net":"22704"},{"location_name":"Northern Mindanao","year":"2019","costs":"54260","net":"29454"},{"location_name":"Davao Region","year":"2019","costs":"61819","net":"15703"},{"location_name":"SOCCSKSARGEN","year":"2019","costs":"44831","net":"12401"},{"location_name":"CARAGA","year":"2019","costs":"41438","net":"7032"},{"location_name":"BARMM","year":"2019","costs":"33517","net":"19659"}]');
+
+    let regions = [];
+    let costs = [];
+    let netr = [];
+
+    try {
+        dbRegs.map((item) => {
+            regions.push(item.location_name);
+            costs.push(item.costs);
+            netr.push(item.net);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempRgLabels = [...regions];
+    var topCostsData = [...costs];
+    var topNetData = [...netr];
+
+    var topReg = document.getElementById('ctxTopRegions').getContext('2d');
+    var topRegChart = new Chart(topReg, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempRgLabels,
+            datasets: [{
+                label: 'Total Costs',
+                backgroundColor: '#A6CEE3', // COLOR 4
+                borderColor: '#A6CEE3', // COLOR 4
+                fill: false,
+                data: topCostsData
+            }, {
+                label: 'Net Returns',
+                backgroundColor: '#2138B7', // COLOR 2
+                borderColor: '# 2138B7', // COLOR 2
+                data: topNetData
+            }]
+        },
+
+        options: {
+            aspectRatio: 1.2,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 90000
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
+
+</script>
+{% endblock script %}

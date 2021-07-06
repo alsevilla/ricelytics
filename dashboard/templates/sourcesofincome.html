@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Major Source of Income</title>
+    <meta name="description" content="Production Charts">
+    <link href="css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <!-- Navigation --->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="btn btn-secondary mr-2 text-white" href="profile.html" role="button"><i class="bi bi-list"></i></a>
+        <a class="btn btn-warning mr-2 text-white" href="profile.html" role="button"><i class="bi bi-caret-left"></i> Back to Main</a>
+    </nav>
+
+    <!-- Header --->
+    <div class="jumbotron text-center">
+        <div class="jumbotron-content">
+            <h2>Profile of the Filipino Rice Farmer</h2>
+            <h1>Major Source of Income</h1>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor<br />incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="sublevel container">
+        <div class="row">
+            <div class="col">
+                <div class="card-deck mb-2 text-center">
+                    <div class="card primary mb-4 bg-alternate-2">
+                        <div class="card-body">
+                            <h5 class="card-title p-2">Irrigated Areas (2017)</h5>
+                            <h1 class="card-text font-weight-bold">87%<i class="bi bi-caret-down-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">Rice Farming</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-primary-2 text-white">
+                        <div class="card-body">
+                            <h5 class="card-title p-2">Overall (2017)</h5>
+                            <h1 class="card-text font-weight-bold">84%<i class="bi bi-caret-down-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill">
+                                <p class="text-white">Rice Farming</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-alternate-2">
+                        <div class="card-body">
+                            <h5 class="card-title p-2">Non-Irrigated Areas (2017)</h5>
+                            <h1 class="card-text font-weight-bold">76%<i class="bi bi-caret-down-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">Rice Farming</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 p-2">Distribution of rice farmers, by major source of income (1997-2017)</h5>
+                        <p class="my-0 font-weight-normal text-muted">in percentage (RBFHS, PhilRice-SED, 2019)</p>
+                    </div>
+                    <div class="card-body">
+                        <div><canvas id="ctxMajorSource"></canvas></div>
+                    </div>
+                    <div class="card-footer text-muted">Legend (Arrangement): All Ecosystems - Irrigated - Rainfed<br />Note: Only rice farming and other sources categories are applicable for 1997 and 2002 survey period.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 p-2">Distribution of rice farmers by major source of income, by province (2017)</h5>
+                        <p class="my-0 font-weight-normal text-muted">in percentage (RBFHS, PhilRice-SED, 2019)</p>
+                    </div>
+                    <div class="card-body">
+                        <div><canvas id="ctxMajorSourceProv"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer --->
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                    <small class="text-muted">Philippine Rice Research Institute.</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>State of the Rice Sector</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Rice Production</a></li>
+                        <li><a class="text-muted" href="#">Area Harvested</a></li>
+                        <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                        <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                        <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                        <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                        <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Rice Farmer Characteristics</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                        <li><a class="text-muted" href="#">Farm Details</a></li>
+                        <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>RCEF Updates</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                        <li><a class="text-muted" href="#">Machineries</a></li>
+                        <li><a class="text-muted" href="#">Extension</a></li>
+                        <li><a class="text-muted" href="#">Credit</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/chart.js"></script>
+    <script>
+        Chart.defaults.global.responsive = true;
+        Chart.defaults.global.tooltips.mode = 'index';
+        Chart.defaults.global.tooltips.intersect = false;
+        Chart.defaults.global.defaultFontFamily = 'Poppins';
+        Chart.defaults.global.defaultFontSize = 13;
+        Chart.defaults.global.animation.duration = 3000;
+
+        // CHART 1
+
+        var dbRTotal = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"80"},{"location_name":"Philippines","year":"2002","value":"82"},{"location_name":"Philippines","year":"2007","value":"81"},{"location_name":"Philippines","year":"2012","value":"87"},{"location_name":"Philippines","year":"2017","value":"84"}]');
+        var dbVTotal = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"0"},{"location_name":"Philippines","year":"2012","value":"1"},{"location_name":"Philippines","year":"2017","value":"1"}]');
+        var dbSTotal = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"3"},{"location_name":"Philippines","year":"2012","value":"4"},{"location_name":"Philippines","year":"2017","value":"5"}]');
+        var dbLTotal = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"0"},{"location_name":"Philippines","year":"2012","value":"0"},{"location_name":"Philippines","year":"2017","value":"1"}]');
+        var dbSATotal = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"3"},{"location_name":"Philippines","year":"2012","value":"3"},{"location_name":"Philippines","year":"2017","value":"4"}]');
+        var dbOTotal = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"20"},{"location_name":"Philippines","year":"2002","value":"18"},{"location_name":"Philippines","year":"2007","value":"13"},{"location_name":"Philippines","year":"2012","value":"5"},{"location_name":"Philippines","year":"2017","value":"5"}]');
+        var dbRIrrigated = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"85"},{"location_name":"Philippines","year":"2002","value":"85"},{"location_name":"Philippines","year":"2007","value":"66"},{"location_name":"Philippines","year":"2012","value":"90"},{"location_name":"Philippines","year":"2017","value":"87"}]');
+        var dbVIrrigated = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"1"},{"location_name":"Philippines","year":"2012","value":"1"},{"location_name":"Philippines","year":"2017","value":"1"}]');
+        var dbSIrrigated = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"3"},{"location_name":"Philippines","year":"2012","value":"3"},{"location_name":"Philippines","year":"2017","value":"4"}]');
+        var dbLIrrigated = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"0"},{"location_name":"Philippines","year":"2012","value":"0"},{"location_name":"Philippines","year":"2017","value":"1"}]');
+        var dbSAIrrigated = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"4"},{"location_name":"Philippines","year":"2012","value":"3"},{"location_name":"Philippines","year":"2017","value":"3"}]');
+        var dbOIrrigated = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"15"},{"location_name":"Philippines","year":"2002","value":"15"},{"location_name":"Philippines","year":"2007","value":"26"},{"location_name":"Philippines","year":"2012","value":"3"},{"location_name":"Philippines","year":"2017","value":"4"}]');
+        var dbRRainfed = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"72"},{"location_name":"Philippines","year":"2002","value":"74"},{"location_name":"Philippines","year":"2007","value":"76"},{"location_name":"Philippines","year":"2012","value":"83"},{"location_name":"Philippines","year":"2017","value":"76"}]');
+        var dbVRainfed = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"1"},{"location_name":"Philippines","year":"2012","value":"0"},{"location_name":"Philippines","year":"2017","value":"2"}]');
+        var dbSRainfed = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"3"},{"location_name":"Philippines","year":"2012","value":"4"},{"location_name":"Philippines","year":"2017","value":"8"}]');
+        var dbLRainfed = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"0"},{"location_name":"Philippines","year":"2012","value":"1"},{"location_name":"Philippines","year":"2017","value":"2"}]');
+        var dbSARainfed = JSON.parse('[{"location_name":"Philippines","year":"1997","value":null},{"location_name":"Philippines","year":"2002","value":null},{"location_name":"Philippines","year":"2007","value":"3"},{"location_name":"Philippines","year":"2012","value":"3"},{"location_name":"Philippines","year":"2017","value":"4"}]');
+        var dbORainfed = JSON.parse('[{"location_name":"Philippines","year":"1997","value":"28"},{"location_name":"Philippines","year":"2002","value":"26"},{"location_name":"Philippines","year":"2007","value":"17"},{"location_name":"Philippines","year":"2012","value":"9"},{"location_name":"Philippines","year":"2017","value":"8"}]');
+
+        let years = [];
+        let values_rtotal = [];
+        let values_vtotal = [];
+        let values_stotal = [];
+        let values_ltotal = [];
+        let values_satotal = [];
+        let values_ototal = [];
+        let values_rirrig = [];
+        let values_virrig = [];
+        let values_sirrig = [];
+        let values_lirrig = [];
+        let values_sairrig = [];
+        let values_oirrig = [];
+        let values_rrain = [];
+        let values_vrain = [];
+        let values_srain = [];
+        let values_lrain = [];
+        let values_sarain = [];
+        let values_orain = [];
+
+        try {
+            dbRTotal.map((item) => {
+                years.push(item.year);
+                values_rtotal.push(item.value);
+            });
+            dbVTotal.map((item) => {
+                values_vtotal.push(item.value);
+            });
+            dbSTotal.map((item) => {
+                values_stotal.push(item.value);
+            });
+            dbLTotal.map((item) => {
+                values_ltotal.push(item.value);
+            });
+            dbSATotal.map((item) => {
+                values_satotal.push(item.value);
+            });
+            dbOTotal.map((item) => {
+                values_ototal.push(item.value);
+            });
+
+            dbRIrrigated.map((item) => {
+                values_rirrig.push(item.value);
+            });
+            dbVIrrigated.map((item) => {
+                values_virrig.push(item.value);
+            });
+            dbSIrrigated.map((item) => {
+                values_sirrig.push(item.value);
+            });
+            dbLIrrigated.map((item) => {
+                values_lirrig.push(item.value);
+            });
+            dbSAIrrigated.map((item) => {
+                values_sairrig.push(item.value);
+            });
+            dbOIrrigated.map((item) => {
+                values_oirrig.push(item.value);
+            });
+
+            dbRRainfed.map((item) => {
+                values_rrain.push(item.value);
+            });
+            dbVRainfed.map((item) => {
+                values_vrain.push(item.value);
+            });
+            dbSRainfed.map((item) => {
+                values_srain.push(item.value);
+            });
+            dbLRainfed.map((item) => {
+                values_lrain.push(item.value);
+            });
+            dbSARainfed.map((item) => {
+                values_sarain.push(item.value);
+            });
+            dbORainfed.map((item) => {
+                values_orain.push(item.value);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+        var majorSource = document.getElementById('ctxMajorSource').getContext('2d');
+        var tempPLabels = [...years];
+        var rAllData = [...values_rtotal];
+        var vAllData = [...values_vtotal];
+        var sAllData = [...values_stotal];
+        var lAllData = [...values_ltotal];
+        var saAllData = [...values_satotal];
+        var oAllData = [...values_ototal];
+        var rIrrigData = [...values_rirrig];
+        var vIrrigData = [...values_virrig];
+        var sIrrigData = [...values_sirrig];
+        var lIrrigData = [...values_lirrig];
+        var saIrrigData = [...values_sairrig];
+        var oIrrigData = [...values_oirrig];
+        var rRainData = [...values_rrain];
+        var vRainData = [...values_vrain];
+        var sRainData = [...values_srain];
+        var lRainData = [...values_lrain];
+        var saRainData = [...values_sarain];
+        var oRainData = [...values_orain];
+        var majorSourceChart = new Chart(majorSource, {
+
+            type: 'bar',
+
+            data: {
+                labels: tempPLabels,
+                datasets: [{
+                        label: 'Overall - Rice Farming (%)',
+                        backgroundColor: '#8794DF', // COLOR 1
+                        borderColor: '#8794DF', // COLOR 1
+                        data: rAllData,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Overall - Vegetable Farming (%)',
+                        backgroundColor: '#DBF968', // COLOR 1
+                        borderColor: '#DBF968', // COLOR 1
+                        data: vAllData,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Overall - Self-Employment (%)',
+                        backgroundColor: '#FFD46A', // COLOR 1
+                        borderColor: '#FFD46A', // COLOR 1
+                        data: sAllData,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Overall - Livestock (%)',
+                        backgroundColor: '#CF56C0', // COLOR 1
+                        borderColor: '#CF56C0', // COLOR 1
+                        data: lAllData,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Overall - Salary Employment (%)',
+                        backgroundColor: '#4FCEB9', // COLOR 1
+                        borderColor: '#4FCEB9', // COLOR 1
+                        data: saAllData,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Overall - Other Sources (%)',
+                        backgroundColor: '#794486', // COLOR 1
+                        borderColor: '#794486', // COLOR 1
+                        data: oAllData,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Irrigated - Rice Farming (%)',
+                        backgroundColor: '#4255BF', // COLOR 2
+                        borderColor: '#4255BF', // COLOR 2
+                        data: rIrrigData,
+                        stack: 'Irrigated'
+                    },
+                    {
+                        label: 'Irrigated - Vegetable Farming (%)',
+                        backgroundColor: '#D1F73E', // COLOR 2
+                        borderColor: '#D1F73E', // COLOR 2
+                        data: vIrrigData,
+                        stack: 'Irrigated'
+                    },
+                    {
+                        label: 'Irrigated - Self-Employed (%)',
+                        backgroundColor: '#FFC840', // COLOR 2
+                        borderColor: '#FFC840', // COLOR 2
+                        data: sIrrigData,
+                        stack: 'Irrigated'
+                    },
+                    {
+                        label: 'Irrigated - Livestock (%)',
+                        backgroundColor: '#C130AF', // COLOR 2
+                        borderColor: '#C130AF', // COLOR 2
+                        data: lIrrigData,
+                        stack: 'Irrigated'
+                    },
+                    {
+                        label: 'Irrigated - Salary Employment (%)',
+                        backgroundColor: '#28C3A9', // COLOR 2
+                        borderColor: '#28C3A9', // COLOR 2
+                        data: saIrrigData,
+                        stack: 'Irrigated'
+                    },
+                    {
+                        label: 'Irrigated - Other Sources (%)',
+                        backgroundColor: '#5E266C', // COLOR 2
+                        borderColor: '#5E266C', // COLOR 2
+                        data: oIrrigData,
+                        stack: 'Irrigated'
+                    },
+                    {
+                        label: 'Rainfed - Rice Farming (%)',
+                        backgroundColor: '#1E35B2', // COLOR 3
+                        borderColor: '#1E35B2', // COLOR 3
+                        data: rRainData,
+                        stack: 'Rainfed'
+                    },
+                    {
+                        label: 'Rainfed - Vegetable Farming (%)',
+                        backgroundColor: '#A7D100', // COLOR 3
+                        borderColor: '#A7D100', // COLOR 3
+                        data: vRainData,
+                        stack: 'Rainfed'
+                    },
+                    {
+                        label: 'Rainfed - Self-Employed (%)',
+                        backgroundColor: '#DA9B00', // COLOR 3
+                        borderColor: '#DA9B00', // COLOR 3
+                        data: sRainData,
+                        stack: 'Rainfed'
+                    },
+                    {
+                        label: 'Rainfed - Livestock (%)',
+                        backgroundColor: '#970085', // COLOR 3
+                        borderColor: '#970085', // COLOR 3
+                        data: lRainData,
+                        stack: 'Rainfed'
+                    },
+                    {
+                        label: 'Rainfed - Salary Employment (%)',
+                        backgroundColor: '#00937A', // COLOR 3
+                        borderColor: '#00937A', // COLOR 3
+                        data: saRainData,
+                        stack: 'Rainfed'
+                    },
+                    {
+                        label: 'Rainfed - Other Sources (%)',
+                        backgroundColor: '#2D0337', // COLOR 3
+                        borderColor: '#2D0337', // COLOR 3
+                        data: oRainData,
+                        stack: 'Rainfed'
+                    }
+                ]
+            },
+
+            options: {
+                aspectRatio: 2,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                        display: true,
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)"
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        display: true,
+                        ticks: {
+                            suggestedMin: 0,
+                            stepSize: 20
+
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    mode: 'x',
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += isNaN(tooltipItem.yLabel) ? '0' : tooltipItem.yLabel;
+                            return label;
+                        }
+                    }
+                }
+            }
+        });
+
+        // CHART 2
+
+        var dbRTotalP = JSON.parse('[{"location_name":"Ilocos Norte","region":"Ilocos Region","year":"2017","eco":"2","value":"95"},{"location_name":"Pangasinan","region":"Ilocos Region","year":"2017","eco":"2","value":"91"},{"location_name":"Apayao","region":"CAR","year":"2017","eco":"2","value":"100"},{"location_name":"Kalinga","region":"CAR","year":"2017","eco":"2","value":"77"},{"location_name":"Cagayan","region":"Cagayan Valley","year":"2017","eco":"2","value":"85"},{"location_name":"Isabela","region":"Cagayan Valley","year":"2017","eco":"2","value":"89"},{"location_name":"Nueva Vizcaya","region":"Cagayan Valley","year":"2017","eco":"2","value":"83"},{"location_name":"Aurora","region":"Central Luzon","year":"2017","eco":"2","value":"93"},{"location_name":"Bulacan","region":"Central Luzon","year":"2017","eco":"2","value":"75"},{"location_name":"Nueva Ecija","region":"Central Luzon","year":"2017","eco":"2","value":"87"},{"location_name":"Pampanga","region":"Central Luzon","year":"2017","eco":"2","value":"85"},{"location_name":"Tarlac","region":"Central Luzon","year":"2017","eco":"2","value":"83"},{"location_name":"Laguna","region":"CALABARZON","year":"2017","eco":"2","value":"79"},{"location_name":"Quezon","region":"CALABARZON","year":"2017","eco":"2","value":"67"},{"location_name":"Occidental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"95"},{"location_name":"Oriental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"84"},{"location_name":"Palawan","region":"MIMAROPA","year":"2017","eco":"2","value":"82"},{"location_name":"Albay","region":"Bicol Region","year":"2017","eco":"2","value":"71"},{"location_name":"Camarines Sur","region":"Bicol Region","year":"2017","eco":"2","value":"93"},{"location_name":"Antique","region":"Western Visayas","year":"2017","eco":"2","value":"72"},{"location_name":"Capiz","region":"Western Visayas","year":"2017","eco":"2","value":"98"},{"location_name":"Iloilo","region":"Western Visayas","year":"2017","eco":"2","value":"73"},{"location_name":"Negros Occidental","region":"Western Visayas","year":"2017","eco":"2","value":"76"},{"location_name":"Bohol","region":"Central Visayas","year":"2017","eco":"2","value":"63"},{"location_name":"Leyte","region":"Eastern Visayas","year":"2017","eco":"2","value":"85"},{"location_name":"Northern Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"59"},{"location_name":"Western Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"74"},{"location_name":"Zamboanga del Norte","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"74"},{"location_name":"Zamboanga del Sur","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"84"},{"location_name":"Zamboanga Sibugay","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"82"},{"location_name":"Bukidnon","region":"Northern Mindanao","year":"2017","eco":"2","value":"82"},{"location_name":"Davao de Oro","region":"Davao Region","year":"2017","eco":"2","value":"96"},{"location_name":"Davao del Norte","region":"Davao Region","year":"2017","eco":"2","value":"92"},{"location_name":"Davao del Sur","region":"Davao Region","year":"2017","eco":"2","value":"97"},{"location_name":"Davao Oriental","region":"Davao Region","year":"2017","eco":"2","value":"95"},{"location_name":"North Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"94"},{"location_name":"South Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"95"},{"location_name":"Sultan Kudarat","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"98"},{"location_name":"Agusan del Norte","region":"CARAGA","year":"2017","eco":"2","value":"80"},{"location_name":"Agusan del Sur","region":"CARAGA","year":"2017","eco":"2","value":"91"},{"location_name":"Maguindanao","region":"BARMM","year":"2017","eco":"2","value":"97"}]');
+        var dbVTotalP = JSON.parse('[{"location_name":"Ilocos Norte","region":"Ilocos Region","year":"2017","eco":"2","value":"0"},{"location_name":"Pangasinan","region":"Ilocos Region","year":"2017","eco":"2","value":"1"},{"location_name":"Apayao","region":"CAR","year":"2017","eco":"2","value":"0"},{"location_name":"Kalinga","region":"CAR","year":"2017","eco":"2","value":"2"},{"location_name":"Cagayan","region":"Cagayan Valley","year":"2017","eco":"2","value":"1"},{"location_name":"Isabela","region":"Cagayan Valley","year":"2017","eco":"2","value":"0"},{"location_name":"Nueva Vizcaya","region":"Cagayan Valley","year":"2017","eco":"2","value":"2"},{"location_name":"Aurora","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Bulacan","region":"Central Luzon","year":"2017","eco":"2","value":"2"},{"location_name":"Nueva Ecija","region":"Central Luzon","year":"2017","eco":"2","value":"6"},{"location_name":"Pampanga","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Tarlac","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Laguna","region":"CALABARZON","year":"2017","eco":"2","value":"5"},{"location_name":"Quezon","region":"CALABARZON","year":"2017","eco":"2","value":"2"},{"location_name":"Occidental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"0"},{"location_name":"Oriental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"2"},{"location_name":"Palawan","region":"MIMAROPA","year":"2017","eco":"2","value":"0"},{"location_name":"Albay","region":"Bicol Region","year":"2017","eco":"2","value":"0"},{"location_name":"Camarines Sur","region":"Bicol Region","year":"2017","eco":"2","value":"0"},{"location_name":"Antique","region":"Western Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Capiz","region":"Western Visayas","year":"2017","eco":"2","value":"0"},{"location_name":"Iloilo","region":"Western Visayas","year":"2017","eco":"2","value":"3"},{"location_name":"Negros Occidental","region":"Western Visayas","year":"2017","eco":"2","value":"0"},{"location_name":"Bohol","region":"Central Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Leyte","region":"Eastern Visayas","year":"2017","eco":"2","value":"0"},{"location_name":"Northern Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Western Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Zamboanga del Norte","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"2"},{"location_name":"Zamboanga del Sur","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"0"},{"location_name":"Zamboanga Sibugay","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"0"},{"location_name":"Bukidnon","region":"Northern Mindanao","year":"2017","eco":"2","value":"0"},{"location_name":"Davao de Oro","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao del Norte","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao del Sur","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao Oriental","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"North Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"South Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"Sultan Kudarat","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"Agusan del Norte","region":"CARAGA","year":"2017","eco":"2","value":"0"},{"location_name":"Agusan del Sur","region":"CARAGA","year":"2017","eco":"2","value":"0"},{"location_name":"Maguindanao","region":"BARMM","year":"2017","eco":"2","value":"1"}]');
+        var dbSTotalP = JSON.parse('[{"location_name":"Ilocos Norte","region":"Ilocos Region","year":"2017","eco":"2","value":"0"},{"location_name":"Pangasinan","region":"Ilocos Region","year":"2017","eco":"2","value":"5"},{"location_name":"Apayao","region":"CAR","year":"2017","eco":"2","value":"0"},{"location_name":"Kalinga","region":"CAR","year":"2017","eco":"2","value":"3"},{"location_name":"Cagayan","region":"Cagayan Valley","year":"2017","eco":"2","value":"2"},{"location_name":"Isabela","region":"Cagayan Valley","year":"2017","eco":"2","value":"3"},{"location_name":"Nueva Vizcaya","region":"Cagayan Valley","year":"2017","eco":"2","value":"3"},{"location_name":"Aurora","region":"Central Luzon","year":"2017","eco":"2","value":"5"},{"location_name":"Bulacan","region":"Central Luzon","year":"2017","eco":"2","value":"13"},{"location_name":"Nueva Ecija","region":"Central Luzon","year":"2017","eco":"2","value":"3"},{"location_name":"Pampanga","region":"Central Luzon","year":"2017","eco":"2","value":"5"},{"location_name":"Tarlac","region":"Central Luzon","year":"2017","eco":"2","value":"8"},{"location_name":"Laguna","region":"CALABARZON","year":"2017","eco":"2","value":"8"},{"location_name":"Quezon","region":"CALABARZON","year":"2017","eco":"2","value":"13"},{"location_name":"Occidental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"3"},{"location_name":"Oriental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"8"},{"location_name":"Palawan","region":"MIMAROPA","year":"2017","eco":"2","value":"5"},{"location_name":"Albay","region":"Bicol Region","year":"2017","eco":"2","value":"7"},{"location_name":"Camarines Sur","region":"Bicol Region","year":"2017","eco":"2","value":"1"},{"location_name":"Antique","region":"Western Visayas","year":"2017","eco":"2","value":"5"},{"location_name":"Capiz","region":"Western Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Iloilo","region":"Western Visayas","year":"2017","eco":"2","value":"5"},{"location_name":"Negros Occidental","region":"Western Visayas","year":"2017","eco":"2","value":"11"},{"location_name":"Bohol","region":"Central Visayas","year":"2017","eco":"2","value":"13"},{"location_name":"Leyte","region":"Eastern Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Northern Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"8"},{"location_name":"Western Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"12"},{"location_name":"Zamboanga del Norte","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"2"},{"location_name":"Zamboanga del Sur","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"7"},{"location_name":"Zamboanga Sibugay","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"3"},{"location_name":"Bukidnon","region":"Northern Mindanao","year":"2017","eco":"2","value":"12"},{"location_name":"Davao de Oro","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao del Norte","region":"Davao Region","year":"2017","eco":"2","value":"5"},{"location_name":"Davao del Sur","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao Oriental","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"North Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"1"},{"location_name":"South Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"3"},{"location_name":"Sultan Kudarat","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"Agusan del Norte","region":"CARAGA","year":"2017","eco":"2","value":"13"},{"location_name":"Agusan del Sur","region":"CARAGA","year":"2017","eco":"2","value":"2"},{"location_name":"Maguindanao","region":"BARMM","year":"2017","eco":"2","value":"1"}]');
+        var dbLTotalP = JSON.parse('[{"location_name":"Ilocos Norte","region":"Ilocos Region","year":"2017","eco":"2","value":"0"},{"location_name":"Pangasinan","region":"Ilocos Region","year":"2017","eco":"2","value":"1"},{"location_name":"Apayao","region":"CAR","year":"2017","eco":"2","value":"0"},{"location_name":"Kalinga","region":"CAR","year":"2017","eco":"2","value":"0"},{"location_name":"Cagayan","region":"Cagayan Valley","year":"2017","eco":"2","value":"0"},{"location_name":"Isabela","region":"Cagayan Valley","year":"2017","eco":"2","value":"0"},{"location_name":"Nueva Vizcaya","region":"Cagayan Valley","year":"2017","eco":"2","value":"0"},{"location_name":"Aurora","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Bulacan","region":"Central Luzon","year":"2017","eco":"2","value":"8"},{"location_name":"Nueva Ecija","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Pampanga","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Tarlac","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Laguna","region":"CALABARZON","year":"2017","eco":"2","value":"2"},{"location_name":"Quezon","region":"CALABARZON","year":"2017","eco":"2","value":"3"},{"location_name":"Occidental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"0"},{"location_name":"Oriental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"2"},{"location_name":"Palawan","region":"MIMAROPA","year":"2017","eco":"2","value":"0"},{"location_name":"Albay","region":"Bicol Region","year":"2017","eco":"2","value":"5"},{"location_name":"Camarines Sur","region":"Bicol Region","year":"2017","eco":"2","value":"1"},{"location_name":"Antique","region":"Western Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Capiz","region":"Western Visayas","year":"2017","eco":"2","value":"0"},{"location_name":"Iloilo","region":"Western Visayas","year":"2017","eco":"2","value":"1"},{"location_name":"Negros Occidental","region":"Western Visayas","year":"2017","eco":"2","value":"1"},{"location_name":"Bohol","region":"Central Visayas","year":"2017","eco":"2","value":"5"},{"location_name":"Leyte","region":"Eastern Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Northern Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"3"},{"location_name":"Western Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"0"},{"location_name":"Zamboanga del Norte","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"0"},{"location_name":"Zamboanga del Sur","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"0"},{"location_name":"Zamboanga Sibugay","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"0"},{"location_name":"Bukidnon","region":"Northern Mindanao","year":"2017","eco":"2","value":"0"},{"location_name":"Davao de Oro","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao del Norte","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao del Sur","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao Oriental","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"North Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"South Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"Sultan Kudarat","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"Agusan del Norte","region":"CARAGA","year":"2017","eco":"2","value":"0"},{"location_name":"Agusan del Sur","region":"CARAGA","year":"2017","eco":"2","value":"2"},{"location_name":"Maguindanao","region":"BARMM","year":"2017","eco":"2","value":"0"}]');
+        var dbSATotalP = JSON.parse('[{"location_name":"Ilocos Norte","region":"Ilocos Region","year":"2017","eco":"2","value":"2"},{"location_name":"Pangasinan","region":"Ilocos Region","year":"2017","eco":"2","value":"1"},{"location_name":"Apayao","region":"CAR","year":"2017","eco":"2","value":"0"},{"location_name":"Kalinga","region":"CAR","year":"2017","eco":"2","value":"3"},{"location_name":"Cagayan","region":"Cagayan Valley","year":"2017","eco":"2","value":"6"},{"location_name":"Isabela","region":"Cagayan Valley","year":"2017","eco":"2","value":"3"},{"location_name":"Nueva Vizcaya","region":"Cagayan Valley","year":"2017","eco":"2","value":"5"},{"location_name":"Aurora","region":"Central Luzon","year":"2017","eco":"2","value":"2"},{"location_name":"Bulacan","region":"Central Luzon","year":"2017","eco":"2","value":"1"},{"location_name":"Nueva Ecija","region":"Central Luzon","year":"2017","eco":"2","value":"1"},{"location_name":"Pampanga","region":"Central Luzon","year":"2017","eco":"2","value":"3"},{"location_name":"Tarlac","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Laguna","region":"CALABARZON","year":"2017","eco":"2","value":"3"},{"location_name":"Quezon","region":"CALABARZON","year":"2017","eco":"2","value":"3"},{"location_name":"Occidental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"2"},{"location_name":"Oriental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"2"},{"location_name":"Palawan","region":"MIMAROPA","year":"2017","eco":"2","value":"5"},{"location_name":"Albay","region":"Bicol Region","year":"2017","eco":"2","value":"10"},{"location_name":"Camarines Sur","region":"Bicol Region","year":"2017","eco":"2","value":"3"},{"location_name":"Antique","region":"Western Visayas","year":"2017","eco":"2","value":"12"},{"location_name":"Capiz","region":"Western Visayas","year":"2017","eco":"2","value":"0"},{"location_name":"Iloilo","region":"Western Visayas","year":"2017","eco":"2","value":"9"},{"location_name":"Negros Occidental","region":"Western Visayas","year":"2017","eco":"2","value":"3"},{"location_name":"Bohol","region":"Central Visayas","year":"2017","eco":"2","value":"12"},{"location_name":"Leyte","region":"Eastern Visayas","year":"2017","eco":"2","value":"5"},{"location_name":"Northern Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"3"},{"location_name":"Western Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"2"},{"location_name":"Zamboanga del Norte","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"7"},{"location_name":"Zamboanga del Sur","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"7"},{"location_name":"Zamboanga Sibugay","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"8"},{"location_name":"Bukidnon","region":"Northern Mindanao","year":"2017","eco":"2","value":"1"},{"location_name":"Davao de Oro","region":"Davao Region","year":"2017","eco":"2","value":"2"},{"location_name":"Davao del Norte","region":"Davao Region","year":"2017","eco":"2","value":"3"},{"location_name":"Davao del Sur","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao Oriental","region":"Davao Region","year":"2017","eco":"2","value":"3"},{"location_name":"North Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"5"},{"location_name":"South Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"2"},{"location_name":"Sultan Kudarat","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"Agusan del Norte","region":"CARAGA","year":"2017","eco":"2","value":"2"},{"location_name":"Agusan del Sur","region":"CARAGA","year":"2017","eco":"2","value":"3"},{"location_name":"Maguindanao","region":"BARMM","year":"2017","eco":"2","value":"1"}]');
+        var dbOTotalP = JSON.parse('[{"location_name":"Ilocos Norte","region":"Ilocos Region","year":"2017","eco":"2","value":"3"},{"location_name":"Pangasinan","region":"Ilocos Region","year":"2017","eco":"2","value":"1"},{"location_name":"Apayao","region":"CAR","year":"2017","eco":"2","value":"0"},{"location_name":"Kalinga","region":"CAR","year":"2017","eco":"2","value":"15"},{"location_name":"Cagayan","region":"Cagayan Valley","year":"2017","eco":"2","value":"6"},{"location_name":"Isabela","region":"Cagayan Valley","year":"2017","eco":"2","value":"5"},{"location_name":"Nueva Vizcaya","region":"Cagayan Valley","year":"2017","eco":"2","value":"7"},{"location_name":"Aurora","region":"Central Luzon","year":"2017","eco":"2","value":"0"},{"location_name":"Bulacan","region":"Central Luzon","year":"2017","eco":"2","value":"1"},{"location_name":"Nueva Ecija","region":"Central Luzon","year":"2017","eco":"2","value":"3"},{"location_name":"Pampanga","region":"Central Luzon","year":"2017","eco":"2","value":"7"},{"location_name":"Tarlac","region":"Central Luzon","year":"2017","eco":"2","value":"9"},{"location_name":"Laguna","region":"CALABARZON","year":"2017","eco":"2","value":"3"},{"location_name":"Quezon","region":"CALABARZON","year":"2017","eco":"2","value":"12"},{"location_name":"Occidental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"0"},{"location_name":"Oriental Mindoro","region":"MIMAROPA","year":"2017","eco":"2","value":"2"},{"location_name":"Palawan","region":"MIMAROPA","year":"2017","eco":"2","value":"8"},{"location_name":"Albay","region":"Bicol Region","year":"2017","eco":"2","value":"7"},{"location_name":"Camarines Sur","region":"Bicol Region","year":"2017","eco":"2","value":"2"},{"location_name":"Antique","region":"Western Visayas","year":"2017","eco":"2","value":"7"},{"location_name":"Capiz","region":"Western Visayas","year":"2017","eco":"2","value":"0"},{"location_name":"Iloilo","region":"Western Visayas","year":"2017","eco":"2","value":"9"},{"location_name":"Negros Occidental","region":"Western Visayas","year":"2017","eco":"2","value":"9"},{"location_name":"Bohol","region":"Central Visayas","year":"2017","eco":"2","value":"5"},{"location_name":"Leyte","region":"Eastern Visayas","year":"2017","eco":"2","value":"6"},{"location_name":"Northern Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"25"},{"location_name":"Western Samar","region":"Eastern Visayas","year":"2017","eco":"2","value":"10"},{"location_name":"Zamboanga del Norte","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"15"},{"location_name":"Zamboanga del Sur","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"2"},{"location_name":"Zamboanga Sibugay","region":"Zamboanga Peninsula","year":"2017","eco":"2","value":"7"},{"location_name":"Bukidnon","region":"Northern Mindanao","year":"2017","eco":"2","value":"5"},{"location_name":"Davao de Oro","region":"Davao Region","year":"2017","eco":"2","value":"2"},{"location_name":"Davao del Norte","region":"Davao Region","year":"2017","eco":"2","value":"0"},{"location_name":"Davao del Sur","region":"Davao Region","year":"2017","eco":"2","value":"3"},{"location_name":"Davao Oriental","region":"Davao Region","year":"2017","eco":"2","value":"2"},{"location_name":"North Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"South Cotabato","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"0"},{"location_name":"Sultan Kudarat","region":"SOCCSKSARGEN","year":"2017","eco":"2","value":"2"},{"location_name":"Agusan del Norte","region":"CARAGA","year":"2017","eco":"2","value":"5"},{"location_name":"Agusan del Sur","region":"CARAGA","year":"2017","eco":"2","value":"2"},{"location_name":"Maguindanao","region":"BARMM","year":"2017","eco":"2","value":"0"}]');
+
+        let provinces = [];
+        let valuesp_rtotal = [];
+        let valuesp_vtotal = [];
+        let valuesp_stotal = [];
+        let valuesp_ltotal = [];
+        let valuesp_satotal = [];
+        let valuesp_ototal = [];
+
+        try {
+            dbRTotalP.map((item) => {
+                provinces.push(item.location_name);
+                valuesp_rtotal.push(item.value);
+            });
+            dbVTotalP.map((item) => {
+                valuesp_vtotal.push(item.value);
+            });
+            dbSTotalP.map((item) => {
+                valuesp_stotal.push(item.value);
+            });
+            dbLTotalP.map((item) => {
+                valuesp_ltotal.push(item.value);
+            });
+            dbSATotalP.map((item) => {
+                valuesp_satotal.push(item.value);
+            });
+            dbOTotalP.map((item) => {
+                valuesp_ototal.push(item.value);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+        var majorSourceProv = document.getElementById('ctxMajorSourceProv').getContext('2d');
+        var tempPrLabels = [...provinces];
+        var rAllDataP = [...valuesp_rtotal];
+        var vAllDataP = [...valuesp_vtotal];
+        var sAllDataP = [...valuesp_stotal];
+        var lAllDataP = [...valuesp_ltotal];
+        var saAllDataP = [...valuesp_satotal];
+        var oAllDataP = [...valuesp_ototal];
+        var majorSourceProvChart = new Chart(majorSourceProv, {
+
+            type: 'horizontalBar',
+
+            data: {
+                labels: tempPrLabels,
+                datasets: [{
+                        label: 'Rice Farming (%)',
+                        backgroundColor: '#0059B3', // COLOR 1
+                        borderColor: '#0059B3', // COLOR 1
+                        data: rAllDataP,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Vegetable Farming (%)',
+                        backgroundColor: '#2138B7', // COLOR 1
+                        borderColor: '#2138B7', // COLOR 1
+                        data: vAllDataP,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Self-Employment (%)',
+                        backgroundColor: '#A6CEE3', // COLOR 1
+                        borderColor: '#A6CEE3', // COLOR 1
+                        data: sAllDataP,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Livestock (%)',
+                        backgroundColor: '#007FFE', // COLOR 1
+                        borderColor: '#007FFE', // COLOR 1
+                        data: lAllDataP,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Salary Employment (%)',
+                        backgroundColor: '#4698EA', // COLOR 1
+                        borderColor: '#4698EA', // COLOR 1
+                        data: saAllDataP,
+                        stack: 'All'
+                    },
+                    {
+                        label: 'Other Sources (%)',
+                        backgroundColor: '#0059B3', // COLOR 1
+                        borderColor: '#0059B3', // COLOR 1
+                        data: oAllDataP,
+                        stack: 'All'
+                    }
+                ]
+            },
+
+            options: {
+                aspectRatio: 0.7,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                        display: true,
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)"
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        display: true,
+                        ticks: {
+                            suggestedMin: 0,
+                            stepSize: 20
+
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

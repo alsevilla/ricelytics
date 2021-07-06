@@ -1,0 +1,272 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Header --->
+<div class="jumbotron text-center">
+    <div class="jumbotron-content">
+        <h2>State of the Rice Sector in the Philippines</h2>
+        <h1>Yield per Hectare</h1>
+        <p class="lead">Estimated paddy rice yield (metric tons/hectare) for all ecosystems, 2000-2020</p>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="sublevel container">
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-alternate">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Yield - Lowland Irrigated (2020)</h5>
+                        <h1 class="card-text font-weight-bold">4.48<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">metric tons/ha</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Yield per Hectare (2020)</h5>
+                        <h1 class="card-text font-weight-bold">4.09<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill">
+                            <p class="text-dark">metric tons/ha</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-alternate">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Yield - Non-Irrigated (2020)</h5>
+                        <h1 class="card-text font-weight-bold">3.16<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">metric tons/ha</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Yearly estimated on rice yield by ecosystem (2000-2020)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in metric ton/hectare (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxYieldStack"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Average yield per hectare per province (2020)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in metric ton/hectare (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxTopYield"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer --->
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                <small class="text-muted">Philippine Rice Research Institute.</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>State of the Rice Sector</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Rice Production</a></li>
+                    <li><a class="text-muted" href="#">Area Harvested</a></li>
+                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Rice Farmer Characteristics</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                    <li><a class="text-muted" href="#">Farm Details</a></li>
+                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>RCEF Updates</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                    <li><a class="text-muted" href="#">Machineries</a></li>
+                    <li><a class="text-muted" href="#">Extension</a></li>
+                    <li><a class="text-muted" href="#">Credit</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // CHART 1
+
+    var dbTotal = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"3.08"},{"location_name":"Philippines","year":"2001","value":"3.19"},{"location_name":"Philippines","year":"2002","value":"3.28"},{"location_name":"Philippines","year":"2003","value":"3.36"},{"location_name":"Philippines","year":"2004","value":"3.51"},{"location_name":"Philippines","year":"2005","value":"3.59"},{"location_name":"Philippines","year":"2006","value":"3.69"},{"location_name":"Philippines","year":"2007","value":"3.79"},{"location_name":"Philippines","year":"2008","value":"3.77"},{"location_name":"Philippines","year":"2009","value":"3.62"},{"location_name":"Philippines","year":"2010","value":"3.63"},{"location_name":"Philippines","year":"2011","value":"3.69"},{"location_name":"Philippines","year":"2012","value":"3.85"},{"location_name":"Philippines","year":"2013","value":"3.89"},{"location_name":"Philippines","year":"2014","value":"4.00"},{"location_name":"Philippines","year":"2015","value":"3.92"},{"location_name":"Philippines","year":"2016","value":"3.88"},{"location_name":"Philippines","year":"2017","value":"4.02"},{"location_name":"Philippines","year":"2018","value":"3.99"},{"location_name":"Philippines","year":"2019","value":"4.04"},{"location_name":"Philippines","year":"2020","value":"4.09"}]');
+    var dbIrrigated = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"3.49"},{"location_name":"Philippines","year":"2001","value":"3.60"},{"location_name":"Philippines","year":"2002","value":"3.68"},{"location_name":"Philippines","year":"2003","value":"3.76"},{"location_name":"Philippines","year":"2004","value":"3.92"},{"location_name":"Philippines","year":"2005","value":"4.02"},{"location_name":"Philippines","year":"2006","value":"4.10"},{"location_name":"Philippines","year":"2007","value":"4.21"},{"location_name":"Philippines","year":"2008","value":"4.14"},{"location_name":"Philippines","year":"2009","value":"3.97"},{"location_name":"Philippines","year":"2010","value":"3.99"},{"location_name":"Philippines","year":"2011","value":"4.03"},{"location_name":"Philippines","year":"2012","value":"4.24"},{"location_name":"Philippines","year":"2013","value":"4.27"},{"location_name":"Philippines","year":"2014","value":"4.43"},{"location_name":"Philippines","year":"2015","value":"4.32"},{"location_name":"Philippines","year":"2016","value":"4.27"},{"location_name":"Philippines","year":"2017","value":"4.43"},{"location_name":"Philippines","year":"2018","value":"4.38"},{"location_name":"Philippines","year":"2019","value":"4.44"},{"location_name":"Philippines","year":"2020","value":"4.48"}]');
+    var dbRainfed = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"2.18"},{"location_name":"Philippines","year":"2001","value":"2.30"},{"location_name":"Philippines","year":"2002","value":"2.40"},{"location_name":"Philippines","year":"2003","value":"2.41"},{"location_name":"Philippines","year":"2004","value":"2.58"},{"location_name":"Philippines","year":"2005","value":"2.55"},{"location_name":"Philippines","year":"2006","value":"2.73"},{"location_name":"Philippines","year":"2007","value":"2.82"},{"location_name":"Philippines","year":"2008","value":"2.92"},{"location_name":"Philippines","year":"2009","value":"2.80"},{"location_name":"Philippines","year":"2010","value":"2.72"},{"location_name":"Philippines","year":"2011","value":"2.91"},{"location_name":"Philippines","year":"2012","value":"2.98"},{"location_name":"Philippines","year":"2013","value":"2.99"},{"location_name":"Philippines","year":"2014","value":"3.00"},{"location_name":"Philippines","year":"2015","value":"2.90"},{"location_name":"Philippines","year":"2016","value":"2.87"},{"location_name":"Philippines","year":"2017","value":"3.06"},{"location_name":"Philippines","year":"2018","value":"3.07"},{"location_name":"Philippines","year":"2019","value":"3.05"},{"location_name":"Philippines","year":"2020","value":"3.16"}]');
+
+    let years = [];
+    let values_total = [];
+    let values_irrig = [];
+    let values_rain = [];
+
+    try {
+        dbTotal.map((item) => {
+            years.push(item.year);
+            values_total.push(item.value);
+        });
+        dbIrrigated.map((item) => {
+            values_irrig.push(item.value);
+        });
+        dbRainfed.map((item) => {
+            values_rain.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var yieldStack = document.getElementById('ctxYieldStack').getContext('2d');
+    var tempYLabels = [...years];
+    var yieldAllData = [...values_total];
+    var yieldIrrigData = [...values_irrig];
+    var yieldRainData = [...values_rain];
+    var yieldStackChart = new Chart(yieldStack, {
+
+        type: 'bar',
+
+        data: {
+            labels: tempYLabels,
+            datasets: [{
+                    label: 'All ecosystems',
+                    backgroundColor: '#007FFE', // COLOR 1
+                    borderColor: '#007FFE', // COLOR 1
+                    lineTension: 0,
+                    type: 'line',
+                    fill: false,
+                    data: yieldAllData,
+                },
+                {
+                    label: 'Irrigated',
+                    backgroundColor: '#2138B7', // COLOR 2
+                    borderColor: '#2138B7', // COLOR 2
+                    lineTension: 0,
+                    type: 'line',
+                    fill: false,
+                    data: yieldIrrigData
+                },
+                {
+                    label: 'Rainfed',
+                    backgroundColor: '#A6CEE3', // COLOR 3
+                    borderColor: '#A6CEE3', // COLOR 3
+                    lineTension: 0,
+                    type: 'line',
+                    fill: false,
+                    data: yieldRainData
+                }
+            ]
+        },
+
+        options: {
+            aspectRatio: 2.5,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
+
+    // CHART 2
+
+    var dbProvs = JSON.parse('[{"location_name":"Nueva Ecija","year":"2020","value":"6.00"},{"location_name":"Ilocos Norte","year":"2020","value":"5.18"},{"location_name":"Davao del Sur","year":"2020","value":"5.16"},{"location_name":"Ilocos Sur","year":"2020","value":"5.06"},{"location_name":"Pampanga","year":"2020","value":"4.90"},{"location_name":"Bukidnon","year":"2020","value":"4.75"},{"location_name":"Isabela","year":"2020","value":"4.74"},{"location_name":"La Union","year":"2020","value":"4.68"},{"location_name":"Lanao Del Norte","year":"2020","value":"4.64"},{"location_name":"Zamboanga del Sur","year":"2020","value":"4.58"},{"location_name":"Pangasinan","year":"2020","value":"4.58"},{"location_name":"Davao Oriental","year":"2020","value":"4.57"},{"location_name":"Nueva Vizcaya","year":"2020","value":"4.49"},{"location_name":"Davao del Norte","year":"2020","value":"4.46"},{"location_name":"Bulacan","year":"2020","value":"4.45"},{"location_name":"Laguna","year":"2020","value":"4.44"},{"location_name":"Bataan","year":"2020","value":"4.42"},{"location_name":"Quirino","year":"2020","value":"4.42"},{"location_name":"Camarines Norte","year":"2020","value":"4.41"},{"location_name":"Zambales","year":"2020","value":"4.40"},{"location_name":"Kalinga","year":"2020","value":"4.40"},{"location_name":"Biliran","year":"2020","value":"4.36"},{"location_name":"Sorsogon","year":"2020","value":"4.33"},{"location_name":"Oriental Mindoro","year":"2020","value":"4.32"},{"location_name":"Misamis Occidental","year":"2020","value":"4.28"},{"location_name":"Southern Leyte","year":"2020","value":"4.26"},{"location_name":"Davao de Oro","year":"2020","value":"4.25"},{"location_name":"Tarlac","year":"2020","value":"4.18"},{"location_name":"Cagayan","year":"2020","value":"4.16"},{"location_name":"Leyte","year":"2020","value":"4.12"},{"location_name":"Occidental Mindoro","year":"2020","value":"4.12"},{"location_name":"Misamis Oriental","year":"2020","value":"4.07"},{"location_name":"North Cotabato","year":"2020","value":"4.05"},{"location_name":"Zamboanga Sibugay","year":"2020","value":"4.05"},{"location_name":"Albay","year":"2020","value":"4.00"},{"location_name":"Palawan","year":"2020","value":"3.94"},{"location_name":"Aurora","year":"2020","value":"3.90"},{"location_name":"Apayao","year":"2020","value":"3.86"},{"location_name":"Camiguin","year":"2020","value":"3.80"},{"location_name":"Camarines Sur","year":"2020","value":"3.77"},{"location_name":"Abra","year":"2020","value":"3.76"},{"location_name":"Negros Occidental","year":"2020","value":"3.75"},{"location_name":"Antique","year":"2020","value":"3.69"},{"location_name":"Sultan Kudarat","year":"2020","value":"3.58"},{"location_name":"South Cotabato","year":"2020","value":"3.58"},{"location_name":"Romblon","year":"2020","value":"3.52"},{"location_name":"Quezon","year":"2020","value":"3.50"},{"location_name":"Surigao Del Norte","year":"2020","value":"3.42"},{"location_name":"Davao Occidental","year":"2020","value":"3.42"},{"location_name":"Siquijor","year":"2020","value":"3.40"},{"location_name":"Iloilo","year":"2020","value":"3.39"},{"location_name":"Agusan del Norte","year":"2020","value":"3.39"},{"location_name":"Cavite","year":"2020","value":"3.38"},{"location_name":"Capiz","year":"2020","value":"3.33"},{"location_name":"Surigao Del Sur","year":"2020","value":"3.32"},{"location_name":"Maguindanao","year":"2020","value":"3.23"},{"location_name":"Sarangani","year":"2020","value":"3.20"},{"location_name":"Ifugao","year":"2020","value":"3.20"},{"location_name":"Aklan","year":"2020","value":"3.17"},{"location_name":"Rizal","year":"2020","value":"3.15"},{"location_name":"Agusan del Sur","year":"2020","value":"3.14"},{"location_name":"Mountain Province","year":"2020","value":"3.12"},{"location_name":"Zamboanga del Norte","year":"2020","value":"3.10"},{"location_name":"Cebu","year":"2020","value":"3.09"},{"location_name":"Benguet","year":"2020","value":"3.07"},{"location_name":"Catanduanes","year":"2020","value":"3.04"},{"location_name":"Marinduque","year":"2020","value":"2.93"},{"location_name":"Northern Samar","year":"2020","value":"2.93"},{"location_name":"Eastern Samar","year":"2020","value":"2.89"},{"location_name":"Guimaras","year":"2020","value":"2.89"},{"location_name":"Bohol","year":"2020","value":"2.88"},{"location_name":"Masbate","year":"2020","value":"2.82"},{"location_name":"Lanao Del Sur","year":"2020","value":"2.81"},{"location_name":"Western Samar","year":"2020","value":"2.80"},{"location_name":"Negros Oriental","year":"2020","value":"2.76"},{"location_name":"Batangas","year":"2020","value":"2.66"},{"location_name":"Dinagat Islands","year":"2020","value":"2.39"},{"location_name":"Tawi-Tawi","year":"2020","value":"2.09"},{"location_name":"Basilan","year":"2020","value":"1.78"},{"location_name":"Sulu","year":"2020","value":"1.72"},{"location_name":"Batanes","year":"2020","value":"1.06"}]');
+
+    let provinces = [];
+    let values = [];
+
+    try {
+        dbProvs.map((item) => {
+            provinces.push(item.location_name);
+            values.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempYLabels = [...provinces];
+    var topProvData = [...values];
+
+    var topYield = document.getElementById('ctxTopYield').getContext('2d');
+    var topYieldChart = new Chart(topYield, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempYLabels,
+            datasets: [{
+                label: 'Yield per hectare (mt)',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData
+            }]
+        },
+
+        options: {
+            aspectRatio: 0.5,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        stepSize: 0.5
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+</script>
+{% endblock script %}

@@ -1,0 +1,321 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<!-- Header --->
+<div class="jumbotron text-center">
+    <div class="jumbotron-content">
+        <h2>State of the Rice Sector in the Philippines</h2>
+        <h1>Imports and Exports</h1>
+        <p class="lead">Nostrum et aut alias aut ea distinctio accusamus. Ea dolores expedita autem eius. <br />Voluptatibus fuga nulla quia et.</p>
+    </div>
+</div>
+
+<!-- Body -->
+<div class="sublevel container">
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Imported Rice (2019)</h5>
+                        <h1 class="card-text font-weight-bold">3.12<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill">
+                            <p class="text-dark">million metric tons</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Exported Rice (2019)</h5>
+                        <h1 class="card-text font-weight-bold">&lt; 1,000 <i class="bi bi-dash"></i></h1>
+                        <div class="card-note w-25 mx-auto rounded-pill">
+                            <p class="text-dark">tons</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Yearly imported rice (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in thousand tons ('000) (PSA, 2020)</p>
+                </div>
+                <div class="card-body mt-4 mb-4">
+                    <div><canvas id="ctxImports"></canvas></div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Yearly exported rice (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in thousand tons ('000) (PSA, 2020) </p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxExports"></canvas></div>
+                </div>
+                <div class="card-footer text-muted">Note: less than 1,000 tons exported = 0 (y-axis) </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Distribution of imported and locally produced rice on total supply (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in percentages (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxImportLocal"></canvas></div>
+                </div>
+                <div class="card-footer text-muted">Note: Excluding beginning stocks in total rice supply</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer --->
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                <small class="text-muted">Philippine Rice Research Institute.</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>State of the Rice Sector</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Rice Production</a></li>
+                    <li><a class="text-muted" href="#">Area Harvested</a></li>
+                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Rice Farmer Characteristics</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                    <li><a class="text-muted" href="#">Farm Details</a></li>
+                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>RCEF Updates</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                    <li><a class="text-muted" href="#">Machineries</a></li>
+                    <li><a class="text-muted" href="#">Extension</a></li>
+                    <li><a class="text-muted" href="#">Credit</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    var dbSupplySources = JSON.parse('[{"location_name":"Philippines","year":"2000","SUBeginningStocks":"2365.00","SUProduction":"8103.00","SUImports":"639.00"},{"location_name":"Philippines","year":"2001","SUBeginningStocks":"2166.00","SUProduction":"8472.00","SUImports":"808.00"},{"location_name":"Philippines","year":"2002","SUBeginningStocks":"2271.00","SUProduction":"8679.00","SUImports":"1196.00"},{"location_name":"Philippines","year":"2003","SUBeginningStocks":"2448.00","SUProduction":"8829.00","SUImports":"886.00"},{"location_name":"Philippines","year":"2004","SUBeginningStocks":"2362.00","SUProduction":"9481.00","SUImports":"1001.00"},{"location_name":"Philippines","year":"2005","SUBeginningStocks":"2051.00","SUProduction":"9550.00","SUImports":"1822.00"},{"location_name":"Philippines","year":"2006","SUBeginningStocks":"2094.00","SUProduction":"10024.00","SUImports":"1716.00"},{"location_name":"Philippines","year":"2007","SUBeginningStocks":"2253.00","SUProduction":"10621.00","SUImports":"1806.00"},{"location_name":"Philippines","year":"2008","SUBeginningStocks":"2172.00","SUProduction":"10997.00","SUImports":"2432.00"},{"location_name":"Philippines","year":"2009","SUBeginningStocks":"2639.00","SUProduction":"10633.00","SUImports":"1755.00"},{"location_name":"Philippines","year":"2010","SUBeginningStocks":"2629.00","SUProduction":"10315.00","SUImports":"2378.00"},{"location_name":"Philippines","year":"2011","SUBeginningStocks":"3424.00","SUProduction":"10911.00","SUImports":"707.00"},{"location_name":"Philippines","year":"2012","SUBeginningStocks":"2631.00","SUProduction":"11793.00","SUImports":"1041.00"},{"location_name":"Philippines","year":"2013","SUBeginningStocks":"2524.00","SUProduction":"12059.00","SUImports":"398.00"},{"location_name":"Philippines","year":"2014","SUBeginningStocks":"2126.00","SUProduction":"12405.00","SUImports":"1087.00"},{"location_name":"Philippines","year":"2015","SUBeginningStocks":"2662.00","SUProduction":"11870.00","SUImports":"1478.00"},{"location_name":"Philippines","year":"2016","SUBeginningStocks":"3199.00","SUProduction":"11528.00","SUImports":"605.00"},{"location_name":"Philippines","year":"2017","SUBeginningStocks":"2765.00","SUProduction":"12607.00","SUImports":"885.00"},{"location_name":"Philippines","year":"2018","SUBeginningStocks":"2290.00","SUProduction":"12469.00","SUImports":"2002.00"},{"location_name":"Philippines","year":"2019","SUBeginningStocks":"2551.00","SUProduction":"12305.00","SUImports":"3118.00"}]');
+    var dbUseAccounts = JSON.parse('[{"location_name":"Philippines","year":"2000","UTExports":"0.00","UTSeeds":"198.00","UTFeedsWaste":"527.00","UTProcessing":"324.00","UTEndingStocks":"2166.00","uttotalnet":"7892.00"},{"location_name":"Philippines","year":"2001","UTExports":"0.00","UTSeeds":"199.00","UTFeedsWaste":"551.00","UTProcessing":"339.00","UTEndingStocks":"2271.00","uttotalnet":"8086.00"},{"location_name":"Philippines","year":"2002","UTExports":"0.00","UTSeeds":"198.00","UTFeedsWaste":"564.00","UTProcessing":"347.00","UTEndingStocks":"2448.00","uttotalnet":"8589.00"},{"location_name":"Philippines","year":"2003","UTExports":"0.00","UTSeeds":"197.00","UTFeedsWaste":"574.00","UTProcessing":"353.00","UTEndingStocks":"2362.00","uttotalnet":"8677.00"},{"location_name":"Philippines","year":"2004","UTExports":"0.00","UTSeeds":"202.00","UTFeedsWaste":"616.00","UTProcessing":"379.00","UTEndingStocks":"2051.00","uttotalnet":"9596.00"},{"location_name":"Philippines","year":"2005","UTExports":"0.00","UTSeeds":"200.00","UTFeedsWaste":"621.00","UTProcessing":"382.00","UTEndingStocks":"2094.00","uttotalnet":"10126.00"},{"location_name":"Philippines","year":"2006","UTExports":"0.00","UTSeeds":"204.00","UTFeedsWaste":"652.00","UTProcessing":"401.00","UTEndingStocks":"2253.00","uttotalnet":"10324.00"},{"location_name":"Philippines","year":"2007","UTExports":"0.00","UTSeeds":"210.00","UTFeedsWaste":"690.00","UTProcessing":"425.00","UTEndingStocks":"2172.00","uttotalnet":"11183.00"},{"location_name":"Philippines","year":"2008","UTExports":"1.00","UTSeeds":"219.00","UTFeedsWaste":"715.00","UTProcessing":"440.00","UTEndingStocks":"2639.00","uttotalnet":"11587.00"},{"location_name":"Philippines","year":"2009","UTExports":"0.00","UTSeeds":"222.00","UTFeedsWaste":"691.00","UTProcessing":"425.00","UTEndingStocks":"2629.00","uttotalnet":"11060.00"},{"location_name":"Philippines","year":"2010","UTExports":"0.00","UTSeeds":"214.00","UTFeedsWaste":"670.00","UTProcessing":"413.00","UTEndingStocks":"3424.00","uttotalnet":"10601.00"},{"location_name":"Philippines","year":"2011","UTExports":"0.00","UTSeeds":"223.00","UTFeedsWaste":"709.00","UTProcessing":"436.00","UTEndingStocks":"2631.00","uttotalnet":"11043.00"},{"location_name":"Philippines","year":"2012","UTExports":"0.00","UTSeeds":"230.00","UTFeedsWaste":"767.00","UTProcessing":"472.00","UTEndingStocks":"2524.00","uttotalnet":"11472.00"},{"location_name":"Philippines","year":"2013","UTExports":"2.00","UTSeeds":"233.00","UTFeedsWaste":"784.00","UTProcessing":"482.00","UTEndingStocks":"2126.00","uttotalnet":"11354.00"},{"location_name":"Philippines","year":"2014","UTExports":"1.00","UTSeeds":"232.00","UTFeedsWaste":"806.00","UTProcessing":"496.00","UTEndingStocks":"2662.00","uttotalnet":"11421.00"},{"location_name":"Philippines","year":"2015","UTExports":"0.00","UTSeeds":"228.00","UTFeedsWaste":"772.00","UTProcessing":"475.00","UTEndingStocks":"3199.00","uttotalnet":"11336.00"},{"location_name":"Philippines","year":"2016","UTExports":"0.00","UTSeeds":"223.00","UTFeedsWaste":"749.00","UTProcessing":"461.00","UTEndingStocks":"2765.00","uttotalnet":"11134.00"},{"location_name":"Philippines","year":"2017","UTExports":"0.00","UTSeeds":"236.00","UTFeedsWaste":"819.00","UTProcessing":"504.00","UTEndingStocks":"2290.00","uttotalnet":"12408.00"},{"location_name":"Philippines","year":"2018","UTExports":"0.00","UTSeeds":"235.00","UTFeedsWaste":"810.00","UTProcessing":"499.00","UTEndingStocks":"2551.00","uttotalnet":"12666.00"},{"location_name":"Philippines","year":"2019","UTExports":"0.00","UTSeeds":"228.00","UTFeedsWaste":"800.00","UTProcessing":"492.00","UTEndingStocks":"2675.00","uttotalnet":"13779.00"}]');
+
+    var curProduce = '12305.00';
+    var curImports = '3118.00';
+    var curExports = '0.00';
+
+    let years = [];
+    let locals = [];
+    let imports = [];
+    let exports = [];
+    let localsp = [];
+    let importsp = [];
+
+    try {
+        dbSupplySources.map((item) => {
+            years.push(item.year);
+            locals.push(item.SUProduction);
+            imports.push(item.SUImports);
+            total = parseInt(item.SUProduction) + parseInt(item.SUImports);
+            localpc = ((item.SUProduction / total) * 100);
+            importspc = ((item.SUImports / total) * 100);
+            localsp.push(localpc.toFixed(0));
+            importsp.push(importspc.toFixed(0));
+        });
+        dbUseAccounts.map((item) => {
+            exports.push(item.UTExports);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var yearsLab = [...years];
+    var totalProduce = [...locals];
+    var totalImports = [...imports];
+    var totalExports = [...exports];
+    var totalProduceP = [...localsp];
+    var totalImportsP = [...importsp];
+
+    var importsC = document.getElementById('ctxImports').getContext('2d');
+
+    var importsChart = new Chart(importsC, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLab,
+            datasets: [{
+                label: 'Imported Rice',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: totalImports
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.6,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
+
+    var exportsC = document.getElementById('ctxExports').getContext('2d');
+
+    var exportsChart = new Chart(exportsC, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLab,
+            datasets: [{
+                label: 'Exported Rice',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: totalExports
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.6,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
+
+    var ImportLocal = document.getElementById('ctxImportLocal').getContext('2d');
+
+    var ImportLocalChart = new Chart(ImportLocal, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLab,
+            datasets: [{
+                label: 'Locally Produced Rice (%)',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                lineTension: 0,
+                fill: true,
+                data: totalProduceP
+            }, {
+                label: 'Imported Rice (%)',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                fill: true,
+                data: totalImportsP
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 2.5,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom'
+            },
+            plugins: {
+                labels: false
+            }
+        }
+    });
+
+</script>
+{% endblock script %}

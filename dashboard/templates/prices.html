@@ -1,0 +1,400 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <!-- Header --->
+    <div class="jumbotron text-center">
+        <div class="jumbotron-content">
+            <h2>State of the Rice Sector in the Philippines</h2>
+            <h1>Rice Market Prices</h1>
+            <p class="lead">Nostrum et aut alias aut ea distinctio accusamus. Ea dolores expedita autem eius. <br />Voluptatibus fuga nulla quia et.</p>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="sublevel container">
+        <div class="row">
+            <div class="col">
+                <div class="card-deck mb-2 text-center">
+                    <div class="card primary mb-4 bg-primary text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Farmgate Price (2020)</h5>
+                            <p class="card-title-note">(PhP/kg)</p>
+                            <h1 class="card-text mt-3 font-weight-bold smaller">16.72<i class="bi bi-caret-up-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill">
+                                <p class="text-dark">Dry Palay</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-primary text-white">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title">Wholesale Price (2020) (PhP/kg)</h5>
+                                    <p class="card-title-note">(PhP/kg)</p>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 border-right">
+                                    <h1 class="card-text font-weight-bold smaller">33.94<i class="bi bi-caret-down-fill"></i></h1>
+                                    <div class="card-note w-100 mx-auto rounded-pill">
+                                        <p class="text-dark">Regular-Milled</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h1 class="card-text font-weight-bold smaller">37.65<i class="bi bi-caret-down-fill"></i></h1>
+                                    <div class="card-note w-100 mx-auto rounded-pill">
+                                        <p class="text-dark">Well-Milled</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card primary mb-4 bg-primary text-white">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title">Retail Price (2020) (PhP/kg)</h5>
+                                    <p class="card-title-note">(PhP/kg)</p>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 border-right">
+                                    <h1 class="card-text font-weight-bold smaller">36.93<i class="bi bi-caret-down-fill"></i></h1>
+                                    <div class="card-note w-100 mx-auto rounded-pill">
+                                        <p class="text-dark">Regular-Milled</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h1 class="card-text font-weight-bold smaller">41.67<i class="bi bi-caret-down-fill"></i></h1>
+                                    <div class="card-note w-100 mx-auto rounded-pill">
+                                        <p class="text-dark">Well-Milled</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 p-2">Farmgate prices per year (2000-2019)</h5>
+                        <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PhP) (PSA, 2020)</p>
+                    </div>
+                    <div class="card-body">
+                        <div><canvas id="ctxFarmPrices"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 p-2">Wholesale prices, regular and well-milled rice, per year (2000-2019)</h5>
+                        <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PhP) (PSA, 2020)</p>
+                    </div>
+                    <div class="card-body">
+                        <div><canvas id="ctxWholesalePrices"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 p-2">Retail prices, regular and well-milled rice, per year (2000-2019)</h5>
+                        <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PhP) (PSA, 2020)</p>
+                    </div>
+                    <div class="card-body">
+                        <div><canvas id="ctxRetailPrices"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer --->
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                    <small class="text-muted">Philippine Rice Research Institute.</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>State of the Rice Sector</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Rice Production</a></li>
+                        <li><a class="text-muted" href="#">Area Harvested</a></li>
+                        <li><a class="text-muted" href="#">Yield per Hectare</a></li>
+                        <li><a class="text-muted" href="#">Supply and Utilization</a></li>
+                        <li><a class="text-muted" href="#">Gross Value Added</a></li>
+                        <li><a class="text-muted" href="#">Farmer’s Income</a></li>
+                        <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Rice Farmer Characteristics</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Sociodemographics</a></li>
+                        <li><a class="text-muted" href="#">Farm Details</a></li>
+                        <li><a class="text-muted" href="#">Technology Awareness</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>RCEF Updates</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Inbred Seeds</a></li>
+                        <li><a class="text-muted" href="#">Machineries</a></li>
+                        <li><a class="text-muted" href="#">Extension</a></li>
+                        <li><a class="text-muted" href="#">Credit</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+    {% endblock content %}
+    {% block script %}
+    <script>
+        Chart.defaults.global.responsive = true;
+        Chart.defaults.global.tooltips.mode = 'index';
+        Chart.defaults.global.tooltips.intersect = false;
+        Chart.defaults.global.defaultFontFamily = 'Poppins';
+        Chart.defaults.global.defaultFontSize = 13;
+        Chart.defaults.global.animation.duration = 3000;
+
+        // CHART 1
+
+        var dbFarmPrices = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"7.50"},{"location_name":"Philippines","year":"2001","value":"7.90"},{"location_name":"Philippines","year":"2002","value":"8.33"},{"location_name":"Philippines","year":"2003","value":"8.56"},{"location_name":"Philippines","year":"2004","value":"9.17"},{"location_name":"Philippines","year":"2005","value":"10.07"},{"location_name":"Philippines","year":"2006","value":"10.46"},{"location_name":"Philippines","year":"2007","value":"11.22"},{"location_name":"Philippines","year":"2008","value":"14.13"},{"location_name":"Philippines","year":"2009","value":"14.67"},{"location_name":"Philippines","year":"2010","value":"14.87"},{"location_name":"Philippines","year":"2011","value":"15.16"},{"location_name":"Philippines","year":"2012","value":"16.22"},{"location_name":"Philippines","year":"2013","value":"16.93"},{"location_name":"Philippines","year":"2014","value":"20.07"},{"location_name":"Philippines","year":"2015","value":"17.33"},{"location_name":"Philippines","year":"2016","value":"17.43"},{"location_name":"Philippines","year":"2017","value":"18.21"},{"location_name":"Philippines","year":"2018","value":"20.40"},{"location_name":"Philippines","year":"2019","value":"16.47"},{"location_name":"Philippines","year":"2020","value":"16.72"}]');
+        var dbFarmPricesR = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"13.22"},{"location_name":"Philippines","year":"2001","value":"13.74"},{"location_name":"Philippines","year":"2002","value":"14.15"},{"location_name":"Philippines","year":"2003","value":"14.37"},{"location_name":"Philippines","year":"2004","value":"15.03"},{"location_name":"Philippines","year":"2005","value":"15.47"},{"location_name":"Philippines","year":"2006","value":"15.45"},{"location_name":"Philippines","year":"2007","value":"16.04"},{"location_name":"Philippines","year":"2008","value":"16.54"},{"location_name":"Philippines","year":"2009","value":"15.93"},{"location_name":"Philippines","year":"2010","value":"15.63"},{"location_name":"Philippines","year":"2011","value":"15.29"},{"location_name":"Philippines","year":"2012","value":"16.22"},{"location_name":"Philippines","year":"2013","value":"16.34"},{"location_name":"Philippines","year":"2014","value":"17.45"},{"location_name":"Philippines","year":"2015","value":"15.02"},{"location_name":"Philippines","year":"2016","value":"15.18"},{"location_name":"Philippines","year":"2017","value":"15.71"},{"location_name":"Philippines","year":"2018","value":"16.65"},{"location_name":"Philippines","year":"2019","value":"13.86"},{"location_name":"Philippines","year":"2020","value":"14.45"}]');
+
+        let years = [];
+        let values_n_prices = [];
+        let values_r_prices = [];
+
+        try {
+            dbFarmPrices.map((item) => {
+                years.push(item.year);
+                values_n_prices.push(item.value);
+            });
+            dbFarmPricesR.map((item) => {
+                values_r_prices.push(item.value);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+        var farmPrices = document.getElementById('ctxFarmPrices').getContext('2d');
+        var tempFarmLabels = [...years];
+        var farmPriceData = [...values_n_prices];
+        var farmPriceReal = [...values_r_prices];
+        var farmPricesChart = new Chart(farmPrices, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: tempFarmLabels,
+                datasets: [{
+                    label: 'Nominal price',
+                    backgroundColor: '#A6CEE3', // COLOR 1
+                    borderColor: '#A6CEE3', // COLOR 1
+                    lineTension: 0,
+                    fill: false,
+                    data: farmPriceData
+                }, {
+                    label: 'Real price (2012=100)',
+                    backgroundColor: '#007FFE', // COLOR 2
+                    borderColor: '#007FFE', // COLOR 2
+                    lineTension: 0,
+                    fill: false,
+                    data: farmPriceReal
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                aspectRatio: 2.2,
+                elements: {
+                    point: {
+                        radius: 2
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)"
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            suggestedMin: 0,
+                        }
+                    }]
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+
+        // CHART 2
+
+        var dbWPrice = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"15.91"},{"location_name":"Philippines","year":"2001","value":"15.99"},{"location_name":"Philippines","year":"2002","value":"16.53"},{"location_name":"Philippines","year":"2003","value":"16.51"},{"location_name":"Philippines","year":"2004","value":"17.30"},{"location_name":"Philippines","year":"2005","value":"19.14"},{"location_name":"Philippines","year":"2006","value":"19.49"},{"location_name":"Philippines","year":"2007","value":"20.66"},{"location_name":"Philippines","year":"2008","value":"27.12"},{"location_name":"Philippines","year":"2009","value":"28.26"},{"location_name":"Philippines","year":"2010","value":"28.46"},{"location_name":"Philippines","year":"2011","value":"29.15"},{"location_name":"Philippines","year":"2012","value":"30.04"},{"location_name":"Philippines","year":"2013","value":"31.56"},{"location_name":"Philippines","year":"2014","value":"36.78"},{"location_name":"Philippines","year":"2015","value":"34.46"},{"location_name":"Philippines","year":"2016","value":"33.69"},{"location_name":"Philippines","year":"2017","value":"35.13"},{"location_name":"Philippines","year":"2018","value":"38.44"},{"location_name":"Philippines","year":"2019","value":"34.43"},{"location_name":"Philippines","year":"2020","value":"33.94"}]');
+        var dbWPricesS = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"17.77"},{"location_name":"Philippines","year":"2001","value":"17.61"},{"location_name":"Philippines","year":"2002","value":"18.21"},{"location_name":"Philippines","year":"2003","value":"18.30"},{"location_name":"Philippines","year":"2004","value":"19.12"},{"location_name":"Philippines","year":"2005","value":"20.93"},{"location_name":"Philippines","year":"2006","value":"21.39"},{"location_name":"Philippines","year":"2007","value":"22.59"},{"location_name":"Philippines","year":"2008","value":"29.81"},{"location_name":"Philippines","year":"2009","value":"31.17"},{"location_name":"Philippines","year":"2010","value":"31.46"},{"location_name":"Philippines","year":"2011","value":"32.06"},{"location_name":"Philippines","year":"2012","value":"32.82"},{"location_name":"Philippines","year":"2013","value":"34.49"},{"location_name":"Philippines","year":"2014","value":"39.51"},{"location_name":"Philippines","year":"2015","value":"45.16"},{"location_name":"Philippines","year":"2016","value":"37.83"},{"location_name":"Philippines","year":"2017","value":"38.83"},{"location_name":"Philippines","year":"2018","value":"49.12"},{"location_name":"Philippines","year":"2019","value":"38.85"},{"location_name":"Philippines","year":"2020","value":"37.65"}]');
+
+        let years_w = [];
+        let values_rm_prices = [];
+        let values_w_prices = [];
+
+        try {
+            dbWPrice.map((item) => {
+                years_w.push(item.year);
+                values_rm_prices.push(item.value);
+            });
+            dbWPricesS.map((item) => {
+                values_w_prices.push(item.value);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+        var wholesalePrices = document.getElementById('ctxWholesalePrices').getContext('2d');
+        var tempWLabels = [...years_w];
+        var wPriceData = [...values_rm_prices];
+        var wPriceSp = [...values_w_prices];
+        var wholesalePricesChart = new Chart(wholesalePrices, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: tempWLabels,
+                datasets: [{
+                    label: 'Regular milled rice',
+                    backgroundColor: '#007FFE', // COLOR 1
+                    borderColor: '#007FFE', // COLOR 1
+                    lineTension: 0,
+                    fill: false,
+                    data: wPriceData
+                }, {
+                    label: 'Well milled rice',
+                    backgroundColor: '#A6CEE3', // COLOR 2
+                    borderColor: '#A6CEE3', // COLOR 2
+                    lineTension: 0,
+                    fill: false,
+                    data: wPriceSp
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                aspectRatio: 2.2,
+                elements: {
+                    point: {
+                        radius: 2
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)"
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            suggestedMin: 0,
+                        }
+                    }]
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+
+        // CHART 3
+
+        var dbRTPrice = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"17.59"},{"location_name":"Philippines","year":"2001","value":"17.54"},{"location_name":"Philippines","year":"2002","value":"18.00"},{"location_name":"Philippines","year":"2003","value":"17.95"},{"location_name":"Philippines","year":"2004","value":"18.71"},{"location_name":"Philippines","year":"2005","value":"20.73"},{"location_name":"Philippines","year":"2006","value":"21.28"},{"location_name":"Philippines","year":"2007","value":"22.39"},{"location_name":"Philippines","year":"2008","value":"29.38"},{"location_name":"Philippines","year":"2009","value":"30.69"},{"location_name":"Philippines","year":"2010","value":"30.84"},{"location_name":"Philippines","year":"2011","value":"31.31"},{"location_name":"Philippines","year":"2012","value":"32.08"},{"location_name":"Philippines","year":"2013","value":"33.70"},{"location_name":"Philippines","year":"2014","value":"38.93"},{"location_name":"Philippines","year":"2015","value":"37.06"},{"location_name":"Philippines","year":"2016","value":"36.67"},{"location_name":"Philippines","year":"2017","value":"37.62"},{"location_name":"Philippines","year":"2018","value":"40.75"},{"location_name":"Philippines","year":"2019","value":"37.89"},{"location_name":"Philippines","year":"2020","value":"36.93"}]');
+        var dbRTPricesS = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"19.45"},{"location_name":"Philippines","year":"2001","value":"19.43"},{"location_name":"Philippines","year":"2002","value":"19.98"},{"location_name":"Philippines","year":"2003","value":"20.20"},{"location_name":"Philippines","year":"2004","value":"21.04"},{"location_name":"Philippines","year":"2005","value":"22.88"},{"location_name":"Philippines","year":"2006","value":"23.56"},{"location_name":"Philippines","year":"2007","value":"24.72"},{"location_name":"Philippines","year":"2008","value":"32.71"},{"location_name":"Philippines","year":"2009","value":"34.12"},{"location_name":"Philippines","year":"2010","value":"34.34"},{"location_name":"Philippines","year":"2011","value":"34.73"},{"location_name":"Philippines","year":"2012","value":"35.30"},{"location_name":"Philippines","year":"2013","value":"36.87"},{"location_name":"Philippines","year":"2014","value":"42.32"},{"location_name":"Philippines","year":"2015","value":"50.76"},{"location_name":"Philippines","year":"2016","value":"41.72"},{"location_name":"Philippines","year":"2017","value":"41.88"},{"location_name":"Philippines","year":"2018","value":"54.23"},{"location_name":"Philippines","year":"2019","value":"42.73"},{"location_name":"Philippines","year":"2020","value":"41.67"}]');
+
+        let years_r = [];
+        let values_rr_prices = [];
+        let values_wr_prices = [];
+
+        try {
+            dbRTPrice.map((item) => {
+                years_r.push(item.year);
+                values_rr_prices.push(item.value);
+            });
+            dbRTPricesS.map((item) => {
+                values_wr_prices.push(item.value);
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+        var retailPrices = document.getElementById('ctxRetailPrices').getContext('2d');
+        var tempRLabels = [...years_r];
+        var rPriceData = [...values_rr_prices];
+        var rPriceSp = [...values_wr_prices];
+        var retailPricesChart = new Chart(retailPrices, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: tempWLabels,
+                datasets: [{
+                    label: 'Regular milled rice',
+                    backgroundColor: '#007FFE', // COLOR 1
+                    borderColor: '#007FFE', // COLOR 1
+                    lineTension: 0,
+                    fill: false,
+                    data: rPriceData
+                }, {
+                    label: 'Well milled rice',
+                    backgroundColor: '#A6CEE3', // COLOR 2
+                    borderColor: '#A6CEE3', // COLOR 2
+                    lineTension: 0,
+                    fill: false,
+                    data: rPriceSp
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                aspectRatio: 2.2,
+                elements: {
+                    point: {
+                        radius: 2
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)"
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            suggestedMin: 0,
+                        }
+                    }]
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+
+    </script>
+{% endblock script %}
