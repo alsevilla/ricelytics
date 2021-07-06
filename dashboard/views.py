@@ -9,6 +9,16 @@ def index(request):
                 'searchbartype': searchbartype,}
     return render(request, 'index.html', context)
 
+#Profile
+def profile(request):
+    title = 'State of the Rice Sector in the Philippines'
+    searchbartype = '1'
+    context = { 'title': title,
+                'searchbartype': searchbartype,}
+    return render(request, 'profile.html', context)
+
+#rcep
+
 # rice productions
 def riceproduction(request):
     title = 'Rice Production'

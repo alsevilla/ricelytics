@@ -18,9 +18,9 @@
     {% if searchbartype == '1'%}
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="btn btn-secondary mr-2 text-white" href="#" role="button"><i class="bi bi-list"></i></a>
-        <a class="btn btn-warning mr-2 text-white" href="" role="button"><i class="bi bi-tags-fill"></i> Industry</a>
-        <a class="btn btn-warning mr-2 text-white" href="profile.html" role="button"><i class="bi bi-person-fill"></i> Farmer</a>
-        <a class="btn btn-warning mr-2 text-white" href="rcep" role="button"><i class="bi bi-info-square"></i> RCEP</a>
+        <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-tags-fill"></i> Industry</a>
+        <a class="btn btn-warning mr-2 text-white" href="{% url 'Profile' %}" role="button"><i class="bi bi-person-fill"></i> Farmer</a>
+        <a class="btn btn-warning mr-2 text-white" href="#" role="button"><i class="bi bi-info-square"></i> RCEP</a>
         <div class="dropdown mr-2">
             <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Region
@@ -71,8 +71,8 @@
     {% block script %}
 
     {% endblock%}
-    <script type="text/javascript" src="js/chartjs-plugin-labels.min.js"></script>
-    <script type="text/javascript" src="js/chartjs-plugin-annotation.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/chartjs-plugin-labels.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/chartjs-plugin-annotation.min.js' %}"></script>
     {% block scriptChart%}
 
     {% endblock %}
