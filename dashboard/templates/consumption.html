@@ -1,18 +1,16 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<!-- Header --->
-<div class="jumbotron text-center">
-    <div class="jumbotron-content">
-        <h2>State of the Rice Sector in the Philippines</h2>
-        <h1>Rice Consumption</h1>
-        <p class="lead">Nostrum et aut alias aut ea distinctio accusamus. Ea dolores expedita autem eius. <br />Voluptatibus fuga nulla quia et.</p>
-    </div>
-</div>
-
 <!-- Body -->
-
 <div class="sublevel container">
+    <!-- Header --->
+    <div class="jumbotron">
+        <div class="jumbotron-content text-center">
+            <h2>State of the Rice Sector in the Philippines</h2>
+            <h1>Rice Consumption</h1>
+            <p class="lead">Nostrum et aut alias aut ea distinctio accusamus. Ea dolores expedita autem eius. <br />Voluptatibus fuga nulla quia et.</p>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <div class="card-deck mb-2 text-center">
@@ -65,8 +63,8 @@
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Local production and net food disposable (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in thousand tons ('000) (PSA, 2020)</p>
+                    <h5 class="my-0 p-2">Local production, net food disposable and population (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in thousand tons ('000), population in millions (PSA, 2020)</p>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxProdFood"></canvas></div>
@@ -116,6 +114,7 @@
 </div>
 {% endblock content %}
 {% block script %}
+<script type="text/javascript" src="js/chartjs-plugin-labels.min.js"></script>
 <script>
     Chart.defaults.global.responsive = true;
     Chart.defaults.global.tooltips.mode = 'index';
@@ -130,6 +129,7 @@
     var dbUseAccounts = JSON.parse('[{"location_name":"Philippines","year":"2000","UTExports":"0.00","UTSeeds":"198.00","UTFeedsWaste":"527.00","UTProcessing":"324.00","UTEndingStocks":"2166.00","uttotalnet":"7892.00"},{"location_name":"Philippines","year":"2001","UTExports":"0.00","UTSeeds":"199.00","UTFeedsWaste":"551.00","UTProcessing":"339.00","UTEndingStocks":"2271.00","uttotalnet":"8086.00"},{"location_name":"Philippines","year":"2002","UTExports":"0.00","UTSeeds":"198.00","UTFeedsWaste":"564.00","UTProcessing":"347.00","UTEndingStocks":"2448.00","uttotalnet":"8589.00"},{"location_name":"Philippines","year":"2003","UTExports":"0.00","UTSeeds":"197.00","UTFeedsWaste":"574.00","UTProcessing":"353.00","UTEndingStocks":"2362.00","uttotalnet":"8677.00"},{"location_name":"Philippines","year":"2004","UTExports":"0.00","UTSeeds":"202.00","UTFeedsWaste":"616.00","UTProcessing":"379.00","UTEndingStocks":"2051.00","uttotalnet":"9596.00"},{"location_name":"Philippines","year":"2005","UTExports":"0.00","UTSeeds":"200.00","UTFeedsWaste":"621.00","UTProcessing":"382.00","UTEndingStocks":"2094.00","uttotalnet":"10126.00"},{"location_name":"Philippines","year":"2006","UTExports":"0.00","UTSeeds":"204.00","UTFeedsWaste":"652.00","UTProcessing":"401.00","UTEndingStocks":"2253.00","uttotalnet":"10324.00"},{"location_name":"Philippines","year":"2007","UTExports":"0.00","UTSeeds":"210.00","UTFeedsWaste":"690.00","UTProcessing":"425.00","UTEndingStocks":"2172.00","uttotalnet":"11183.00"},{"location_name":"Philippines","year":"2008","UTExports":"1.00","UTSeeds":"219.00","UTFeedsWaste":"715.00","UTProcessing":"440.00","UTEndingStocks":"2639.00","uttotalnet":"11587.00"},{"location_name":"Philippines","year":"2009","UTExports":"0.00","UTSeeds":"222.00","UTFeedsWaste":"691.00","UTProcessing":"425.00","UTEndingStocks":"2629.00","uttotalnet":"11060.00"},{"location_name":"Philippines","year":"2010","UTExports":"0.00","UTSeeds":"214.00","UTFeedsWaste":"670.00","UTProcessing":"413.00","UTEndingStocks":"3424.00","uttotalnet":"10601.00"},{"location_name":"Philippines","year":"2011","UTExports":"0.00","UTSeeds":"223.00","UTFeedsWaste":"709.00","UTProcessing":"436.00","UTEndingStocks":"2631.00","uttotalnet":"11043.00"},{"location_name":"Philippines","year":"2012","UTExports":"0.00","UTSeeds":"230.00","UTFeedsWaste":"767.00","UTProcessing":"472.00","UTEndingStocks":"2524.00","uttotalnet":"11472.00"},{"location_name":"Philippines","year":"2013","UTExports":"2.00","UTSeeds":"233.00","UTFeedsWaste":"784.00","UTProcessing":"482.00","UTEndingStocks":"2126.00","uttotalnet":"11354.00"},{"location_name":"Philippines","year":"2014","UTExports":"1.00","UTSeeds":"232.00","UTFeedsWaste":"806.00","UTProcessing":"496.00","UTEndingStocks":"2662.00","uttotalnet":"11421.00"},{"location_name":"Philippines","year":"2015","UTExports":"0.00","UTSeeds":"228.00","UTFeedsWaste":"772.00","UTProcessing":"475.00","UTEndingStocks":"3199.00","uttotalnet":"11336.00"},{"location_name":"Philippines","year":"2016","UTExports":"0.00","UTSeeds":"223.00","UTFeedsWaste":"749.00","UTProcessing":"461.00","UTEndingStocks":"2765.00","uttotalnet":"11134.00"},{"location_name":"Philippines","year":"2017","UTExports":"0.00","UTSeeds":"236.00","UTFeedsWaste":"819.00","UTProcessing":"504.00","UTEndingStocks":"2290.00","uttotalnet":"12408.00"},{"location_name":"Philippines","year":"2018","UTExports":"0.00","UTSeeds":"235.00","UTFeedsWaste":"810.00","UTProcessing":"499.00","UTEndingStocks":"2551.00","uttotalnet":"12666.00"},{"location_name":"Philippines","year":"2019","UTExports":"0.00","UTSeeds":"228.00","UTFeedsWaste":"800.00","UTProcessing":"492.00","UTEndingStocks":"2675.00","uttotalnet":"13779.00"}]');
     var dbPerCapitas = JSON.parse('[{"location_name":"Philippines","year":"2000","KgPerYear":"103.16","GmPerDay":"282.62"},{"location_name":"Philippines","year":"2001","KgPerYear":"103.77","GmPerDay":"284.30"},{"location_name":"Philippines","year":"2002","KgPerYear":"108.02","GmPerDay":"295.95"},{"location_name":"Philippines","year":"2003","KgPerYear":"107.02","GmPerDay":"293.21"},{"location_name":"Philippines","year":"2004","KgPerYear":"116.07","GmPerDay":"318.01"},{"location_name":"Philippines","year":"2005","KgPerYear":"118.81","GmPerDay":"325.50"},{"location_name":"Philippines","year":"2006","KgPerYear":"118.71","GmPerDay":"325.22"},{"location_name":"Philippines","year":"2007","KgPerYear":"126.26","GmPerDay":"345.91"},{"location_name":"Philippines","year":"2008","KgPerYear":"128.10","GmPerDay":"350.97"},{"location_name":"Philippines","year":"2009","KgPerYear":"121.51","GmPerDay":"332.89"},{"location_name":"Philippines","year":"2010","KgPerYear":"113.83","GmPerDay":"311.86"},{"location_name":"Philippines","year":"2011","KgPerYear":"116.46","GmPerDay":"319.07"},{"location_name":"Philippines","year":"2012","KgPerYear":"118.88","GmPerDay":"325.69"},{"location_name":"Philippines","year":"2013","KgPerYear":"115.63","GmPerDay":"316.79"},{"location_name":"Philippines","year":"2014","KgPerYear":"114.34","GmPerDay":"313.25"},{"location_name":"Philippines","year":"2015","KgPerYear":"111.62","GmPerDay":"305.81"},{"location_name":"Philippines","year":"2016","KgPerYear":"107.83","GmPerDay":"295.43"},{"location_name":"Philippines","year":"2017","KgPerYear":"119.10","GmPerDay":"326.31"},{"location_name":"Philippines","year":"2018","KgPerYear":"119.76","GmPerDay":"328.11"},{"location_name":"Philippines","year":"2019","KgPerYear":"128.43","GmPerDay":"351.85"}]');
     var dbPerCapitasFNRI = JSON.parse('[{"location_name":"Philippines","year":"2000","KgPerYear":"105.77","GmPerDay":"289.78"},{"location_name":"Philippines","year":"2009","KgPerYear":"119.08","GmPerDay":"326.25"},{"location_name":"Philippines","year":"2012","KgPerYear":"114.27","GmPerDay":"313.05"},{"location_name":"Philippines","year":"2016","KgPerYear":"109.88","GmPerDay":"301.03"}]');
+    var dbPopulation = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"76.95"},{"location_name":"Philippines","year":"2001","value":"78.57"},{"location_name":"Philippines","year":"2002","value":"80.22"},{"location_name":"Philippines","year":"2003","value":"81.88"},{"location_name":"Philippines","year":"2004","value":"83.56"},{"location_name":"Philippines","year":"2005","value":"85.26"},{"location_name":"Philippines","year":"2006","value":"86.97"},{"location_name":"Philippines","year":"2007","value":"88.71"},{"location_name":"Philippines","year":"2008","value":"90.46"},{"location_name":"Philippines","year":"2009","value":"92.23"},{"location_name":"Philippines","year":"2010","value":"93.14"},{"location_name":"Philippines","year":"2011","value":"94.82"},{"location_name":"Philippines","year":"2012","value":"96.51"},{"location_name":"Philippines","year":"2013","value":"98.20"},{"location_name":"Philippines","year":"2014","value":"99.88"},{"location_name":"Philippines","year":"2015","value":"100.83"},{"location_name":"Philippines","year":"2016","value":"102.53"},{"location_name":"Philippines","year":"2017","value":"104.17"},{"location_name":"Philippines","year":"2018","value":"105.76"},{"location_name":"Philippines","year":"2019","value":"107.29"}]');
 
     var curStocks = '2551.00';
     var curProduce = '12305.00';
@@ -158,6 +158,7 @@
     let gmpercapita = [];
     let kgpercapita_act = [];
     let gmpercapita_act = [];
+    let population = [];
 
     try {
         dbSupplySources.map((item) => {
@@ -173,6 +174,9 @@
             processing.push(item.UTProcessing);
             endstocks.push(item.UTEndingStocks);
             food.push(item.uttotalnet);
+        });
+        dbPopulation.map((item) => {
+            population.push(item.value);
         });
         dbPerCapitas.map((item) => {
             kgpercapita.push(item.KgPerYear);
@@ -195,6 +199,7 @@
     var totalGmCapita = [...gmpercapita];
     var totalKgCapitaAct = [...kgpercapita_act];
     var totalGmCapitaAct = [...gmpercapita_act];
+    var populationPH = [...population];
 
 
 
@@ -207,25 +212,35 @@
 
     var ProdFoodChart = new Chart(ProdFood, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
             labels: yearsLab,
             datasets: [{
+                type: 'line',
                 label: 'Local Production',
                 backgroundColor: '#A6CEE3', // COLOR 1
                 borderColor: '#A6CEE3', // COLOR 1
                 lineTension: 0,
                 fill: false,
-                data: totalProduce
+                data: totalProduce,
+                yAxisID: 'A'
             }, {
+                type: 'line',
                 label: 'Net Food Disposable',
                 backgroundColor: '#007FFE', // COLOR 2
                 borderColor: '#007FFE', // COLOR 2
                 lineTension: 0,
                 fill: false,
-                data: totalFood
+                data: totalFood,
+                yAxisID: 'A'
+            }, {
+                label: 'Population (in Million)',
+                backgroundColor: '#2138B7', // COLOR 2
+                borderColor: '#2138B7', // COLOR 2
+                data: populationPH,
+                yAxisID: 'B'
             }]
         },
 
@@ -245,14 +260,20 @@
                     }
                 }],
                 yAxes: [{
-                    display: true,
-                    ticks: {
-                        suggestedMin: 0,
-                    }
+                    id: 'A',
+                    type: 'linear',
+                    position: 'left',
+                }, {
+                    id: 'B',
+                    type: 'linear',
+                    position: 'right',
                 }]
             },
             legend: {
                 position: 'bottom'
+            },
+            plugins: {
+                labels: false
             }
         }
     });

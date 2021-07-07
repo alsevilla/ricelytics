@@ -17,8 +17,6 @@ def profile(request):
                 'searchbartype': searchbartype,}
     return render(request, 'profile.html', context)
 
-#rcep
-
 # rice productions
 def riceproduction(request):
     title = 'Rice Production'

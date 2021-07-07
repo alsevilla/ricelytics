@@ -13,14 +13,49 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css" />
   </head>
   <body>
-
     <!-- Navigation --->
+    <div class="menu-bar">
+      <div class="back-button text-center">
+        <a class="btn btn-lg text-white" role="button"><i class="bi bi-list"></i></a>
+      </div>
+      <div class="show-content">
+        <a class="btn btn-lg text-white" role="button"><i class="bi bi-chevron-left"></i></a>
+        <img class="pt-4 pd-4"src="{% static 'assets/Ricelytics Logo - White Orange.png' %}" alt="">
+        <div class="ml-4 mr-4 mt-5 pb-4">
+          <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="text-center">
+          <div class="menu-bar-title pb-4 pt-4 ">
+              <h2 class="active-title">RICE INDUSTRY</h2>
+          </div>
+          <div class="menu-bar-title pb-4 pt-4 ">
+            <h2>RICE FARMER</h2>
+          </div>
+          <div class="menu-bar-title pb-4 pt-4 ">
+            <h2>CASE STUDIES</h2>
+          </div>
+        </div>
+        <br><br><br>
+        <div class="menu-bar-contact mt-5 ml-3 pl-4">
+          <h5 class="active-title">Contact Us</h5>
+          <div class="row">
+            <div class="col-7 text-white">
+              <i class="bi bi-facebook"></i><span class="p-small">&nbsp; &nbsp;/PhilRice RiceLytics </span>
+              <br><br>
+              <i class="bi bi-envelope-fill"></i><span class="p-small">&nbsp; &nbsp;ricelytics@philrice.gov.ph</span>
+            </div>
+            <div class="col-5 text-white">
+              <i class="bi bi-twitter"></i><span class="p-small">&nbsp; &nbsp;@RiceLytics</span>
+              <br><br>
+              <i class="bi bi-telephone-fill"></i> <span class="p-small">&nbsp; &nbsp;0917-111-7423</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     {% if searchbartype == '1'%}
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="btn btn-secondary mr-2 text-white" href="#" role="button"><i class="bi bi-list"></i></a>
-        <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-tags-fill"></i> Industry</a>
-        <a class="btn btn-warning mr-2 text-white" href="{% url 'Profile' %}" role="button"><i class="bi bi-person-fill"></i> Farmer</a>
-        <a class="btn btn-warning mr-2 text-white" href="#" role="button"><i class="bi bi-info-square"></i> RCEP</a>
+    <nav class="navbar ml-5 pl-5 navbar-expand-lg navbar-light">
+        <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-house-fill"></i> National</a>
         <div class="dropdown mr-2">
             <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Region
@@ -54,12 +89,16 @@
         <a class="btn btn-info rounded-pill mr-2" href="#" role="button">Get Data</a>
         <a class="btn border-info rounded-pill btn-light mr-2 text-info" href="#" role="button">Clear Filter</a>
     </nav>
-
     {% else %}
     <!-- Navigation --->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="btn btn-secondary mr-2 text-white" href="" role="button"><i class="bi bi-list"></i></a>
+    <nav class="navbar ml-5 pl-5 navbar-expand-lg navbar-dark justify-content-between">
+      <div>
         <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage'%}" role="button"><i class="bi bi-caret-left"></i> Back to Main</a>
+      </div>
+      <div>
+        <a class="btn" href="#"><i class="bi bi-box-arrow-in-down"></i></a>
+        <a class="btn" href="#"><i class="bi bi-printer-fill"></i>  </ion-icon></a>
+      </div>
     </nav>
     {% endif %}
     {% block content %}
@@ -71,10 +110,7 @@
     {% block script %}
 
     {% endblock%}
-    <script type="text/javascript" src="{% static 'js/chartjs-plugin-labels.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/chartjs-plugin-annotation.min.js' %}"></script>
-    {% block scriptChart%}
 
-    {% endblock %}
+
   </body>
 </html>

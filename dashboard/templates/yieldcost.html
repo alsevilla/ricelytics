@@ -1,17 +1,16 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<!-- Header --->
-<div class="jumbotron text-center">
-    <div class="jumbotron-content">
-        <h2>State of the Rice Sector in the Philippines</h2>
-        <h1>Yield and Production Cost</h1>
-        <p class="lead">Comparison of provincial average yield and production hectare using the <br />Rice Based Farm Household Survey, 2016-2017</p>
-    </div>
-</div>
-
 <!-- Body -->
 <div class="sublevel container">
+    <!-- Header --->
+    <div class="jumbotron">
+        <div class="jumbotron-content text-center">
+            <h2>State of the Rice Sector in the Philippines</h2>
+            <h1>Yield and Production Cost</h1>
+            <p class="lead">Comparison of provincial average yield and production hectare using the <br />Rice Based Farm Household Survey, 2016-2017</p>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <div class="card-deck mb-2 text-center">
@@ -115,9 +114,8 @@
 </div>
 {% endblock content %}
 {% block script %}
-{% endblock script %}
-{% block scriptChart %}
-
+<script type="text/javascript" src="{% static 'js/chartjs-plugin-labels.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/chartjs-plugin-annotation.min.js' %}"></script>
 <script>
     Chart.defaults.global.responsive = true;
     Chart.defaults.global.tooltips.mode = 'index';
@@ -493,13 +491,11 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        reverse: true,
                         min: 10
                     }
                 }],
                 xAxes: [{
                     ticks: {
-                        //                              reverse: true,
                         min: 1,
                         max: 7
                     }
@@ -541,4 +537,4 @@
     });
 
 </script>
-{% endblock scriptChart %}
+{% endblock script %}
