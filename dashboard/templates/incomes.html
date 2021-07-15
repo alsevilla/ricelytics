@@ -7,7 +7,7 @@
     <div class="jumbotron ">
         <div class="jumbotron-content text-center">
             <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>Farmer's Income</h1>
+            <h1>{{ title }}</h1>
             <p class="lead">Total costs, gross and net returns of paddy rice production, 2000-2019</p>
         </div>
     </div>
@@ -16,8 +16,8 @@
             <div class="card-deck mb-2 text-center">
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Gross Returns (2019)</h5>
-                        <h2 class="card-text font-weight-bold">PhP 66,539<i class="bi bi-caret-down-fill"></i></h2>
+                        <h5 class="card-title p-2">Gross Returns ({{ gr_year }})</h5>
+                        <h2 class="card-text font-weight-bold">PhP {{ gr_price }}<i class="bi bi-caret-down-fill"></i></h2>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                             <p class="text-white">per hectare</p>
                         </div>
@@ -26,8 +26,8 @@
                 </div>
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Net Returns (2019)</h5>
-                        <h2 class="card-text font-weight-bold">PhP 21,237<i class="bi bi-caret-down-fill"></i></h2>
+                        <h5 class="card-title p-2">Net Returns ({{ nr_year }})</h5>
+                        <h2 class="card-text font-weight-bold">PhP {{ nr_price }}<i class="bi bi-caret-down-fill"></i></h2>
                         <div class="card-note w-50 mx-auto rounded-pill">
                             <p class="text-dark">per hectare</p>
                         </div>
@@ -36,8 +36,8 @@
                 </div>
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Production Costs (2019)</h5>
-                        <h2 class="card-text font-weight-bold">PhP 45,302<i class="bi bi-caret-down-fill"></i></h2>
+                        <h5 class="card-title p-2">Production Costs ({{ pc_year }})</h5>
+                        <h2 class="card-text font-weight-bold">PhP {{ pc_price }}<i class="bi bi-caret-down-fill"></i></h2>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                             <p class="text-white">per hectare</p>
                         </div>
@@ -119,8 +119,7 @@
     Chart.defaults.global.defaultFontSize = 13;
     Chart.defaults.global.animation.duration = 3000;
 
-    var dbNetReturns = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"1567.42"},{"location_name":"Philippines","year":"2001","value":"3051.38"},{"location_name":"Philippines","year":"2002","value":"5416.75"},{"location_name":"Philippines","year":"2003","value":"5844.80"},{"location_name":"Philippines","year":"2004","value":"6930.70"},{"location_name":"Philippines","year":"2005","value":"8226.30"},{"location_name":"Philippines","year":"2006","value":"9975.40"},{"location_name":"Philippines","year":"2007","value":"11943.80"},{"location_name":"Philippines","year":"2008","value":"16073.10"},{"location_name":"Philippines","year":"2009","value":"15316.05"},{"location_name":"Philippines","year":"2010","value":"14603.75"},{"location_name":"Philippines","year":"2011","value":"14761.40"},{"location_name":"Philippines","year":"2012","value":"19972.00"},{"location_name":"Philippines","year":"2013","value":"23712.05"},{"location_name":"Philippines","year":"2014","value":"31596.00"},{"location_name":"Philippines","year":"2015","value":"25464.95"},{"location_name":"Philippines","year":"2016","value":"24920.12"},{"location_name":"Philippines","year":"2017","value":"28871.63"},{"location_name":"Philippines","year":"2018","value":"33619.09"},{"location_name":"Philippines","year":"2019","value":"21236.80"}]');
-
+    var dbNetReturns ={{ anrData|safe }};
     let years_net = [];
     let values_net = [];
 
@@ -133,8 +132,7 @@
         console.log(error);
     }
 
-    var dbGrossReturns = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"23062.50"},{"location_name":"Philippines","year":"2001","value":"25201.00"},{"location_name":"Philippines","year":"2002","value":"27280.75"},{"location_name":"Philippines","year":"2003","value":"28718.80"},{"location_name":"Philippines","year":"2004","value":"32186.70"},{"location_name":"Philippines","year":"2005","value":"36151.30"},{"location_name":"Philippines","year":"2006","value":"38597.40"},{"location_name":"Philippines","year":"2007","value":"42523.80"},{"location_name":"Philippines","year":"2008","value":"53270.10"},{"location_name":"Philippines","year":"2009","value":"53032.05"},{"location_name":"Philippines","year":"2010","value":"53903.75"},{"location_name":"Philippines","year":"2011","value":"55940.40"},{"location_name":"Philippines","year":"2012","value":"62447.00"},{"location_name":"Philippines","year":"2013","value":"65773.05"},{"location_name":"Philippines","year":"2014","value":"80280.00"},{"location_name":"Philippines","year":"2015","value":"67846.95"},{"location_name":"Philippines","year":"2016","value":"67628.40"},{"location_name":"Philippines","year":"2017","value":"73113.15"},{"location_name":"Philippines","year":"2018","value":"81294.00"},{"location_name":"Philippines","year":"2019","value":"66538.80"}]');
-
+    var dbGrossReturns ={{ agrData|safe }};
     let years_gross = [];
     let values_gross = [];
 
@@ -147,8 +145,7 @@
         console.log(error);
     }
 
-    var dbCosts = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"21495.08"},{"location_name":"Philippines","year":"2001","value":"22149.62"},{"location_name":"Philippines","year":"2002","value":"21864.00"},{"location_name":"Philippines","year":"2003","value":"22874.00"},{"location_name":"Philippines","year":"2004","value":"25256.00"},{"location_name":"Philippines","year":"2005","value":"27925.00"},{"location_name":"Philippines","year":"2006","value":"28622.00"},{"location_name":"Philippines","year":"2007","value":"30580.00"},{"location_name":"Philippines","year":"2008","value":"37197.00"},{"location_name":"Philippines","year":"2009","value":"37716.00"},{"location_name":"Philippines","year":"2010","value":"39300.00"},{"location_name":"Philippines","year":"2011","value":"41179.00"},{"location_name":"Philippines","year":"2012","value":"42475.00"},{"location_name":"Philippines","year":"2013","value":"42061.00"},{"location_name":"Philippines","year":"2014","value":"48684.00"},{"location_name":"Philippines","year":"2015","value":"42382.00"},{"location_name":"Philippines","year":"2016","value":"42708.28"},{"location_name":"Philippines","year":"2017","value":"44241.52"},{"location_name":"Philippines","year":"2018","value":"47674.91"},{"location_name":"Philippines","year":"2019","value":"45302.00"}]');
-
+    var dbCosts = {{ acData|safe }};
     let years_costs = [];
     let values_costs = [];
 
@@ -228,8 +225,7 @@
 
     // CHART 2
 
-    var dbRegs = JSON.parse('[{"location_name":"Ilocos Region","year":"2019","costs":"62659","net":"17261"},{"location_name":"CAR","year":"2019","costs":"48098","net":"15786"},{"location_name":"Cagayan Valley","year":"2019","costs":"60353","net":"13377"},{"location_name":"Central Luzon","year":"2019","costs":"56928","net":"23050"},{"location_name":"CALABARZON","year":"2019","costs":"49837","net":"6662"},{"location_name":"MIMAROPA","year":"2019","costs":"55989","net":"12786"},{"location_name":"Bicol Region","year":"2019","costs":"40251","net":"12698"},{"location_name":"Western Visayas","year":"2019","costs":"41760","net":"12886"},{"location_name":"Central Visayas","year":"2019","costs":"49919","net":"3127"},{"location_name":"Eastern Visayas","year":"2019","costs":"44960","net":"16568"},{"location_name":"Zamboanga Peninsula","year":"2019","costs":"50867","net":"22704"},{"location_name":"Northern Mindanao","year":"2019","costs":"54260","net":"29454"},{"location_name":"Davao Region","year":"2019","costs":"61819","net":"15703"},{"location_name":"SOCCSKSARGEN","year":"2019","costs":"44831","net":"12401"},{"location_name":"CARAGA","year":"2019","costs":"41438","net":"7032"},{"location_name":"BARMM","year":"2019","costs":"33517","net":"19659"}]');
-
+    var dbRegs = {{ acnrData|safe }};
     let regions = [];
     let costs = [];
     let netr = [];

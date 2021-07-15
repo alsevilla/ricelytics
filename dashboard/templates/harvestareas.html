@@ -7,7 +7,7 @@
     <div class="jumbotron">
         <div class="jumbotron-content text-center ">
             <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>Area Harvested</h1>
+            <h1>{{title}}</h1>
             <p class="lead">Area harvested to paddy rice (million hectares) for all ecosystems, 2000-2020</p>
         </div>
     </div>
@@ -16,8 +16,8 @@
             <div class="card-deck mb-2 text-center">
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Area Harvested - Irrigated (2020)</h5>
-                        <h1 class="card-text font-weight-bold">3.25<i class="bi bi-caret-down-fill"></i></h1>
+                        <h5 class="card-title p-2">Area Harvested - Irrigated ({{irrigated_year}})</h5>
+                        <h1 class="card-text font-weight-bold">{{ irrigated_value }}<i class="bi bi-caret-down-fill"></i></h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                             <p class="text-white">million hectares</p>
                         </div>
@@ -25,8 +25,8 @@
                 </div>
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Area Harvested (2020)</h5>
-                        <h1 class="card-text font-weight-bold">4.72<i class="bi bi-caret-up-fill"></i></h1>
+                        <h5 class="card-title p-2">Area Harvested ({{all_eco_year}})</h5>
+                        <h1 class="card-text font-weight-bold">{{all_eco_value}}<i class="bi bi-caret-up-fill"></i></h1>
                         <div class="card-note w-50 mx-auto rounded-pill">
                             <p class="text-dark">million hectares</p>
                         </div>
@@ -34,8 +34,8 @@
                 </div>
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Area Harvested - Rainfed (2020)</h5>
-                        <h1 class="card-text font-weight-bold">1.47<i class="bi bi-caret-up-fill"></i></h1>
+                        <h5 class="card-title p-2">Area Harvested - Rainfed ({{non_irrigated_year}})</h5>
+                        <h1 class="card-text font-weight-bold">{{non_irrigated_value}}<i class="bi bi-caret-up-fill"></i></h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                             <p class="text-white">million hectares</p>
                         </div>
@@ -122,9 +122,9 @@
 
     // CHART 1
 
-    var dbTotal = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"4.04"},{"location_name":"Philippines","year":"2001","value":"4.07"},{"location_name":"Philippines","year":"2002","value":"4.05"},{"location_name":"Philippines","year":"2003","value":"4.01"},{"location_name":"Philippines","year":"2004","value":"4.13"},{"location_name":"Philippines","year":"2005","value":"4.07"},{"location_name":"Philippines","year":"2006","value":"4.16"},{"location_name":"Philippines","year":"2007","value":"4.27"},{"location_name":"Philippines","year":"2008","value":"4.46"},{"location_name":"Philippines","year":"2009","value":"4.53"},{"location_name":"Philippines","year":"2010","value":"4.35"},{"location_name":"Philippines","year":"2011","value":"4.54"},{"location_name":"Philippines","year":"2012","value":"4.69"},{"location_name":"Philippines","year":"2013","value":"4.75"},{"location_name":"Philippines","year":"2014","value":"4.74"},{"location_name":"Philippines","year":"2015","value":"4.66"},{"location_name":"Philippines","year":"2016","value":"4.56"},{"location_name":"Philippines","year":"2017","value":"4.81"},{"location_name":"Philippines","year":"2018","value":"4.80"},{"location_name":"Philippines","year":"2019","value":"4.65"},{"location_name":"Philippines","year":"2020","value":"4.72"}]');
-    var dbIrrigated = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"2.70"},{"location_name":"Philippines","year":"2001","value":"2.73"},{"location_name":"Philippines","year":"2002","value":"2.71"},{"location_name":"Philippines","year":"2003","value":"2.72"},{"location_name":"Philippines","year":"2004","value":"2.79"},{"location_name":"Philippines","year":"2005","value":"2.79"},{"location_name":"Philippines","year":"2006","value":"2.83"},{"location_name":"Philippines","year":"2007","value":"2.92"},{"location_name":"Philippines","year":"2008","value":"3.03"},{"location_name":"Philippines","year":"2009","value":"3.06"},{"location_name":"Philippines","year":"2010","value":"3.01"},{"location_name":"Philippines","year":"2011","value":"3.07"},{"location_name":"Philippines","year":"2012","value":"3.16"},{"location_name":"Philippines","year":"2013","value":"3.24"},{"location_name":"Philippines","year":"2014","value":"3.25"},{"location_name":"Philippines","year":"2015","value":"3.23"},{"location_name":"Philippines","year":"2016","value":"3.18"},{"location_name":"Philippines","year":"2017","value":"3.30"},{"location_name":"Philippines","year":"2018","value":"3.29"},{"location_name":"Philippines","year":"2019","value":"3.26"},{"location_name":"Philippines","year":"2020","value":"3.25"}]');
-    var dbRainfed = JSON.parse('[{"location_name":"Philippines","year":"2000","value":"1.33"},{"location_name":"Philippines","year":"2001","value":"1.34"},{"location_name":"Philippines","year":"2002","value":"1.34"},{"location_name":"Philippines","year":"2003","value":"1.29"},{"location_name":"Philippines","year":"2004","value":"1.33"},{"location_name":"Philippines","year":"2005","value":"1.28"},{"location_name":"Philippines","year":"2006","value":"1.33"},{"location_name":"Philippines","year":"2007","value":"1.36"},{"location_name":"Philippines","year":"2008","value":"1.43"},{"location_name":"Philippines","year":"2009","value":"1.48"},{"location_name":"Philippines","year":"2010","value":"1.35"},{"location_name":"Philippines","year":"2011","value":"1.46"},{"location_name":"Philippines","year":"2012","value":"1.53"},{"location_name":"Philippines","year":"2013","value":"1.51"},{"location_name":"Philippines","year":"2014","value":"1.49"},{"location_name":"Philippines","year":"2015","value":"1.42"},{"location_name":"Philippines","year":"2016","value":"1.37"},{"location_name":"Philippines","year":"2017","value":"1.52"},{"location_name":"Philippines","year":"2018","value":"1.51"},{"location_name":"Philippines","year":"2019","value":"1.39"},{"location_name":"Philippines","year":"2020","value":"1.47"}]');
+    var dbTotal = {{ aeData|safe }} ;
+    var dbIrrigated ={{ iData|safe }} ;
+    var dbRainfed ={{ rfData|safe }} ;
 
     let years = [];
     let values_total = [];
@@ -208,8 +208,7 @@
 
     // CHART 2
 
-    var dbProvs = JSON.parse('[{"location_name":"Nueva Ecija","year":"2020","value":"319331"},{"location_name":"Iloilo","year":"2020","value":"290498"},{"location_name":"Isabela","year":"2020","value":"286929"},{"location_name":"Pangasinan","year":"2020","value":"251537"},{"location_name":"Cagayan","year":"2020","value":"221113"},{"location_name":"Camarines Sur","year":"2020","value":"173024"},{"location_name":"Maguindanao","year":"2020","value":"156424"},{"location_name":"Tarlac","year":"2020","value":"136876"},{"location_name":"North Cotabato","year":"2020","value":"128092"},{"location_name":"Negros Occidental","year":"2020","value":"126422"},{"location_name":"Leyte","year":"2020","value":"112375"},{"location_name":"Sultan Kudarat","year":"2020","value":"109465"},{"location_name":"Capiz","year":"2020","value":"109110"},{"location_name":"Bukidnon","year":"2020","value":"100805"},{"location_name":"Oriental Mindoro","year":"2020","value":"99897"},{"location_name":"Palawan","year":"2020","value":"97215"},{"location_name":"Pampanga","year":"2020","value":"86152"},{"location_name":"Agusan del Sur","year":"2020","value":"85500"},{"location_name":"South Cotabato","year":"2020","value":"84862"},{"location_name":"Bulacan","year":"2020","value":"81387"},{"location_name":"Occidental Mindoro","year":"2020","value":"79430"},{"location_name":"Lanao Del Sur","year":"2020","value":"76097"},{"location_name":"Zamboanga del Sur","year":"2020","value":"72738"},{"location_name":"Antique","year":"2020","value":"71093"},{"location_name":"Ilocos Norte","year":"2020","value":"66213"},{"location_name":"Bohol","year":"2020","value":"65009"},{"location_name":"Western Samar","year":"2020","value":"59697"},{"location_name":"Nueva Vizcaya","year":"2020","value":"56577"},{"location_name":"Albay","year":"2020","value":"53893"},{"location_name":"Quezon","year":"2020","value":"53331"},{"location_name":"Masbate","year":"2020","value":"52661"},{"location_name":"Ilocos Sur","year":"2020","value":"51082"},{"location_name":"Zamboanga Sibugay","year":"2020","value":"43627"},{"location_name":"Lanao Del Norte","year":"2020","value":"40560"},{"location_name":"Northern Samar","year":"2020","value":"40021"},{"location_name":"La Union","year":"2020","value":"38869"},{"location_name":"Aklan","year":"2020","value":"38403"},{"location_name":"Zambales","year":"2020","value":"36000"},{"location_name":"Zamboanga del Norte","year":"2020","value":"34713"},{"location_name":"Sorsogon","year":"2020","value":"33543"},{"location_name":"Davao de Oro","year":"2020","value":"29441"},{"location_name":"Davao del Norte","year":"2020","value":"29071"},{"location_name":"Laguna","year":"2020","value":"28378"},{"location_name":"Bataan","year":"2020","value":"28264"},{"location_name":"Surigao Del Sur","year":"2020","value":"26673"},{"location_name":"Apayao","year":"2020","value":"26011"},{"location_name":"Kalinga","year":"2020","value":"25485"},{"location_name":"Quirino","year":"2020","value":"25019"},{"location_name":"Camarines Norte","year":"2020","value":"24593"},{"location_name":"Davao del Sur","year":"2020","value":"23955"},{"location_name":"Abra","year":"2020","value":"23383"},{"location_name":"Aurora","year":"2020","value":"23198"},{"location_name":"Guimaras","year":"2020","value":"21410"},{"location_name":"Negros Oriental","year":"2020","value":"21377"},{"location_name":"Agusan del Norte","year":"2020","value":"20828"},{"location_name":"Surigao Del Norte","year":"2020","value":"20189"},{"location_name":"Misamis Occidental","year":"2020","value":"19229"},{"location_name":"Southern Leyte","year":"2020","value":"19096"},{"location_name":"Eastern Samar","year":"2020","value":"18924"},{"location_name":"Davao Oriental","year":"2020","value":"15624"},{"location_name":"Ifugao","year":"2020","value":"15433"},{"location_name":"Batangas","year":"2020","value":"12781"},{"location_name":"Biliran","year":"2020","value":"12303"},{"location_name":"Sarangani","year":"2020","value":"12268"},{"location_name":"Romblon","year":"2020","value":"10443"},{"location_name":"Catanduanes","year":"2020","value":"8915"},{"location_name":"Cavite","year":"2020","value":"7380"},{"location_name":"Benguet","year":"2020","value":"7124"},{"location_name":"Marinduque","year":"2020","value":"6256"},{"location_name":"Misamis Oriental","year":"2020","value":"5958"},{"location_name":"Mountain Province","year":"2020","value":"5126"},{"location_name":"Rizal","year":"2020","value":"4395"},{"location_name":"Cebu","year":"2020","value":"3631"},{"location_name":"Dinagat Islands","year":"2020","value":"2883"},{"location_name":"Davao Occidental","year":"2020","value":"693"},{"location_name":"Camiguin","year":"2020","value":"563"},{"location_name":"Sulu","year":"2020","value":"513"},{"location_name":"Siquijor","year":"2020","value":"447"},{"location_name":"Tawi-Tawi","year":"2020","value":"165"},{"location_name":"Basilan","year":"2020","value":"137"},{"location_name":"Batanes","year":"2020","value":"79"}]');
-
+    var dbProvs = {{ tpData|safe }};
     let provinces = [];
     let values = [];
 

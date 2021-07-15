@@ -286,7 +286,7 @@ ion-icon {
   background-color: #131313;
   position: fixed;
   width: 66px;
-  z-index: 500;
+  z-index: 1031;
   top:0;
   bottom:0;
   background-image: url('../assets/Ricelytics_Logo_-_White_Orange.png');
@@ -298,7 +298,7 @@ ion-icon {
   background-color: #131313;
   position: fixed;
   width: 405px;
-  z-index: 500;
+  z-index: 1031;
   top:0;
   bottom:0;
   background-image: url('../assets/MJCSotto-PRA-0628.png');
