@@ -8,7 +8,7 @@ from django.db import connection
 import json
 import decimal
 
-# DecimalEncoder converts DecimalField of Django Models to json.dumps 
+# DecimalEncoder converts DecimalField of Django Models to json.dumps
 class DecimalEncoder(json.JSONEncoder):
     def default(self,o):
         if isinstance(o,decimal.Decimal):
@@ -19,8 +19,263 @@ class DecimalEncoder(json.JSONEncoder):
 def index(request):
     title = 'State of the Rice Sector in the Philippines'
     searchbartype = '1'
+    location_code = '999'
+    location_type = '2'
+    year_start = '2000'
+    year_end = '2020'
+    ecosystem = '2'
+    # Rice Production
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= %s
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= %s
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]):
+        rp_year = data.year
+        rp_value = data.value
+        rp_compare = data.compare
+    # Area Harvested
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= %s
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= %s
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]):
+        ah_year = data.year
+        ah_value = data.value
+        ah_compare = data.compare
+
+    # Yield per hectare
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= %s
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= %s
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]):
+        yph_year = data.year
+        yph_value = data.value
+        yph_compare = data.compare
+
+    # Suppy
+    for data in kpi_pay.objects.raw("""SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
+        supply_value = data.value
+        supply_compare = data.compare
+
+    # Utilization
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."UTExports", 0) + (COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0)) + ((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) +
+                                        			COALESCE("s"."UTEndingStocks", 0))))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."UTExports", 0) + (COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0)) + ((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) +
+                                        			COALESCE("s"."UTEndingStocks", 0))))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
+        utilization_value = data.value
+        utilization_compare = data.compare
+    # locally Produced and Net Food Disposable
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."suproduction", "t1"."uttotalnet", ("t1"."suproduction" - "t2"."suproduction") as suproduction_compare, ("t1"."uttotalnet" - "t2"."uttotalnet") as uttotalnet_compare
+                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUProduction")/1000::numeric,2) AS SUProduction, ROUND(((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)))/1000::numeric,2) AS UTTotalNet
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>=%s AND year<=%s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUProduction")/1000::numeric,2) AS SUProduction, ROUND(((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)))/1000::numeric,2) AS UTTotalNet
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>=%s AND year<=%s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
+        lp_value = data.suproduction
+        lp_compare = data.suproduction_compare
+        nf_value = data.uttotalnet
+        nf_compare = data.uttotalnet_compare
+
+    # Import and Export
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."suimports", "t1"."UTExports", ("t1"."suimports" - "t2"."suimports") AS suimports_compare, ("t1"."UTExports" - "t2"."UTExports") AS utexports_compare
+                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUImports")/1000::numeric,2) AS SUImports, "s"."UTExports"
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year >= %s AND year <= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUImports")/1000::numeric,2) AS SUImports, "s"."UTExports"
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year >= %s AND year <= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                                    """, [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
+        import_value = data.suimports
+        import_compare = data.suimports_compare
+        export_value = data.UTExports
+        export_compare = data.utexports_compare
+
+    # Farmgate Price, Wholesale Price, Retail Price
+    for data in kpi_pay.objects.raw("""SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."farmgatePrice", "t1"."wholesalePrice", "t1"."retailPrice", ("t1"."farmgatePrice" - "t2"."farmgatePrice") AS farmgaterice_compare, ("t1"."wholesalePrice" - "t2"."wholesalePrice") AS wholesalePrice_compare, ("t1"."retailPrice" - "t2"."retailPrice") AS retailPrice_compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."farmgatePrice", "k"."wholesalePrice", "k"."retailPrice"
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."farmgatePrice", "k"."wholesalePrice", "k"."retailPrice"
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                        """, [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
+        farmgate_value = data.farmgatePrice
+        farmgate_compare = data.farmgaterice_compare
+        wholesale_value = data.wholesalePrice
+        wholesale_compare = data.wholesaleprice_compare
+        retail_value = data.retailPrice
+        retail_compare = data.retailprice_compare
+
+    # Gross Value Added, Share to Agri. GVA, Share to Nat. GDP
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."gva",  "t1"."gvashare",  "t1"."gdpshare", ("t1"."gva" - "t2"."gva") AS gva_compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/1000::numeric,2) as gva, ROUND((("k"."palayValue"/"k"."agriValue")*100)::numeric,1) AS gvashare, ROUND(("k"."palayValue"/"k"."gdpValue")*100::numeric,2) AS gdpshare
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/1000::numeric,2) as gva, ROUND((("k"."palayValue"/"k"."agriValue")*100)::numeric,1) AS gvashare, ROUND(("k"."palayValue"/"k"."gdpValue")*100::numeric,2) AS gdpshare
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                                    """, [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
+        gva_value = data.gva
+        gva_compare = data.gva_compare
+        gvashare_value = data.gvashare
+        gdpshare_value = data.gdpshare
+    # Net Returns, Gross Return
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", TO_CHAR(("t1"."gross"),'999,999') AS gross, TO_CHAR(("t1"."net"),'999,999') AS net, ("t1"."gross" - "t2"."gross") AS gross_compare, ("t1"."net" - "t2"."net") AS net_compare
+                                        FROM (		SELECT "c"."id" AS id, "l"."locName" AS location_name, "y"."year" AS year, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice")) AS gross, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice") - "c"."costProduction") AS net
+                                        			FROM (SELECT "locCode", "locType", "year", "eco", ROUND(AVG("yieldEst")::numeric,2) AS yieldEst
+                                        				FROM "kpi_pay"
+                                        				WHERE "locCode" = %s AND "locType" = %s AND "eco" = %s AND "year">= %s AND "year"<= '2019'
+                                        				GROUP BY "locCode", "locType", "year", "eco") "y"
+                                        			FULL JOIN "kpi_costs" "c" ON "y"."locCode" = "c"."locCode" AND "y"."locType" = "c"."locType" AND "y"."year" = "c"."year"
+                                        			FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
+                                        			FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
+                                        			WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<='2019'
+                                        			ORDER BY "y"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "c"."id" AS id, "l"."locName" AS location_name, "y"."year" AS year, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice")) AS gross, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice") - "c"."costProduction") AS net
+                                        			FROM (SELECT "locCode", "locType", "year", "eco", ROUND(AVG("yieldEst")::numeric,2) AS yieldEst
+                                        				FROM "kpi_pay"
+                                        				WHERE "locCode" = %s AND "locType" = %s AND "eco" = %s AND "year">= %s AND "year"<= '2019'
+                                        				GROUP BY "locCode", "locType", "year", "eco") "y"
+                                        			FULL JOIN "kpi_costs" "c" ON "y"."locCode" = "c"."locCode" AND "y"."locType" = "c"."locType" AND "y"."year" = "c"."year"
+                                        			FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
+                                        			FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
+                                        			WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<='2019'
+                                        			ORDER BY "y"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                        """, [location_code, location_type, ecosystem, year_start, location_code, location_type, ecosystem, year_start,location_code, location_type, ecosystem, year_start, location_code, location_type, ecosystem, year_start]):
+        gr_value = data.gross
+        gr_compare = data.gross_compare
+        nr_value = data.net
+        nr_compare = data.net_compare
     context = { 'title': title,
-                'searchbartype': searchbartype,}
+                'searchbartype': searchbartype,
+                'rp_year':rp_year,
+                'rp_value':rp_value,
+                'rp_compare':rp_compare,
+                'ah_year':ah_year,
+                'ah_value':ah_value,
+                'ah_compare':ah_compare,
+                'yph_year':yph_year,
+                'yph_value':yph_value,
+                'yph_compare':yph_compare,
+                'supply_value':supply_value,
+                'supply_compare':supply_compare,
+                'utilization_value':utilization_value,
+                'utilization_compare':utilization_compare,
+                'lp_value':lp_value,
+                'lp_compare':lp_compare,
+                'nf_value':nf_value,
+                'nf_compare':nf_compare,
+                'import_value':import_value,
+                'import_compare':import_compare,
+                'export_value':export_value,
+                'export_compare':export_compare,
+                'farmgate_value':farmgate_value,
+                'farmgate_compare':farmgate_compare,
+                'wholesale_value':wholesale_value,
+                'wholesale_compare':wholesale_compare,
+                'retail_value':retail_value,
+                'retail_compare':retail_compare,
+                'gva_value':gva_value,
+                'gva_compare':gva_compare,
+                'gvashare_value':gvashare_value,
+                'gdpshare_value':gdpshare_value,
+                'gr_value':gr_value,
+                'gr_compare':gr_compare,
+                'nr_value':nr_value,
+                'nr_compare':nr_compare}
     return render(request, 'index.html', context)
 
 #Profile
@@ -39,35 +294,73 @@ def riceproduction(request):
     year_start = '2000'
     year_end = '2020'
     year = '2020'
-    ecosystem = '2'
     keys = ('location_name','year','value')
     # Main kpi Production - Irrigated (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '1'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '1'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '1'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         irrigated_year = data.year
         irrigated_value = data.value
+        irrigated_compare = data.compare
     # Main kpi Production - Rice Production (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '2'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '2'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '2'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         all_eco_year = data.year
         all_eco_value = data.value
+        all_eco_compare = data.compare
     # Main kpi Production - Production - Non-Irrigated (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '0'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '0'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '0'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         non_irrigated_year = data.year
         non_irrigated_value = data.value
+        non_irrigated_compare = data.compare
     # All Ecosystem (stacked chart)
     aeCursor = connection.cursor()
     aeCursor.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) as value
@@ -116,9 +409,9 @@ def riceproduction(request):
                         FROM "kpi_pay" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= %s
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
                         GROUP BY year, location_name
-                        ORDER BY value DESC""", [location_code, location_type, year, ecosystem])
+                        ORDER BY value DESC""", [location_code, location_type, year])
     tpRows = tpCursor.fetchall()
     tpResult = []
     for row in tpRows:
@@ -128,8 +421,10 @@ def riceproduction(request):
     context = { 'title': title,
                 'irrigated_year':irrigated_year,
                 'irrigated_value':irrigated_value,
+                'irrigated_compare':irrigated_compare,
                 'all_eco_year':all_eco_year,
                 'all_eco_value':all_eco_value,
+                'all_eco_compare':all_eco_compare,
                 'non_irrigated_year':non_irrigated_year,
                 'non_irrigated_value':non_irrigated_value,
                 'aeData': aeData,
@@ -145,37 +440,73 @@ def areaharvested(request):
     location_type = '2'
     year_start = '2000'
     year_end = '2020'
-    year = '2020'
-    ecosystem = '2'
     keys = ('location_name','year','value')
-    # Main kpi Production - Irrigated (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '1'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+    # Main kpi Area Harvested - Irrigated (2020)
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '1'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '1'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         irrigated_year = data.year
         irrigated_value = data.value
-    # Main kpi Production - Rice Production (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '2'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+        irrigated_compare = data.compare
+    # Main kpi Area Harvested (2020)
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '2'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '2'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         all_eco_year = data.year
         all_eco_value = data.value
-    # Main kpi Production - Production - Non-Irrigated (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '0'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
-        non_irrigated_year = data.year
-        non_irrigated_value = data.value
-
+        all_eco_compare = data.compare
+    # Main kpi Area Harvested - Rainfed
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '0'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '0'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
+        rainfed_year = data.year
+        rainfed_value = data.value
+        rainfed_compare = data.compare
     # All Ecosystem (stacked chart)
     aeCursor = connection.cursor()
     aeCursor.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."areaHarv"/1000000)::numeric,2) as value
@@ -224,9 +555,9 @@ def areaharvested(request):
                         FROM "kpi_pay" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= %s
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
                         GROUP BY year, location_name
-                        ORDER BY value DESC""", [location_code, location_type, year, ecosystem])
+                        ORDER BY value DESC""", [location_code, location_type, year_end])
     tpRows = tpCursor.fetchall()
     tpResult = []
     for row in tpRows:
@@ -236,10 +567,13 @@ def areaharvested(request):
     context = { 'title': title,
                 'irrigated_year':irrigated_year,
                 'irrigated_value':irrigated_value,
+                'irrigated_compare':irrigated_compare,
                 'all_eco_year':all_eco_year,
                 'all_eco_value':all_eco_value,
-                'non_irrigated_year':non_irrigated_year,
-                'non_irrigated_value':non_irrigated_value,
+                'all_eco_compare':all_eco_compare,
+                'rainfed_year':rainfed_year,
+                'rainfed_value':rainfed_value,
+                'rainfed_compare':rainfed_compare,
                 'aeData': aeData,
                 'rfData': rfData,
                 'iData': iData,
@@ -253,36 +587,73 @@ def estimatedyield(request):
     location_type = '2'
     year_start = '2000'
     year_end = '2020'
-    year = '2020'
-    ecosystem = '2'
     keys = ('location_name','year','value')
-    # Main kpi Production - Irrigated (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '1'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+    # Main kpi Yield - Lowland Irrigated (2020)
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '1'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '1'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
         irrigated_year = data.year
         irrigated_value = data.value
-    # Main kpi Production - Rice Production (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '2'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+        irrigated_compare = data.compare
+    # Main kpi Yield per Hectare (2020)
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '2'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '2'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
         all_eco_year = data.year
         all_eco_value = data.value
-    # Main kpi Production - Production - Non-Irrigated (2020)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
-                                        FROM "ids_location" "l"
-                                        FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
-                                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year= %s AND "k"."eco"= '0'
-                                        GROUP BY year, location_name, l.id """, [location_code, location_type, year]):
+        all_eco_compare = data.compare
+    # Main kpi Yield - Non-Irrigated (2020)
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '0'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) AS value
+                                        			FROM "ids_location" "l"
+                                        			FULL JOIN "kpi_pay" "k" ON "l"."locCode" = "k"."locCode" AND "k"."locType" = "l"."locType"
+                                        			FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= '0'
+                                        			GROUP BY year, location_name, l.id
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
         non_irrigated_year = data.year
         non_irrigated_value = data.value
+        non_irrigated_compare = data.compare
 
     # All Ecosystem (stacked chart)
     aeCursor = connection.cursor()
@@ -332,9 +703,9 @@ def estimatedyield(request):
                         FROM "kpi_pay" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
-                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= %s
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = '2020' AND "k"."eco"= '2'
                         GROUP BY year, location_name
-                        ORDER BY value DESC""", [location_code, location_type, year, ecosystem])
+                        ORDER BY value DESC""", [location_code, location_type])
     tpRows = tpCursor.fetchall()
     tpResult = []
     for row in tpRows:
@@ -344,10 +715,13 @@ def estimatedyield(request):
     context = { 'title': title,
                 'irrigated_year':irrigated_year,
                 'irrigated_value':irrigated_value,
+                'irrigated_compare':irrigated_compare,
                 'all_eco_year':all_eco_year,
                 'all_eco_value':all_eco_value,
+                'all_eco_compare':all_eco_compare,
                 'non_irrigated_year':non_irrigated_year,
                 'non_irrigated_value':non_irrigated_value,
+                'non_irrigated_compare':non_irrigated_compare,
                 'aeData': aeData,
                 'rfData': rfData,
                 'iData': iData,
@@ -361,26 +735,45 @@ def supplyUtilization(request):
     location_type = '2'
     year_start = '2000'
     year_end = '2019'
-    year = '2019'
     ecosystem = '2'
     keys = ('location_name','year','value')
     # Total Supply (2019)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0))/1000::numeric,2) AS value
-                                        FROM "kpi_sua" "s"
-                                        FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
-                                        WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year= %s """, [location_code, location_type, year]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         supply_year = data.year
         supply_value = data.value
+        supply_compare = data.compare
 
     # Total Utilization (2019)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."UTExports", 0) + (COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0)) + ((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) +
-                                        COALESCE("s"."UTEndingStocks", 0))))/1000::numeric,2) AS value
-                                        FROM "kpi_sua" "s"
-                                        FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
-                                        WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year= %s """, [location_code, location_type, year]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") as compare
+                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."UTExports", 0) + (COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0)) + ((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) +
+                                        			COALESCE("s"."UTEndingStocks", 0))))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."UTExports", 0) + (COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0)) + ((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) +
+                                        			COALESCE("s"."UTEndingStocks", 0))))/1000::numeric,2) AS value
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
         utilization_year = data.year
         utilization_value = data.value
-
+        utilization_compare = data.compare
     #Total supply (Chart)
     tsCursor = connection.cursor()
     tsCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0) AS value
@@ -437,8 +830,10 @@ def supplyUtilization(request):
     context = { 'title': title,
                 'supply_year':supply_year,
                 'supply_value':supply_value,
+                'supply_compare':supply_compare,
                 'utilization_year':utilization_year,
                 'utilization_value':utilization_value,
+                'utilization_compare':utilization_compare,
                 'tsData':tsData,
                 'tuData':tuData,
                 'ssData':ssData,
@@ -455,16 +850,24 @@ def consumption(request):
     year_end = '2019'
     keys = ('location_name', 'year', 'value')
     # Get FNRI Per Capita (Per Year)
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "c"."year" AS year, "c"."PerCapitaKg" AS KgPerYear, "c"."PerCapitaGram" AS GmPerDay
-                                        FROM "kpi_percapita" "c"
-                                        FULL JOIN "ids_location" "l" ON "c"."locCode" = "l"."locCode" AND "c"."locType" = "l"."locType"
-                                        WHERE "c"."locCode" = %s AND "c"."locType" = %s AND year>=%s AND year<=%s
-                                        ORDER BY year DESC
-                                        LIMIT 1 """, [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."kgperyear","t1"."gmperday", ("t1"."kgperyear" - "t2"."kgperyear") as kgperyear_compare, ("t1"."gmperday" - "t2"."gmperday") as gmperday_compare
+                                        FROM (		SELECT "c"."id" AS id, "l"."locName" AS location_name, "c"."year" AS year, "c"."PerCapitaKg" AS KgPerYear, "c"."PerCapitaGram" AS GmPerDay
+                                        			FROM "kpi_percapita" "c"
+                                        			FULL JOIN "ids_location" "l" ON "c"."locCode" = "l"."locCode" AND "c"."locType" = "l"."locType"
+                                        			WHERE "c"."locCode" = %s AND "c"."locType" = %s AND year>=%s AND year<=%s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "c"."id" AS id, "l"."locName" AS location_name, "c"."year" AS year, "c"."PerCapitaKg" AS KgPerYear, "c"."PerCapitaGram" AS GmPerDay
+                                        			FROM "kpi_percapita" "c"
+                                        			FULL JOIN "ids_location" "l" ON "c"."locCode" = "l"."locCode" AND "c"."locType" = "l"."locType"
+                                        			WHERE "c"."locCode" = %s AND "c"."locType" = %s AND year>=%s AND year<=%s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1 """, [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         per_capita_year = data.year
         per_kapita_kg_value = data.kgperyear
+        per_kapita_kg_compare = data.kgperyear_compare
         per_kapita_gram_value = data.gmperday
-
+        per_kapita_gram_compare = data.gmperday_compare
     # Get Yearly accounts (Chart - Ranged)
     ycCursor = connection.cursor()
     ycCursor.execute("""SELECT "l"."locName" AS location_name, "c"."year" AS year, "c"."PerCapitaKg" AS value
@@ -551,7 +954,9 @@ def consumption(request):
     context = { 'title': title,
                 'per_capita_year':per_capita_year,
                 'per_kapita_kg_value':per_kapita_kg_value,
+                'per_kapita_kg_compare':per_kapita_kg_compare,
                 'per_kapita_gram_value':per_kapita_gram_value,
+                'per_kapita_gram_compare':per_kapita_gram_compare,
                 'ycData':ycData,
                 'dcData':dcData,
                 'lpData':lpData,
@@ -569,15 +974,24 @@ def importExport(request):
     year_start = '2000'
     year_end = '2019'
     # Get Main Card Value Import and Export
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUImports")/1000::numeric,2) AS SUImports, "s"."UTExports"
-                                        FROM "kpi_sua" "s"
-                                        FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
-                                        WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year >= %s AND year <= %s
-                                        ORDER BY year DESC
-                                        LIMIT 1 """, [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."suimports","t1"."UTExports", ("t1"."suimports" - "t2"."suimports") as suimports_compare, ("t1"."UTExports" - "t2"."UTExports") as UTExports_compare
+                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUImports")/1000::numeric,2) AS SUImports, "s"."UTExports"
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year >= %s AND year <= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUImports")/1000::numeric,2) AS SUImports, "s"."UTExports"
+                                        			FROM "kpi_sua" "s"
+                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year >= %s AND year <= %s
+                                        			ORDER BY year DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1 """, [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         imexport_year = data.year
         import_value = data.suimports
+        import_compare = data.suimports_compare
         export_value = data.UTExports
+        export_compare = data.utexports_compare
 
     # Yearly imported rice (chart - range)
     irCursor = connection.cursor()
@@ -606,7 +1020,9 @@ def importExport(request):
     context = { 'title': title,
                 'imexport_year':imexport_year,
                 'import_value': import_value,
+                'import_compare':import_compare,
                 'export_value': export_value,
+                'export_compare':export_compare,
                 'irData': irData,
                 'erData': erData}
     return render(request,'impexports.html', context)
@@ -624,7 +1040,7 @@ def prices(request):
     for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."farmgatePrice" as value
                                         FROM "kpi_prices" "k"
                                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
-                                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "l"."year"<=%s
+                                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
                                         ORDER BY "k"."year" DESC
                                         LIMIT 1""", [location_code, location_type, year_start, year_end]):
         farmgate_year = data.year
@@ -633,7 +1049,7 @@ def prices(request):
     for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."wholesalePrice", "k"."WholesaleSpPrice"
                                         FROM "kpi_prices" "k"
                                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
-                                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "l"."year"<=%s
+                                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
                                         ORDER BY "k"."year" DESC
                                         LIMIT 1""", [location_code, location_type, year_start, year_end]):
         wholesale_year = data.year
@@ -644,8 +1060,8 @@ def prices(request):
                         FROM "kpi_prices" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
-                                        ORDER BY "k"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+                        ORDER BY "k"."year" DESC
+                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
         retail_year = data.year
         retail_price = data.retailPrice
         retail_spprice = data.retailSpPrice

@@ -1,5 +1,6 @@
 from django.db import models
 
+# Database tables of the Program
 # Create your models here.
 class ids_ecosystem(models.Model):
     eco = models.CharField(max_length=1)

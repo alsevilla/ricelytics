@@ -1,5 +1,8 @@
+# Extension URLs of the program
+# The mail URLs are in "ricelytics/urls.py"
+# Before declaring a URL path django needs to define a class first in django views.py
 from django.urls import path
-from . import views
+from . import views # Calls all define classes from views.py
 
 urlpatterns = [
     path('', views.index, name='HomePage'),
