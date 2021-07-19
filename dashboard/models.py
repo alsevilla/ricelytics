@@ -2,11 +2,14 @@ from django.db import models
 
 # Database tables of the Program
 # Create your models here.
+#  Django requires non null value as default
+# declare null=true, blank=true to make the django accept blank data or null data
 class ids_ecosystem(models.Model):
     eco = models.CharField(max_length=1)
     ecoName = models.CharField(max_length=255)
 
     class Meta:
+        # Name of the table
         db_table = 'ids_ecosystem'
 
 class ids_location(models.Model):
@@ -18,7 +21,7 @@ class ids_location(models.Model):
 
     class Meta:
         db_table = 'ids_location'
-
+    # use this funtion if using foreinKey to view the locCode value instead of '[ids_location:value[0]]'
     def __self__(self):
         return '%s' % (self.locCode)
 
@@ -68,6 +71,7 @@ class kpi_prices(models.Model):
     WholesaleSpPrice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     retailPrice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     retailSpPrice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
     class Meta:
         db_table = 'kpi_prices'
 
@@ -206,3 +210,13 @@ class kpi_pop(models.Model):
 
     class Meta:
         db_table = 'kpi_pop'
+
+class rb_ycost(models.Model):
+    locCode = locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    yieldEst = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    costperkg = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    
+    class Meta:
+        db_table = 'rb_ycost'

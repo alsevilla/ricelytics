@@ -1452,5 +1452,19 @@ def incomes(request):
 # yield and production cost
 def yieldcost(request):
     title = 'Yield and Production Cost'
-    context = { 'title': title}
+
+    # Scatter Table Yield and unit cost of top rice-producing provinces, 2017
+    yuCursor = connection.cursor()
+    yuCursor.execute("""SELECT ROUND(("k"."yieldEst")/1000::numeric,2) as x, "k"."costperkg" as y, "l"."locName" AS location_name
+                        FROM "rb_ycost" "k"
+                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                        WHERE "k"."locType" = '2' AND "k"."year" = '2017' """)
+    yuRows = yuCursor.fetchall()
+    yuResult = []
+    yuKeys = ('x','y','location_name')
+    for row in yuRows:
+        yuResult.append(dict(zip(yuKeys,row)))
+    yuData = json.dumps(yuResult, cls=DecimalEncoder)
+    context = { 'title': title,
+                'yuData':yuData}
     return render(request, 'yieldcost.html', context)
