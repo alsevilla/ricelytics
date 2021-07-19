@@ -24,13 +24,13 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-6 border-right">
-                                <h1 class="card-text font-weight-bold" style="margin-left: -10px;">{{ aff_price }}<i class="bi bi-caret-up-fill"></i></h1>
+                                <h1 class="card-text font-weight-bold" style="margin-left: -10px;">{{ aff_price }}{% if aff_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                                 <div class="card-note w-100 mx-auto rounded-pill bg-primary">
                                     <p class="text-white">trillion pesos</p>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <h2 class="card-text align-middle mt-2 font-weight-bold">{{ aff_percent }}%<i class="bi bi-caret-up-fill"></i></h2>
+                                <h2 class="card-text align-middle mt-2 font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                                 <div class="card-note w-100 mx-auto rounded-pill bg-primary">
                                     <p class="text-white">rice sector's share</p>
                                 </div>
@@ -42,7 +42,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Rice Production Gross Value Added ({{ rpgva_year }})</h5>
                         <p class="card-title-note">(At Constant 2018 Prices)</p>
-                        <h1 class="card-text font-weight-bold mt-3">{{ rpgva_price }}<i class="bi bi-caret-up-fill"></i></h1>
+                        <h1 class="card-text font-weight-bold mt-3">{{ rpgva_price }}{% if rpgva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif rpgva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill">
                             <p class="text-dark">billion pesos</p>
                         </div>
@@ -58,13 +58,13 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-6 border-right">
-                                <h1 class="card-text font-weight-bold" style="margin-left: -10px;">{{ gdp_price }}<i class="bi bi-caret-up-fill"></i></h1>
+                                <h1 class="card-text font-weight-bold" style="margin-left: -10px;">{{ gdp_price }}{% if gdp_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gdp_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                                 <div class="card-note w-100 mx-auto rounded-pill bg-primary">
                                     <p class="text-white">trillion pesos</p>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <h2 class="card-text align-middle mt-2 font-weight-bold">{{ gdp_percent }}%<i class="bi bi-caret-up-fill"></i></h2>
+                                <h2 class="card-text align-middle mt-2 font-weight-bold">{{ gdp_percent }}%{% if gdp_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gdp_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                                 <div class="card-note w-100 mx-auto rounded-pill bg-primary">
                                     <p class="text-white">rice sector's share</p>
                                 </div>

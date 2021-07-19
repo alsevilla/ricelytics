@@ -1037,34 +1037,60 @@ def prices(request):
     keys = ('location_name', 'year', 'value')
 
     # Get Main Card Farmgate Price
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."farmgatePrice" as value
-                                        FROM "kpi_prices" "k"
-                                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
-                                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
-                                        ORDER BY "k"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") AS compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."farmgatePrice" as value
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."farmgatePrice" as value
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         farmgate_year = data.year
         farmgate_value = data.value
+        farmgate_compare = data.compare
     # Get Main Card Wholesale Price
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."wholesalePrice", "k"."WholesaleSpPrice"
-                                        FROM "kpi_prices" "k"
-                                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
-                                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
-                                        ORDER BY "k"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."wholesalePrice",  "t1"."WholesaleSpPrice",("t1"."wholesalePrice" - "t2"."wholesalePrice") AS wholesalePrice_compare, ("t1"."WholesaleSpPrice" - "t2"."WholesaleSpPrice") AS WholesaleSpPrice_compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."wholesalePrice", "k"."WholesaleSpPrice"
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."wholesalePrice", "k"."WholesaleSpPrice"
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "k"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         wholesale_year = data.year
         wholesale_price = data.wholesalePrice
+        wholesale_compare = data.wholesaleprice_compare
         wholesale_spprice = data.WholesaleSpPrice
+        wholesale_spcompare = data.wholesalespprice_compare
     # Get Main Card Retail Price
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."retailPrice", "k"."retailSpPrice"
-                        FROM "kpi_prices" "k"
-                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
-                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
-                        ORDER BY "k"."year" DESC
-                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."retailPrice",  "t1"."retailSpPrice",("t1"."retailPrice" - "t2"."retailPrice") AS retailPrice_compare, ("t1"."retailSpPrice" - "t2"."retailSpPrice") AS retailSpPrice_compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."retailPrice", "k"."retailSpPrice"
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, "k"."retailPrice", "k"."retailSpPrice"
+                                        			FROM "kpi_prices" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
         retail_year = data.year
         retail_price = data.retailPrice
+        retail_compare = data.retailprice_compare
         retail_spprice = data.retailSpPrice
+        retail_spcompare = data.retailspprice_compare
     # Farmgate prices per year (chart - range)
     # Nominal Price
     npCursor = connection.cursor()
@@ -1139,12 +1165,17 @@ def prices(request):
     context = { 'title': title,
                 'farmgate_year':farmgate_year,
                 'farmgate_value':farmgate_value,
+                'farmgate_compare':farmgate_compare,
                 'wholesale_year':wholesale_year,
                 'wholesale_price':wholesale_price,
+                'wholesale_compare':wholesale_compare,
                 'wholesale_spprice':wholesale_spprice,
+                'wholesale_spcompare':wholesale_spcompare,
                 'retail_year':retail_year,
                 'retail_price':retail_price,
+                'retail_compare':retail_compare,
                 'retail_spprice':retail_spprice,
+                'retail_spcompare':retail_spcompare,
                 'npData':npData,
                 'rpData':rpData,
                 'rmData':rmData,
@@ -1162,35 +1193,60 @@ def valuations(request):
     year_end = '2020'
     keys = ('location_name','year','value')
     # Maim Card Get Agriculture, Forestry, and Fishing GVA
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."agriValue")/1000000::numeric,2) AS value, ROUND(("k"."palayValue"/"k"."agriValue")*100) AS percent
-                                        FROM "kpi_value" "k"
-                                        FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
-                                        WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
-                                        ORDER BY "k"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value",  "t1"."percent", ("t1"."value" - "t2"."value") AS value_compare, ("t1"."percent" - "t2"."percent") AS percent_compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."agriValue")/1000000::numeric,2) AS value, ROUND(("k"."palayValue"/"k"."agriValue")*100::numeric,1) AS percent
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."agriValue")/1000000::numeric,2) AS value, ROUND(("k"."palayValue"/"k"."agriValue")*100::numeric,1) AS percent
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         aff_year = data.year
         aff_price = data.value
+        aff_price_compare = data.value_compare
         aff_percent = data.percent
+        aff_percent_compare = data.percent_compare
     # Main Card Get Rice Production Gross Value Added
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/10000::numeric,2) as value
-                                        FROM "kpi_value" "k"
-                                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
-                                        WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
-                                        ORDER BY "k"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") AS value_compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/10000::numeric,2) as value
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/10000::numeric,2) as value
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         rpgva_year = data.year
         rpgva_price = data.value
+        rpgva_compare = data.value_compare
     #   Main Card Get Gross Domestic Product
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id,"l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."gdpValue")/1000000::numeric,1) AS value, ROUND(("k"."palayValue"/"k"."gdpValue")*100::numeric,1) AS percent
-                                        FROM "kpi_value" "k"
-                                        FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
-                                        WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
-                                        ORDER BY "k"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value","t1"."percent", ("t1"."value" - "t2"."value") AS value_compare, ("t1"."percent" - "t2"."percent") AS percent_compare
+                                        FROM (		SELECT "k"."id" AS id,"l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."gdpValue")/1000000::numeric,1) AS value, ROUND(("k"."palayValue"/"k"."gdpValue")*100::numeric,1) AS percent
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id,"l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."gdpValue")/1000000::numeric,1) AS value, ROUND(("k"."palayValue"/"k"."gdpValue")*100::numeric,1) AS percent
+                                        			FROM "kpi_value" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
         gdp_year = data.year
         gdp_price = data.value
+        gdp_price_compare = data.value_compare
         gdp_percent = data.percent
-
+        gdp_percent_compare = data.percent_compare
     # Rice production and agriculture sector GVA (chart - range)
     # Rice production
     rpCursor = connection.cursor()
@@ -1240,12 +1296,17 @@ def valuations(request):
     context = { 'title': title,
                 'aff_year':aff_year,
                 'aff_price':aff_price,
+                'aff_price_compare':aff_price_compare,
                 'aff_percent':aff_percent,
+                'aff_percent_compare':aff_percent_compare,
                 'rpgva_year': rpgva_year,
                 'rpgva_price':rpgva_price,
+                'rpgva_compare':rpgva_compare,
                 'gdp_year':gdp_year,
                 'gdp_price':gdp_price,
+                'gdp_price_compare':gdp_price_compare,
                 'gdp_percent':gdp_percent,
+                'gdp_percent_compare':gdp_percent_compare,
                 'rpData':rpData,
                 'asData':asData,
                 'tgdpsData':tgdpsData,
@@ -1261,42 +1322,57 @@ def incomes(request):
     year_end = '2019'
     ecosystem = '2'
     keys = ('location_name','year','value')
-    # Main Card Gross Returns
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "y"."year" AS year, TO_CHAR(ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice")),'999,999') AS value
-                                        FROM (SELECT "locCode", "locType", "year", "eco", ROUND(AVG("yieldEst")::numeric,2) AS yieldEst
-                                        	FROM "kpi_pay"
-                                        	WHERE "locCode" = %s AND "locType" = %s AND "eco" = %s AND "year">= %s AND "year"<= %s
-                                        	GROUP BY "locCode", "locType", "year", "eco") "y"
-                                        FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
-                                        FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
-                                        WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s
-                                        ORDER BY "y"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]):
+
+    # Main Card Gross, Net Returns
+    for data in kpi_pay.objects.raw("""  SELECT "t1"."id", "t1"."location_name", "t1"."year", TO_CHAR(("t1"."gross"),'999,999') AS gross, TO_CHAR(("t1"."net"),'999,999') AS net, ("t1"."gross" - "t2"."gross") AS gross_compare, ("t1"."net" - "t2"."net") AS net_compare
+                                        FROM (		SELECT "c"."id" AS id, "l"."locName" AS location_name, "y"."year" AS year, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice")) AS gross, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice") - "c"."costProduction") AS net
+                                        			FROM (SELECT "locCode", "locType", "year", "eco", ROUND(AVG("yieldEst")::numeric,2) AS yieldEst
+                                        				FROM "kpi_pay"
+                                        				WHERE "locCode" = %s AND "locType" = %s AND "eco" = %s AND "year">= %s AND "year"<= '2019'
+                                        				GROUP BY "locCode", "locType", "year", "eco") "y"
+                                        			FULL JOIN "kpi_costs" "c" ON "y"."locCode" = "c"."locCode" AND "y"."locType" = "c"."locType" AND "y"."year" = "c"."year"
+                                        			FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
+                                        			FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
+                                        			WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<='2019'
+                                        			ORDER BY "y"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "c"."id" AS id, "l"."locName" AS location_name, "y"."year" AS year, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice")) AS gross, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice") - "c"."costProduction") AS net
+                                        			FROM (SELECT "locCode", "locType", "year", "eco", ROUND(AVG("yieldEst")::numeric,2) AS yieldEst
+                                        				FROM "kpi_pay"
+                                        				WHERE "locCode" = %s AND "locType" = %s AND "eco" = %s AND "year">= %s AND "year"<= '2019'
+                                        				GROUP BY "locCode", "locType", "year", "eco") "y"
+                                        			FULL JOIN "kpi_costs" "c" ON "y"."locCode" = "c"."locCode" AND "y"."locType" = "c"."locType" AND "y"."year" = "c"."year"
+                                        			FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
+                                        			FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
+                                        			WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<='2019'
+                                        			ORDER BY "y"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
+                                        """, [location_code, location_type, ecosystem, year_start, location_code, location_type, ecosystem, year_start,location_code, location_type, ecosystem, year_start, location_code, location_type, ecosystem, year_start]):
+
         gr_year = data.year
-        gr_price = data.value
-    # Main Card Net Returns
-    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id, "l"."locName" AS location_name, "y"."year" AS year, TO_CHAR(ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice") - "c"."costProduction"),'999,999') AS value
-                                        FROM (SELECT "locCode", "locType", "year", "eco", ROUND(AVG("yieldEst")::numeric,2) AS yieldEst
-                                        	FROM "kpi_pay"
-                                        	WHERE "locCode" = %s AND "locType" = %s AND "eco" = %s AND "year">= %s AND "year"<= %s
-                                        	GROUP BY "locCode", "locType", "year", "eco") "y"
-                                        FULL JOIN "kpi_costs" "c" ON "y"."locCode" = "c"."locCode" AND "y"."locType" = "c"."locType" AND "y"."year" = "c"."year"
-                                        FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
-                                        FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
-                                        WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s
-                                        ORDER BY "y"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]):
+        gr_price = data.gross
+        gr_compare = data.gross_compare
         nr_year = data.year
-        nr_price = data.value
+        nr_price = data.net
+        nr_compare = data.net_compare
+
     # Main Card Production Cost
-    for data in kpi_pay.objects.raw("""SELECT "l"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, TO_CHAR(ROUND(("k"."costProduction")),'999,999') AS value
-                                        FROM "kpi_costs" "k"
-                                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
-                                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year >= %s AND year <= %s
-                                        ORDER BY "k"."year" DESC
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end]):
+    for data in kpi_pay.objects.raw("""SELECT "t1"."id", "t1"."location_name", "t1"."year", TO_CHAR(("t1"."value"),'999,999') AS value, ("t1"."value" - "t2"."value") AS value_compare
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."costProduction")) AS value
+                                        			FROM "kpi_costs" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year >= %s AND year <= %s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t1"
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year" AS year, ROUND(("k"."costProduction")) AS value
+                                        			FROM "kpi_costs" "k"
+                                        			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                        			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year >= %s AND year <= %s
+                                        			ORDER BY "k"."year" DESC
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):
         pc_year = data.year
         pc_price = data.value
+        pc_compare = data.value_compare
     # Yearly average gross returns on rice production
     # Average Gross Return
     agrCursor = connection.cursor()
@@ -1360,10 +1436,13 @@ def incomes(request):
     context = { 'title': title,
                 'gr_year':gr_year,
                 'gr_price':gr_price,
+                'gr_compare':gr_compare,
                 'nr_year':nr_year,
                 'nr_price':nr_price,
+                'nr_compare':nr_compare,
                 'pc_year':pc_year,
                 'pc_price':pc_price,
+                'pc_compare':pc_compare,
                 'agrData':agrData,
                 'acData':acData,
                 'anrData':anrData,

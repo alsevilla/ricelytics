@@ -17,7 +17,7 @@
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
                         <h5 class="card-title p-2">Gross Returns ({{ gr_year }})</h5>
-                        <h2 class="card-text font-weight-bold">PhP {{ gr_price }}<i class="bi bi-caret-down-fill"></i></h2>
+                        <h2 class="card-text font-weight-bold">PhP {{ gr_price }}{% if gr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                             <p class="text-white">per hectare</p>
                         </div>
@@ -27,7 +27,7 @@
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
                         <h5 class="card-title p-2">Net Returns ({{ nr_year }})</h5>
-                        <h2 class="card-text font-weight-bold">PhP {{ nr_price }}<i class="bi bi-caret-down-fill"></i></h2>
+                        <h2 class="card-text font-weight-bold">PhP {{ nr_price }}{% if nr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif nr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                         <div class="card-note w-50 mx-auto rounded-pill">
                             <p class="text-dark">per hectare</p>
                         </div>
@@ -37,7 +37,7 @@
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
                         <h5 class="card-title p-2">Production Costs ({{ pc_year }})</h5>
-                        <h2 class="card-text font-weight-bold">PhP {{ pc_price }}<i class="bi bi-caret-down-fill"></i></h2>
+                        <h2 class="card-text font-weight-bold">PhP {{ pc_price }}{% if pc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif pc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                             <p class="text-white">per hectare</p>
                         </div>
