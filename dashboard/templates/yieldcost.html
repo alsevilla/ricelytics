@@ -16,8 +16,8 @@
             <div class="card-deck mb-2 text-center">
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Yield per Hectare (2019)</h5>
-                        <h1 class="card-text font-weight-bold">4.04<i class="bi bi-caret-up-fill"></i></h1>
+                        <h5 class="card-title p-2">Yield per Hectare ({{yph_year}})</h5>
+                        <h1 class="card-text font-weight-bold">{{ yph_value }}{% if yph_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif yph_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill">
                             <p class="text-dark">metric tons/ha</p>
                         </div>
@@ -25,8 +25,8 @@
                 </div>
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Unit Cost (2019)</h5>
-                        <h1 class="card-text font-weight-bold">PhP 11.20<i class="bi bi-caret-down-fill"></i></h1>
+                        <h5 class="card-title p-2">Unit Cost ({{uc_year}})</h5>
+                        <h1 class="card-text font-weight-bold">PhP {{ uc_value }}{% if uc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif uc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-25 mx-auto rounded-pill">
                             <p class="text-dark">per kilogram</p>
                         </div>
@@ -126,8 +126,7 @@
 
     // Chart 1
 
-    var dbNPK = JSON.parse('[{"location_name":"Aurora","year":"2019","n_value":"67.50","p_value":"8.86","k_value":"14.71"},{"location_name":"Bataan","year":"2019","n_value":"104.93","p_value":"9.17","k_value":"17.44"},{"location_name":"Biliran","year":"2019","n_value":"74.91","p_value":"13.51","k_value":"9.07"},{"location_name":"Bukidnon","year":"2019","n_value":"70.39","p_value":"7.88","k_value":"6.31"},{"location_name":"Bulacan","year":"2019","n_value":"68.13","p_value":"11.69","k_value":"16.40"},{"location_name":"Cagayan","year":"2019","n_value":"97.45","p_value":"9.56","k_value":"8.81"},{"location_name":"Camarines Norte","year":"2019","n_value":"65.85","p_value":"8.50","k_value":"10.43"},{"location_name":"Camiguin","year":"2019","n_value":"91.63","p_value":"8.95","k_value":"14.65"},{"location_name":"Davao de Oro","year":"2019","n_value":"60.12","p_value":"5.54","k_value":"7.86"},{"location_name":"Davao del Norte","year":"2019","n_value":"73.99","p_value":"6.17","k_value":"9.31"},{"location_name":"Davao del Sur","year":"2019","n_value":"124.89","p_value":"8.65","k_value":"15.34"},{"location_name":"Davao Oriental","year":"2019","n_value":"70.85","p_value":"6.36","k_value":"8.63"},{"location_name":"Ilocos Norte","year":"2019","n_value":"119.18","p_value":"11.53","k_value":"20.33"},{"location_name":"Ilocos Sur","year":"2019","n_value":"144.13","p_value":"16.27","k_value":"18.73"},{"location_name":"Isabela","year":"2019","n_value":"96.32","p_value":"10.82","k_value":"11.30"},{"location_name":"Kalinga","year":"2019","n_value":"121.62","p_value":"7.17","k_value":"9.72"},{"location_name":"La Union","year":"2019","n_value":"83.96","p_value":"5.82","k_value":"9.35"},{"location_name":"Laguna","year":"2019","n_value":"88.43","p_value":"5.17","k_value":"9.60"},{"location_name":"Lanao Del Norte","year":"2019","n_value":"79.56","p_value":"5.93","k_value":"8.72"},{"location_name":"Leyte","year":"2019","n_value":"43.82","p_value":"4.22","k_value":"7.94"},{"location_name":"Misamis Occidental","year":"2019","n_value":"70.87","p_value":"8.57","k_value":"9.22"},{"location_name":"Misamis Oriental","year":"2019","n_value":"83.71","p_value":"6.48","k_value":"8.95"},{"location_name":"Nueva Ecija","year":"2019","n_value":"99.61","p_value":"15.06","k_value":"18.48"},{"location_name":"Nueva Vizcaya","year":"2019","n_value":"115.00","p_value":"11.98","k_value":"16.86"},{"location_name":"Occidental Mindoro","year":"2019","n_value":"85.44","p_value":"7.41","k_value":"13.55"},{"location_name":"Oriental Mindoro","year":"2019","n_value":"86.80","p_value":"9.57","k_value":"16.78"},{"location_name":"Palawan","year":"2019","n_value":"106.27","p_value":"14.34","k_value":"16.01"},{"location_name":"Pampanga","year":"2019","n_value":"132.84","p_value":"9.06","k_value":"15.73"},{"location_name":"Pangasinan","year":"2019","n_value":"80.25","p_value":"5.82","k_value":"10.10"},{"location_name":"Quirino","year":"2019","n_value":"87.19","p_value":"14.05","k_value":"10.47"},{"location_name":"Sorsogon","year":"2019","n_value":"56.12","p_value":"7.68","k_value":"10.79"},{"location_name":"South Cotabato","year":"2019","n_value":"91.65","p_value":"7.68","k_value":"13.29"},{"location_name":"Southern Leyte","year":"2019","n_value":"72.99","p_value":"8.33","k_value":"12.05"},{"location_name":"Tarlac","year":"2019","n_value":"78.55","p_value":"7.30","k_value":"12.59"},{"location_name":"Zambales","year":"2019","n_value":"96.09","p_value":"10.52","k_value":"18.39"},{"location_name":"Zamboanga del Sur","year":"2019","n_value":"63.46","p_value":"7.47","k_value":"4.26"},{"location_name":"Zamboanga Sibugay","year":"2019","n_value":"89.33","p_value":"10.64","k_value":"13.25"}]');
-
+    var dbNPK = {{ npkData|safe }};
     let provinces = [];
     let nUse = [];
     let pUse = [];
@@ -205,8 +204,7 @@
 
     // Chart 1
 
-    var dbCostItems = JSON.parse('[{"locName":"Philippines","year":"2009","materialInputs":"21.00","hiredLabor":"31.00","OFELabor":"10.00","machine":"7.00","irrigation":"2.00","landRent":"16.00","interestCapital":"6.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2010","materialInputs":"19.00","hiredLabor":"31.00","OFELabor":"12.00","machine":"7.00","irrigation":"2.00","landRent":"16.00","interestCapital":"6.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2011","materialInputs":"20.00","hiredLabor":"31.00","OFELabor":"12.00","machine":"7.00","irrigation":"2.00","landRent":"15.00","interestCapital":"6.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2012","materialInputs":"20.00","hiredLabor":"33.00","OFELabor":"12.00","machine":"7.00","irrigation":"2.00","landRent":"16.00","interestCapital":"3.00","otherInputs":"7.00"},{"locName":"Philippines","year":"2013","materialInputs":"20.00","hiredLabor":"37.00","OFELabor":"9.00","machine":"7.00","irrigation":"1.00","landRent":"19.00","interestCapital":"3.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2014","materialInputs":"18.00","hiredLabor":"39.00","OFELabor":"10.00","machine":"6.00","irrigation":"1.00","landRent":"19.00","interestCapital":"3.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2015","materialInputs":"18.00","hiredLabor":"37.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"16.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2016","materialInputs":"18.00","hiredLabor":"37.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"16.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2017","materialInputs":"16.00","hiredLabor":"38.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"17.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2018","materialInputs":"16.00","hiredLabor":"38.00","OFELabor":"13.00","machine":"7.00","irrigation":"1.00","landRent":"17.00","interestCapital":"4.00","otherInputs":"4.00"},{"locName":"Philippines","year":"2019","materialInputs":"16.00","hiredLabor":"38.00","OFELabor":"14.00","machine":"7.00","irrigation":"1.00","landRent":"15.00","interestCapital":"5.00","otherInputs":"4.00"}]');
-
+    var dbCostItems ={{ pbcData|safe }};
     let yearsPH = [];
     let materialInputsPH = [];
     let hiredLaborPH = [];
