@@ -49,6 +49,9 @@
         max-width: 1600px;
     }
 }
+.container {
+    max-width: 1600px;
+}
 body {
   background-color: #EEEEEE;
 }

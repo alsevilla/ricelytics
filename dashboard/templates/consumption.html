@@ -16,19 +16,19 @@
             <div class="card-deck mb-2 text-center">
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Per Capita Rice Consumption ({{ per_capita_year }})</h5>
+                        <h5 class="card-title p-2">Average Annual Capita Consumption ({{ per_capita_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ per_kapita_kg_value }}{% if per_kapita_kg_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif per_kapita_kg_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill">
-                            <p class="text-dark">kilograms (kgs)</p>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>kilograms</p>
                         </div>
                     </div>
                 </div>
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Daily Per Capita Rice Consumption ({{ per_capita_year }})</h5>
+                        <h5 class="card-title p-2">Average Daily Per Capita Consumption ({{ per_capita_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ per_kapita_gram_value }}{% if per_kapita_gram_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif per_kapita_gram_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill">
-                            <p class="text-dark">grams (gms)</p>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>grams</p>
                         </div>
                     </div>
                 </div>

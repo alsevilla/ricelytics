@@ -16,28 +16,28 @@
             <div class="card-deck mb-2 text-center">
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Yield - Lowland Irrigated ({{ irrigated_year }})</h5>
+                        <h5 class="card-title p-2">Irrigated Area Total ({{ irrigated_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ irrigated_value }}{% if irrigated_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif irrigated_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">metric tons/ha</p>
+                            <p class="text-white">MILLION HECTARES</p>
                         </div>
                     </div>
                 </div>
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Yield per Hectare ({{ all_eco_year }})</h5>
+                        <h5 class="card-title p-2">National Total ({{ all_eco_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ all_eco_value}}{% if all_eco_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif all_eco_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill">
-                            <p class="text-dark">metric tons/ha</p>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>MILLION HECTARES</p>
                         </div>
                     </div>
                 </div>
                 <div class="card primary mb-4 bg-alternate">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Yield - Non-Irrigated ({{ non_irrigated_year }})</h5>
+                        <h5 class="card-title p-2">Non-Irrigated Area Total ({{ non_irrigated_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ non_irrigated_value }}{% if non_irrigated_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif non_irrigated_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">metric tons/ha</p>
+                            <p class="text-white">MILLION HECTARES</p>
                         </div>
                     </div>
                 </div>
