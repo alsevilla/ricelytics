@@ -367,7 +367,7 @@ def profile(request):
 
 # rice productions
 def riceproduction(request):
-    title = 'Rice Production'# Declared the title for the page title and tab title
+    title = 'Palay Production'# Declared the title for the page title and tab title
     location_code = '999'# locCode in ids_location, Philippines
     location_type = '2'# locType in ids_location, Provinces
     year_start = '2000'# starting Date, for range

@@ -53,9 +53,9 @@
       </div>
     </div>
     {% if searchbartype == '1'%}
-    <nav class="navbar  ml-5 pl-5 navbar-expand-lg navbar-light">
+    <nav class="nav navbar navbar-expand-lg navbar-light">
         <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-house-fill"></i> National</a>
-        <div class="dropdown mr-2">
+        <div class="dropdown ml-3 mr-4">
             <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Region
             </button>
@@ -65,7 +65,7 @@
                 <button class="dropdown-item" type="button">Region</button>
             </div>
         </div>
-        <div class="dropdown mr-2">
+        <div class="dropdown mr-4">
             <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Province
             </button>
@@ -75,7 +75,7 @@
                 <button class="dropdown-item" type="button">Province</button>
             </div>
         </div>
-        <div class="dropdown mr-2">
+        <div class="dropdown mr-4">
             <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Municipality
             </button>
@@ -85,12 +85,12 @@
                 <button class="dropdown-item" type="button">Municipality</button>
             </div>
         </div>
-        <a class="btn btn-info rounded-pill mr-2" href="#" role="button">Get Data</a>
-        <a class="btn border-info rounded-pill btn-light mr-2 text-info" href="#" role="button">Clear Filter</a>
+        <a class="btn btn-info rounded-pill mr-4" href="#" role="button">Get Data</a>
+        <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
     </nav>
     {% else %}
     <!-- Navigation --->
-    <nav class="navbar  ml-5 pl-5 navbar-expand-lg navbar-dark justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-dark justify-content-between">
       <div>
         <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage'%}" role="button"><i class="bi bi-caret-left"></i> Back to Main</a>
       </div>
