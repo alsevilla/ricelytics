@@ -713,7 +713,7 @@ def areaharvested(request):
 
 #estimated yield
 def estimatedyield(request):
-    title = 'Yield Per Hectare' # Declared the title for the page title and tab title
+    title = 'Rice Yield Per Hectare' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
     year_start = '2000'  # starting Date, for range

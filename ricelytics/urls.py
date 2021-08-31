@@ -21,5 +21,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('dashboard.urls')), # Includes the dashboard URL (extending the URLs path of the django application)
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # Declare the Media and static Folder
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # Declare the Media and static Folder
 # This is needed to declare for the deployment of the system
