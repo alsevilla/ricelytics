@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col">
             <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-alternate">
+                <div class="card primary mb-4 bg-alternate text-white">
                     <div class="card-body">
                         <h5 class="card-title p-2">Irrigated Area Total ({{irrigated_year}})</h5>
                         <h1 class="card-text font-weight-bold">{{ irrigated_value }}{% if irrigated_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif irrigated_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-alternate">
+                <div class="card primary mb-4 bg-alternate2 text-white">
                     <div class="card-body">
                         <h5 class="card-title p-2">Non-Irrigated Area Total ({{rainfed_year}})</h5>
                         <h1 class="card-text font-weight-bold">{{rainfed_value}}{% if rainfed_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif rainfed_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
@@ -169,14 +169,14 @@
                 },
                 {
                     label: 'Irrigated',
-                    backgroundColor: '#2138B7', // COLOR 2
-                    borderColor: '#2138B7', // COLOR 2
+                    backgroundColor: '#C45000', // COLOR 2
+                    borderColor: '#C45000', // COLOR 2
                     data: areaIrrigData
                 },
                 {
                     label: 'Rainfed',
-                    backgroundColor: '#A6CEE3', // COLOR 3
-                    borderColor: '#A6CEE3', // COLOR 3
+                    backgroundColor: '#FFB043', // COLOR 3
+                    borderColor: '#FFB043', // COLOR 3
                     data: areaRainData
                 }
             ]

@@ -91,7 +91,7 @@
                     <div class="card secondary text-center mt-2 border-0 bg-light">
                           <div class="card-body">
                             <h6 class="card-title text-center"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Palay Farmgate Price (Dry) per Kilogram</a></h6>
-                            <h2 class="card-text">₱ {{ farmgate_value }}{% if farmgate_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif farmgate_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                            <h2 class="card-text">P {{ farmgate_value }}{% if farmgate_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif farmgate_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                         </div>
                     </div>
                     <div class="card secondary mb-0 pt-3 text-center border-0 bg-light">
@@ -100,11 +100,11 @@
                     <div class="card-group">
                       <div class="card secondary mb-0 pb-2 text-center border-top-0 border-left-0 border-bottom-0 pt-2 pl-2 bg-light">
                         <p><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Well-Milled Rice</a></p>
-                        <h2 class="card-text">₱ {{ wholesaleSp_value }}{% if wholesaleSp_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesaleSp_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <h2 class="card-text">P {{ wholesaleSp_value }}{% if wholesaleSp_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesaleSp_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                       </div>
                       <div class="card secondary mb-0 pb-2 text-center border-top-0 border-right-0 border-bottom-0 pt-2 pl-2 bg-light">
                         <p><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Regular-Milled Rice</a></p>
-                        <h2 class="card-text">₱ {{ wholesale_value }}{% if wholesale_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <h2 class="card-text">P {{ wholesale_value }}{% if wholesale_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                       </div>
                     </div>
                     <div class="card secondary mb-0 pt-3 text-center border-0 bg-light">
@@ -113,11 +113,11 @@
                     <div class="card-group">
                       <div class="card secondary mb-0 pb-2 text-center border-top-0 border-left-0 border-bottom-0 pt-2 pl-2 bg-light">
                         <p class="card-title"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Well-Milled Rice</a></p>
-                        <h2 class="card-text">₱ {{ retailSp_value }}{% if retailSp_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retailSp_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <h2 class="card-text">P {{ retailSp_value }}{% if retailSp_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retailSp_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                       </div>
                       <div class="card secondary mb-0 pb-2 text-center border-top-0 border-right-0 border-bottom-0 pt-2 pl-2 bg-light">
                         <p class="card-title"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Regular-Milled Rice</a></p>
-                        <h2 class="card-text">₱ {{ retail_value }}{% if retail_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <h2 class="card-text">P {{ retail_value }}{% if retail_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                       </div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                             <div class="col-12 p-0 ">
                                 <div class="card secondary text-center pt-2 border-0 bg-light">
                                   <h6 class="card-title "><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Rice Production Gross Value Added</a></h6>
-                                  <h2 class="card-text">₱{{ gva_value }}{% if gva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                                  <h2 class="card-text">P {{ gva_value }}{% if gva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                                   <p>BILLION</p>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                                 <div class="card secondary text-center border-0 bg-light mb-2">
                                     <div class="px-3 pt-2 pb-1">
                                         <h6 class="card-title text-center"><a href="{% url 'Incomes' %}" class="text-black stretched-link text-decoration-none">Farmer's Net Income</a></h6>
-                                        <h2 class="card-text">₱{{ nr_value }}{% if nr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif nr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                                        <h2 class="card-text">P {{nr_value}}{% if nr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif nr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                                         <p>PER HECTARE</p>
                                         <hr>
                                         <div class="row py-2">
@@ -158,7 +158,7 @@
                                             <h6 class="text-left text-nowrap pt-1"><a href="{% url 'Incomes' %}" class="text-black stretched-link text-decoration-none">Gross Income</a></h6>
                                           </div>
                                           <div class="col-5">
-                                            <h3 class="text-center">₱{{ gr_value }}{% if gr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h3>
+                                            <h3 class="text-center">P {{gr_value}}{% if gr_compare > 0 %}<i class="bi bi-caret-up-fill"></i> {% elif gr_compare < 0 %}<i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h3>
                                           </div>
                                           <div class="col-4 pt-1">
                                             <p>PER HECTARE</p>
@@ -174,7 +174,7 @@
                                         <h6 class="text-nowrap pt-2"><a href="{% url 'YieldCost' %}" class="text-black stretched-link text-decoration-none">Cost of Production</a></h6>
                                       </div>
                                       <div class="col-4">
-                                        <h3 class="text-center">₱ {{ uc_value }}{% if uc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif uc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h3>
+                                        <h3 class="text-center">P {{ uc_value }}{% if uc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif uc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h3>
                                       </div>
                                       <div class="col-4 pt-2">
                                         <p class="text-left">PER KILOGRAM</p>
@@ -198,7 +198,7 @@
         </div>
         <div class="col-3">
             <div class="card mb-0">
-                <img class="card-img-top image" src="{% static 'assets/prism_sample.jpg' %}" alt="Card image cap">
+                <img class="card-img-top" src="{% static 'assets/prism_sample.jpg' %}" alt="Card image cap">
             </div>
             <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
         </div>

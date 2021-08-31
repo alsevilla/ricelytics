@@ -16,8 +16,8 @@
             <div class="card-deck mb-2 text-center">
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Palay Farmgate Price - Dry ({{ farmgate_year }})</h5>
-                        <h1 class="card-text mt-3 font-weight-bold smaller">{{ farmgate_value }}{% if farmgate_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif farmgate_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        <h5 class="card-title">Dry Palay Farmgate Price ({{ farmgate_year }})</h5>
+                        <h1 class="card-text mt-4 font-weight-bold">P{{ farmgate_value }}{% if farmgate_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif farmgate_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>per kilogram</p>
                         </div>
@@ -31,20 +31,17 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-6 border-right">
-                                <p>Regular-Milled</p>
-                                <h1 class="card-text font-weight-bold smaller">{{ wholesale_price }}{% if wholesale_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                                <div class="card-note w-100 mx-auto rounded-pill bg-warning">
-                                    <p>per kilogram</p>
-                                </div>
-                            </div>
+                          <div class="col-6 border-right">
+                              <p>Well-Milled</p>
+                              <h1 class="card-text font-weight-bold smaller">P{{ wholesale_spprice }}{% if wholesale_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                          </div>
                             <div class="col-6">
-                                <p>Well-Milled</p>
-                                <h1 class="card-text font-weight-bold smaller">{{ wholesale_spprice }}{% if wholesale_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                                <div class="card-note w-100 mx-auto rounded-pill bg-warning">
-                                    <p>per kilogram</p>
-                                </div>
+                                <p>Regular-Milled</p>
+                                <h1 class="card-text font-weight-bold smaller">P{{ wholesale_price }}{% if wholesale_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                             </div>
+                        </div>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
+                            <p>per kilogram</p>
                         </div>
                     </div>
                 </div>
@@ -57,19 +54,16 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-6 border-right">
-                                <p>Regular-Milled</p>
-                                <h1 class="card-text font-weight-bold smaller">{{ retail_price }}{% if retail_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                                <div class="card-note w-100 mx-auto rounded-pill bg-warning">
-                                    <p>per kilogram</p>
-                                </div>
+                              <p>Well-Milled</p>
+                              <h1 class="card-text font-weight-bold smaller">P{{ retail_spprice }}{% if retail_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                             </div>
                             <div class="col-6">
-                                <p>Well-Milled</p>
-                                <h1 class="card-text font-weight-bold smaller">{{ retail_spprice }}{% if retail_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                                <div class="card-note w-100 mx-auto rounded-pill bg-warning">
-                                    <p>per kilogram</p>
-                                </div>
+                                <p>Regular-Milled</p>
+                                <h1 class="card-text font-weight-bold smaller">P{{ retail_price }}{% if retail_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                             </div>
+                        </div>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
+                            <p>per kilogram</p>
                         </div>
                     </div>
                 </div>

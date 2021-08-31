@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load mathfilters %}
 {% block content %}
 <!-- Body -->
 <div class="sublevel container">
@@ -14,55 +15,50 @@
     <div class="row">
         <div class="col">
             <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-alternate">
+                <div class="card primary mb-5 bg-alternate3">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col">
-                                <h5 class="card-title">Percentage Share to Agriculture, Forestry, and Fishing GVA ({{ aff_year }})</h5>
-                                <p class="card-title-note">(At Constant 2018 Prices)</p>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
                           <div class="col-6 border-right">
-                              <h1 class="card-text align-middle mt-2 font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                          </div>
-                            <div class="col-6 ">
-                                <h1 class="card-text font-weight-bold" style="margin-left: -10px;">{{ aff_price }}{% if aff_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                                <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                    <p class="text-white">in million pesos</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">Rice Production Gross Value Added ({{ rpgva_year }})</h5>
-                        <p class="card-title-note">(At Constant 2018 Prices)</p>
-                        <h1 class="card-text font-weight-bold mt-3">{{ rpgva_price }}{% if rpgva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif rpgva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>billion</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-alternate">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title">Percentage Share to Gross Domestic Product ({{ gdp_year }})</h5>
-                                <p class="card-title-note">(At Constant 2018 Prices)</p>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                          <div class="col-6 border-right">
-                              <h1 class="card-text align-middle mt-2 font-weight-bold">{{ gdp_percent }}%{% if gdp_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gdp_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                            <h6 class="card-title">GVA in Agriculture, Forestry, and Fishing ({{ aff_year }})</h6>
+                              <h1 class="card-text font-weight-bold mt-4" style="margin-left: -10px;">P{{ aff_price }}{% if aff_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                              <div class="card-note w-100 mx-auto rounded-pill bg-primary">
+                                  <p class="text-white">billion</p>
+                              </div>
+                              <p class="card-title-note">(At 2018 Constant Prices)</p>
                           </div>
                           <div class="col-6">
-                              <h1 class="card-text font-weight-bold" style="margin-left: -10px;">{{ gdp_price }}{% if gdp_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gdp_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                              <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                  <p class="text-white">in million pesos</p>
-                              </div>
+                            <h6 class="card-title">Percent Share of Rice Production</h6>
+                            <div class="card-body py-1"><canvas id="GVA"></canvas></div>
+                            <!-- <h1 class="card-text align-middle font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1> -->
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-5 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Gross Value Added in Rice Production ({{ rpgva_year }})</h5>
+                        <h1 class="card-text font-weight-bold mt-4 pt-3">P{{ rpgva_price }}{% if rpgva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif rpgva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>Billion Pesos</p>
+                        </div>
+                        <p>(At 2018 Constant Prices)</p>
+                    </div>
+                </div>
+                <div class="card primary mb-5 bg-alternate3">
+                    <div class="card-body">
+                        <div class="row">
+                          <div class="col-6 border-right">
+                            <h6 class="card-title">National Gross Domestic Product ({{ gdp_year }})</h6>
+                            <h1 class="card-text font-weight-bold" style="margin-left: -10px;">P{{ gdp_price }}{% if gdp_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gdp_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">Trillion</p>
+                            </div>
+                            <p class="card-title-note">(At 2018 Constant Prices)</p>
+                          </div>
+                          <div class="col-6">
+                            <h6 class="card-title">Percent Share of Rice Production</h6>
+                            <div class="card-body py-1"><canvas id="GDP"></canvas></div>
+                            <!-- <h1 class="card-text align-middle mt-2 font-weight-bold">{{ gdp_percent }}%{% if gdp_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gdp_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1> -->
                           </div>
                         </div>
                     </div>
@@ -137,12 +133,185 @@
 {% endblock content %}
 {% block script %}
 <script>
+  Chart.pluginService.register({
+      beforeDraw: function(chart) {
+          if (chart.config.options.elements.center) {
+              // Get ctx from string
+              var ctx = chart.chart.ctx;
+
+              // Get options from the center object in options
+              var centerConfig = chart.config.options.elements.center;
+              var fontStyle = centerConfig.fontStyle || 'Arial';
+              var txt = centerConfig.text;
+              var color = centerConfig.color || '#000';
+              var maxFontSize = centerConfig.maxFontSize || 75;
+              var sidePadding = centerConfig.sidePadding || 20;
+              var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+              // Start with a base font of 30px
+              ctx.font = "30px " + fontStyle;
+
+              // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+              var stringWidth = ctx.measureText(txt).width;
+              var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+              // Find out how much the font can grow in width.
+              var widthRatio = elementWidth / stringWidth;
+              var newFontSize = Math.floor(30 * widthRatio);
+              var elementHeight = (chart.innerRadius * 2);
+
+              // Pick a new font size so it will not be larger than the height of label.
+              var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+              var minFontSize = centerConfig.minFontSize;
+              var lineHeight = centerConfig.lineHeight || 25;
+              var wrapText = false;
+
+              if (minFontSize === undefined) {
+                  minFontSize = 20;
+              }
+
+              if (minFontSize && fontSizeToUse < minFontSize) {
+                  fontSizeToUse = minFontSize;
+                  wrapText = true;
+              }
+
+              // Set font settings to draw it correctly.
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+              var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+              ctx.font = fontSizeToUse + "px " + fontStyle;
+              ctx.fillStyle = color;
+
+              if (!wrapText) {
+                  ctx.fillText(txt, centerX, centerY);
+                  return;
+              }
+
+              var words = txt.split(' ');
+              var line = '';
+              var lines = [];
+
+              // Break words up into multiple lines if necessary
+              for (var n = 0; n < words.length; n++) {
+                  var testLine = line + words[n] + ' ';
+                  var metrics = ctx.measureText(testLine);
+                  var testWidth = metrics.width;
+                  if (testWidth > elementWidth && n > 0) {
+                      lines.push(line);
+                      line = words[n] + ' ';
+                  } else {
+                      line = testLine;
+                  }
+              }
+
+              // Move the center up depending on line height and number of lines
+              centerY -= (lines.length / 2) * lineHeight;
+
+              for (var n = 0; n < lines.length; n++) {
+                  ctx.fillText(lines[n], centerX, centerY);
+                  centerY += lineHeight;
+              }
+              //Draw text in center
+              ctx.fillText(line, centerX, centerY);
+          }
+      }
+  });
     Chart.defaults.global.responsive = true;
     Chart.defaults.global.tooltips.mode = 'index';
     Chart.defaults.global.tooltips.intersect = false;
     Chart.defaults.global.defaultFontFamily = 'Poppins';
     Chart.defaults.global.defaultFontSize = 13;
     Chart.defaults.global.animation.duration = 3000;
+
+    //Chart GVA
+
+    var ctx = document.getElementById("GVA");
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [{{100|sub:aff_percent}}, {{ aff_percent }}],
+                backgroundColor: [
+                    '#FFFFFF', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ],
+                borderColor: [
+                    '#FFFFFF', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 1.1,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: 10
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '{{ aff_percent }}%',
+                    color: '#2138B7', // Default is #000000
+                    fontStyle: 'Poppins', // Default is Arial
+                    sidePadding: 30, // Default is 20 (as a percentage)
+                    minFontSize: 10, // Default is 20 (in px), set to false and text will not wrap.
+                    lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                }
+            }
+        }
+    });
+
+    //Chart GDP
+
+    var ctx = document.getElementById("GDP");
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [{{100|sub:gdp_percent}}, {{ gdp_percent }}],
+                backgroundColor: [
+                    '#FFFFFF', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ],
+                borderColor: [
+                    '#FFFFFF', // COLOR 1
+                    '#2138B7' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 1.1,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: 10
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '{{ gdp_percent }}%',
+                    color: '#2138B7', // Default is #000000
+                    fontStyle: 'Poppins', // Default is Arial
+                    sidePadding: 30, // Default is 20 (as a percentage)
+                    minFontSize: 10, // Default is 20 (in px), set to false and text will not wrap.
+                    lineHeight: 25 // Default is 25 (in px), used for when text wraps
+                }
+            }
+        }
+    });
 
     // CHART 1
 

@@ -14,32 +14,32 @@
     <div class="row">
         <div class="col">
             <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-alternate">
+                <div class="card primary mb-4 bg-alternate3">
                     <div class="card-body">
                         <h5 class="card-title p-2">Gross Return ({{ gr_year }})</h5>
-                        <h2 class="card-text font-weight-bold">₱{{ gr_price }}{% if gr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">per hectare</p>
+                        <h2 class="card-text font-weight-bold">P{{ gr_price }}{% if gr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">per hectare per cropping season</p>
                         </div>
-                        <p class="mb-0 text-capitalize">Average Yield per Hectare (KG) x Farmgate Price (pesos/kg)</p>
+                        <p class="mb-0 text-capitalize">Average Yield per Hectare (kg) x Farmgate Price (pesos/kg)</p>
                     </div>
                 </div>
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
                         <h5 class="card-title p-2">Farmer's Net Returns ({{ nr_year }})</h5>
-                        <h2 class="card-text font-weight-bold">₱{{ nr_price }}{% if nr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif nr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>per hectare per season</p>
+                        <h2 class="card-text font-weight-bold">P{{ nr_price }}{% if nr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif nr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                            <p>per hectare per cropping season</p>
                         </div>
                         <p class="mb-0 text-capitalize">Gross returns - Production Cost</p>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-alternate">
+                <div class="card primary mb-4 bg-alternate3">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Production Costs ({{ pc_year }})</h5>
-                        <h2 class="card-text font-weight-bold">₱{{ pc_price }}{% if pc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif pc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">per hectare</p>
+                        <h5 class="card-title p-2">Total Costs ({{ pc_year }})</h5>
+                        <h2 class="card-text font-weight-bold">P{{ pc_price }}{% if pc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif pc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">per hectare per cropping season</p>
                         </div>
                     </div>
                 </div>

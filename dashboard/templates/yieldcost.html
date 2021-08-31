@@ -16,19 +16,19 @@
             <div class="card-deck mb-2 text-center">
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Yield per Hectare ({{yph_year}})</h5>
+                        <h5 class="card-title p-2">Average Yield ({{yph_year}})</h5>
                         <h1 class="card-text font-weight-bold">{{ yph_value }}{% if yph_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif yph_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill">
-                            <p class="text-dark">metric tons/ha</p>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>metric ton per hectare</p>
                         </div>
                     </div>
                 </div>
                 <div class="card primary mb-4 bg-primary text-white">
                     <div class="card-body">
                         <h5 class="card-title p-2">Unit Cost ({{uc_year}})</h5>
-                        <h1 class="card-text font-weight-bold">PhP {{ uc_value }}{% if uc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif uc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-25 mx-auto rounded-pill">
-                            <p class="text-dark">per kilogram</p>
+                        <h1 class="card-text font-weight-bold">P{{ uc_value }}{% if uc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif uc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>per kilogram</p>
                         </div>
                     </div>
                 </div>
