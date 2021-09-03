@@ -516,6 +516,24 @@ def riceproduction(request):
     for row in tpRows:
         tpResult.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData = json.dumps(tpResult, cls=DecimalEncoder) # dumps the data as a json
+
+    #Top Provincial Production, 2020 only, All Ecosystem (Chart)
+    # Query method for json output (the precedent query didnt work for json output), This method is longer to code for outputing single type of data like in the main KPI Cards
+    tpCursor2 = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    tpCursor2.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) as value
+                        FROM "kpi_pay" "k"
+                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
+                        GROUP BY year, location_name
+                        ORDER BY value DESC
+                        LIMIT 20""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
+    tpRows2 = tpCursor2.fetchall() # fetch all data of the executed query
+    tpResult2 = [] # store the values as an array or data dictionary
+    for row in tpRows2:
+        tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
     context = { 'title': title,
                 'irrigated_year':irrigated_year,
@@ -529,7 +547,8 @@ def riceproduction(request):
                 'aeData': aeData,
                 'rfData': rfData,
                 'iData': iData,
-                'tpData': tpData}
+                'tpData': tpData,
+                'tpData2': tpData2}
     return render(request, 'productions.html', context) # render the page with the context
 
 # area harvested
@@ -694,6 +713,26 @@ def areaharvested(request):
     for row in tpRows:
         tpResult.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData = json.dumps(tpResult, cls=DecimalEncoder) # dumps the data as a json
+
+    #Top Provincial Production, 2020 only, All Ecosystem (Chart)
+    # Query method for json output (the precedent query didnt work for json output), This method is longer to code for outputing single type of data like in the main KPI Cards
+    tpCursor2 = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    # Get location_name, year, value
+    # Table used kpi_pay, ids_location, ids_ecosystem
+    tpCursor2.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, SUM("k"."areaHarv") as value
+                        FROM "kpi_pay" "k"
+                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
+                        GROUP BY year, location_name
+                        ORDER BY value DESC
+                        LIMIT 20""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
+    tpRows2 = tpCursor2.fetchall() # fetch all data of the executed query
+    tpResult2 = [] # store the values as an array or data dictionary
+    for row in tpRows2:
+        tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
     context = { 'title': title,
                 'irrigated_year':irrigated_year,
@@ -708,7 +747,8 @@ def areaharvested(request):
                 'aeData': aeData,
                 'rfData': rfData,
                 'iData': iData,
-                'tpData': tpData}
+                'tpData': tpData,
+                'tpData2': tpData2}
     return render(request, 'harvestareas.html', context) # render the page with the context
 
 #estimated yield
@@ -875,6 +915,25 @@ def estimatedyield(request):
     for row in tpRows:
         tpResult.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData = json.dumps(tpResult, cls=DecimalEncoder) # dumps the data as a json
+
+    #Top Provincial Production, 2020 only, All Ecosystem (Chart)
+    # Execute query (same Raw query execution as the precedent)
+    # Get location_name, year, value
+    # Table used kpi_pay, ids_location, ids_ecosystem
+    tpCursor2 = connection.cursor() # Connection cursor to postgres
+    tpCursor2.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) as value
+                        FROM "kpi_pay" "k"
+                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = '2020' AND "k"."eco"= '2'
+                        GROUP BY year, location_name
+                        ORDER BY value DESC
+                        LIMIT 20""", [location_code, location_type]) # assign values to %s (apples to apples type)
+    tpRows2 = tpCursor2.fetchall() # fetch all data of the executed query
+    tpResult2 = [] # store the values as an array or data dictionary
+    for row in tpRows2:
+        tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
     context = { 'title': title,
                 'irrigated_year':irrigated_year,
@@ -889,7 +948,8 @@ def estimatedyield(request):
                 'aeData': aeData,
                 'rfData': rfData,
                 'iData': iData,
-                'tpData': tpData}
+                'tpData': tpData,
+                'tpData2': tpData2}
     return render (request, 'estyields.html', context) # render the page with the context
 
 # supply and utilization
@@ -936,7 +996,7 @@ def supplyUtilization(request):
     # Execute query (same Raw query execution as the precedent)
     # Get location_name, year, value
     # Table used kpi_sua, ids_location
-    tsCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0) AS value
+    tsCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, ROUND((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0))/1000::numeric,2) AS value
                         FROM "kpi_sua" "s"
                         FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
                         WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<=%s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
@@ -952,8 +1012,8 @@ def supplyUtilization(request):
     # Execute query (same Raw query execution as the precedent)
     # Get location_name, year, value
     # Table used kpi_sua, ids_location
-    tuCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, (COALESCE("s"."UTExports", 0) + (COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0)) + ((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) +
-                        COALESCE("s"."UTEndingStocks", 0)))) AS value
+    tuCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, ROUND(((COALESCE("s"."UTExports", 0) + (COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0)) + ((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) +
+                        COALESCE("s"."UTEndingStocks", 0)))))/1000::numeric,2) AS value
                         FROM "kpi_sua" "s"
                         FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
                         WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<=%s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
@@ -969,7 +1029,7 @@ def supplyUtilization(request):
     # Execute query (same Raw query execution as the precedent)
     # Get location_name, SUBeginningStocks, SUProduction, SUImports
     # Table used kpi_sua, ids_location
-    ssCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, "s"."SUBeginningStocks", "s"."SUProduction", "s"."SUImports"
+    ssCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUBeginningStocks")/1000::numeric,1), ROUND(("s"."SUProduction")/1000::numeric,1), ROUND(("s"."SUImports")/1000::numeric,1)
                         FROM "kpi_sua" "s"
                         FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
                         WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<=%s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
@@ -986,7 +1046,7 @@ def supplyUtilization(request):
     # Execute query (same Raw query execution as the precedent)
     # Get location_name, year, UTExports, UTSeeds, UTFeedsWaste, UTProcessing, UTEndingStocks, uttotalnet
     # Table used kpi_sua, ids_location
-    yaCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, "s"."UTExports", "s"."UTSeeds", "s"."UTFeedsWaste", "s"."UTProcessing", "s"."UTEndingStocks", (COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)) AS UTTotalNet
+    yaCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."UTExports")/1000::numeric,1), ROUND(("s"."UTSeeds")/1000::numeric,1), ROUND(("s"."UTFeedsWaste")/1000::numeric,1), ROUND(("s"."UTProcessing")/1000::numeric,1), ROUND(("s"."UTEndingStocks")/1000::numeric,1), ROUND(((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)))/1000::numeric,1) AS UTTotalNet
                         FROM "kpi_sua" "s"
                         FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
                         WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>= %s AND year<=%s """, [location_code, location_type, year_start, year_end])
@@ -1208,7 +1268,7 @@ def importExport(request):
     # Execute query (same Raw query execution as the precedent)
     # get location_name, year, SUBeginningStocks, SUImports
     # Used tables kpi_sua, ids_location
-    irCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, "s"."SUBeginningStocks", "s"."SUProduction", "s"."SUImports"
+    irCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUBeginningStocks")/1000::numeric,2), ROUND(("s"."SUProduction")/1000::numeric,2), ROUND(("s"."SUImports")/1000::numeric,2)
                         FROM "kpi_sua" "s"
                         FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
                         WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year >= %s AND year <= %s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
@@ -1706,7 +1766,7 @@ def incomes(request):
     # Query method for json output (the precedent query didnt work for json output), This method is longer to code for outputing single type of data like in the main KPI Cards
     acnrCursor = connection.cursor() # Connection cursor to postgres
     # Execute query (same Raw query execution as the precedent)
-    acnrCursor.execute("""SELECT "l"."locName" AS location_name, "y"."year" AS year, ROUND("c"."costProduction") AS costs, ROUND((((("y"."yieldest") * 1000) * ("p"."farmgatePrice")) - "c"."costProduction")) AS net
+    acnrCursor.execute("""SELECT "l"."locName" AS location_name, "y"."year" AS year, ROUND("c"."costProduction") AS costs, ROUND((((("y"."yieldest") * 1000) * ("p"."farmgatePrice")) - "c"."costProduction")) AS net, ROUND((("y"."yieldest") * 1000) * ("p"."farmgatePrice")) AS gross
                         FROM (SELECT "locCode", "locType", "year", "eco", AVG("yieldEst") AS yieldEst
                         	FROM "kpi_pay"
                         	WHERE "locCode" != '999' AND "locType" ='1' AND eco='2' AND "year"= '2019'
@@ -1717,7 +1777,7 @@ def incomes(request):
                         WHERE "y"."locCode"!='999' AND "y"."locType" ='1' AND "y"."eco" ='2'  AND  "y"."year"='2019'""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
     acnrRows = acnrCursor.fetchall() # fetch all data of the executed query
     acnrResult = [] # store the values as an array or data dictionary
-    acnrKeys = ('location_name','year','costs','net') #keys to be used
+    acnrKeys = ('location_name','year','costs','net', 'gross') #keys to be used
     for row in acnrRows:
         acnrResult.append(dict(zip(acnrKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
     acnrData = json.dumps(acnrResult, cls=DecimalEncoder) # dumps the data as a json
@@ -1740,7 +1800,7 @@ def incomes(request):
 
 # yield and production cost
 def yieldcost(request):
-    title = 'Yield and Production Cost'
+    title = 'Yield vs. Production Cost'
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
     year_start = '2000' # starting Date, for range

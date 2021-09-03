@@ -1,8 +1,6 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<!-- Body -->
-<div class="sublevel container">
     <!-- Header --->
     <div class="jumbotron">
         <div class="jumbotron-content text-center">
@@ -40,7 +38,7 @@
             <div class="card mb-4">
                 <div class="card-header text-center">
                     <h5 class="my-0 p-2">Yearly imported rice (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in thousand tons ('000) (PSA, 2020)</p>
+                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
                 </div>
                 <div class="card-body mt-4 mb-4">
                     <div><canvas id="ctxImports"></canvas></div>
@@ -51,7 +49,7 @@
             <div class="card mb-4">
                 <div class="card-header text-center">
                     <h5 class="my-0 p-2">Yearly exported rice (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in thousand tons ('000) (PSA, 2020) </p>
+                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxExports"></canvas></div>
@@ -64,8 +62,8 @@
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Distribution of imported and locally produced rice on total supply (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in percentages (PSA, 2020)</p>
+                    <h5 class="my-0 p-2">Percent share of rice imports and local production to total rice supply (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">Excluding beginning stocks</p>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxImportLocal"></canvas></div>
@@ -74,46 +72,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer --->
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
-                <small class="text-muted">Philippine Rice Research Institute.</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>State of the Rice Sector</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Rice Production</a></li>
-                    <li><a class="text-muted" href="#">Area Harvested</a></li>
-                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
-                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
-                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
-                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
-                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Rice Farmer Characteristics</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
-                    <li><a class="text-muted" href="#">Farm Details</a></li>
-                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>RCEF Updates</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
-                    <li><a class="text-muted" href="#">Machineries</a></li>
-                    <li><a class="text-muted" href="#">Extension</a></li>
-                    <li><a class="text-muted" href="#">Credit</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-</div>
 {% endblock content %}
 {% block script %}
 <script>
@@ -167,7 +125,7 @@
 
     var importsChart = new Chart(importsC, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
@@ -176,6 +134,7 @@
                 label: 'Imported Rice',
                 backgroundColor: '#007FFE', // COLOR 1
                 borderColor: '#007FFE', // COLOR 1
+                type:'line',
                 lineTension: 0,
                 fill: false,
                 data: totalImports
@@ -205,7 +164,32 @@
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
             }
         }
     });
@@ -214,7 +198,7 @@
 
     var exportsChart = new Chart(exportsC, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
@@ -224,6 +208,7 @@
                 backgroundColor: '#A6CEE3', // COLOR 2
                 borderColor: '#A6CEE3', // COLOR 2
                 lineTension: 0,
+                type:'line',
                 fill: false,
                 data: totalExports
             }]
@@ -248,11 +233,37 @@
                     display: true,
                     ticks: {
                         suggestedMin: 0,
+                        suggestedMax:2.5,
                     }
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
             }
         }
     });
@@ -308,10 +319,35 @@
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
             },
             plugins: {
                 labels: false
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 15);
+                    });
+                  });
+                }
             }
         }
     });

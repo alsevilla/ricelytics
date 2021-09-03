@@ -1,14 +1,12 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<!-- Body -->
-<div class="sublevel container">
     <!-- Header --->
     <div class="jumbotron">
         <div class="jumbotron-content text-center">
             <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>Rice Consumption</h1>
-            <p class="lead">Nostrum et aut alias aut ea distinctio accusamus. Ea dolores expedita autem eius. <br />Voluptatibus fuga nulla quia et.</p>
+            <h1>{{ title }}</h1>
+            <p>How much rice do Filipinos consume each day and year? Explore the information of per capita consumption and the comparison of our local consumption and local food consumption.</p>
         </div>
     </div>
     <div class="row">
@@ -39,7 +37,7 @@
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Yearly per capita rice consumption (1999-2016)</h5>
+                    <h5 class="my-0 p-2">Average annual per capita consumption per survey year (1999-2016)</h5>
                     <p class="my-0 font-weight-normal text-muted">in kilograms (kg) (FNRI and PSA, 2019)</p>
                 </div>
                 <div class="card-body">
@@ -50,7 +48,7 @@
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Daily per capita rice consumption (1999-2016)</h5>
+                    <h5 class="my-0 p-2">Average daily per capita consumption per survey year (1999-2016)</h5>
                     <p class="my-0 font-weight-normal text-muted">in grams (gms) (FNRI and PSA, 2019)</p>
                 </div>
                 <div class="card-body">
@@ -63,7 +61,7 @@
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Local production, net food disposable and population (2000-2019)</h5>
+                    <h5 class="my-0 p-2">Local production versus net food disposable (2000-2019)</h5>
                     <p class="my-0 font-weight-normal text-muted">in thousand tons ('000), population in millions (PSA, 2020)</p>
                 </div>
                 <div class="card-body">
@@ -72,46 +70,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer --->
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
-                <small class="text-muted">Philippine Rice Research Institute.</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>State of the Rice Sector</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Rice Production</a></li>
-                    <li><a class="text-muted" href="#">Area Harvested</a></li>
-                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
-                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
-                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
-                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
-                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Rice Farmer Characteristics</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
-                    <li><a class="text-muted" href="#">Farm Details</a></li>
-                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>RCEF Updates</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
-                    <li><a class="text-muted" href="#">Machineries</a></li>
-                    <li><a class="text-muted" href="#">Extension</a></li>
-                    <li><a class="text-muted" href="#">Credit</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-</div>
 {% endblock content %}
 {% block script %}
 <script type="text/javascript" src="{% static 'js/chartjs-plugin-labels.min.js' %}"></script>
@@ -274,7 +232,8 @@
             },
             plugins: {
                 labels: false
-            }
+            },
+
         }
     });
 
@@ -324,6 +283,30 @@
             },
             plugins: {
                 labels: false
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 0);
+                    });
+                  });
+                }
             }
         }
     });
@@ -374,6 +357,30 @@
             },
             plugins: {
                 labels: false
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 0);
+                    });
+                  });
+                }
             }
         }
     });

@@ -2,14 +2,13 @@
 {% load static %}
 {% load mathfilters %}
 {% block content %}
-<!-- Body -->
-<div class="container">
+
     <!-- Header --->
     <div id="main" class="jumbotron">
         <div class="jumbotron-content text-center">
             <h2>{{ title }}</h2>
             <h1>Philippines</h1>
-            <p>Explore the status of the rice industry in terms of production, area, yield, <br /> income, total use of rice, imports, per capita rice consumption, and prices.</p>
+            <p>What is the status of the rice industry in the country? Explore and get insights about the trend of the key performance <br /> indicators of rice production, utilization, and economics.</p>
             <div class="w-25 mx-auto rounded-pill bg-light">
                 <h6 class="text-dark p-2">Population: <strong>108.8 MILLION</strong> (PSA, 2021)</h6>
             </div>
@@ -183,10 +182,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
-                            <h6 class="mt-3 mb-1"><a href="productions">Top 10 Rice Producing Provinces</a></h6>
-                            <p>million metric tons (PSA, 2020)</p>
+                        <div class="col-12 mt-3">
                             <div class="card mb-0">
+                              <h5 class="mb-1 pt-2 pl-3"><a href="productions">Top 10 Rice Producing Provinces</a></h5>
+                              <p class=" pl-3">in million metric tons (PSA, 2020)</p>
                                 <div class="card-body text-center">
                                     <div><canvas id="ctxTopProv"></canvas></div>
                                 </div>
@@ -203,47 +202,6 @@
             <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
         </div>
     </div>
-
-
-    <!-- Footer --->
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
-                <small class="text-muted">Philippine Rice Research Institute.</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>State of the Rice Sector</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Rice Production</a></li>
-                    <li><a class="text-muted" href="#">Area Harvested</a></li>
-                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
-                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
-                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
-                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
-                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Rice Farmer Characteristics</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
-                    <li><a class="text-muted" href="#">Farm Details</a></li>
-                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>RCEF Updates</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
-                    <li><a class="text-muted" href="#">Machineries</a></li>
-                    <li><a class="text-muted" href="#">Extension</a></li>
-                    <li><a class="text-muted" href="#">Credit</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-</div>
 {% endblock content %}
 {% block script %}
 <script>
@@ -377,7 +335,8 @@
             aspectRatio: 2.5,
             scales: {
                 xAxes: [{
-                    display: true,
+                    // display: true,
+                    display: false,
                 }],
                 yAxes: [{
                     display: true,
@@ -391,7 +350,30 @@
             },
             legend: {
                 display: false
-            }
+            },
+              tooltips: false,
+              hover: {
+                animationDuration: 0
+              },
+              animation: {
+                duration: 0,
+                  onComplete: function() {
+                    let chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function(dataset, i)
+                                               {
+                      let meta = chartInstance.controller.getDatasetMeta(i);
+                      meta.data.forEach(function(bar, index) {
+                        let data = dataset.data[index];
+                        ctx.fillText(data, bar._model.x + 15 , bar._model.y + 5);
+                      });
+                    });
+                  }
+              }
         }
     });
 
