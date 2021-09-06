@@ -1,14 +1,13 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<!-- Body -->
-<div class="sublevel container">
+
     <!-- Header --->
     <div class="jumbotron">
         <div class="jumbotron-content text-center">
             <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>Yield and Production Cost</h1>
-            <p class="lead">Comparison of provincial average yield and production hectare using the <br />Rice Based Farm Household Survey, 2016-2017</p>
+            <h1>{{title}}</h1>
+            <p>How competitive are our farmers in terms of having high yield with less cost? Explore the comparison of NPK utilization among the top yielding provinces, distribution of cost items per hectare, and yield and cost analysis per province.</p>
         </div>
     </div>
     <div class="row">
@@ -36,25 +35,25 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Average fertilizer use by N-P-K component, high-yielding provinces, 2019</h5>
-                    <p class="my-0 font-weight-normal text-muted">in kilograms/hectare (%) (PSA, 2020)</p>
+                    <h5 class="my-0 p-2">Average fertilizer use by N-P-K component in high-yielding provinces (2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in kilograms per hectare (kg/ha)</p>
                 </div>
                 <div class="card-body">
-                    <div><canvas id="ctxNPKUse"></canvas></div>
+                    <div><canvas id="ctxNPKUse" height="150"></canvas></div>
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Percentage breakdown of costs of rice production, Philippines, 2009-2019</h5>
+                    <h5 class="my-0 p-2">Percentage breakdown of costs of rice production (2009-2019)</h5>
                     <p class="my-0 font-weight-normal text-muted">in Percentage (%) (PSA, 2020)</p>
                 </div>
                 <div class="card-body">
-                    <div><canvas id="ctxBreakdownPh"></canvas></div>
+                    <div><canvas id="ctxBreakdownPh" height="150"></canvas></div>
                 </div>
             </div>
         </div>
@@ -63,8 +62,8 @@
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Yield and unit cost of top rice-producing provinces, 2017</h5>
-                    <p class="my-0 font-weight-normal text-muted">in PhP per kilogram (PhP/kg), metric tons (mt/ha) (RBFHS, PHILRICE-SED, 2019)</p>
+                    <h5 class="my-0 p-2">Yield versus production cost of top-producing provinces (2017)</h5>
+                    <p class="my-0 font-weight-normal text-muted">The lower right quadrant represents the most competitive provinces with palay yield greater than 4 mt/ha and cost of less than P16/kg.</p>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxYieldCost"></canvas></div>
@@ -73,45 +72,6 @@
         </div>
     </div>
 
-    <!-- Footer --->
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
-                <small class="text-muted">Philippine Rice Research Institute.</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>State of the Rice Sector</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Rice Production</a></li>
-                    <li><a class="text-muted" href="#">Area Harvested</a></li>
-                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
-                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
-                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
-                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
-                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Rice Farmer Characteristics</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
-                    <li><a class="text-muted" href="#">Farm Details</a></li>
-                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>RCEF Updates</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
-                    <li><a class="text-muted" href="#">Machineries</a></li>
-                    <li><a class="text-muted" href="#">Extension</a></li>
-                    <li><a class="text-muted" href="#">Credit</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-</div>
 {% endblock content %}
 {% block script %}
 <script type="text/javascript" src="{% static 'js/chartjs-plugin-labels.min.js' %}"></script>
@@ -194,10 +154,36 @@
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
             },
             plugins: {
                 labels: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 17);
+                    });
+                  });
+                }
             }
         }
     });
@@ -250,49 +236,49 @@
         data: {
             labels: costLabels,
             datasets: [{
-                    label: 'Material Inputs (%)',
+                    label: 'Material Inputs',
                     backgroundColor: '#2037B4', // COLOR 1
                     borderColor: '#2037B4', // COLOR 1
                     data: materialInputsPHData
                 },
                 {
-                    label: 'Hired Labor (%)',
+                    label: 'Hired Labor',
                     backgroundColor: '#FF6800', // COLOR 2
                     borderColor: '#FF6800', // COLOR 2
                     data: hiredLaborPHData
                 },
                 {
-                    label: 'Operator, Family, and Exchange Labor (%)',
+                    label: 'Operator, Family, and Exchange Labor',
                     backgroundColor: '#939393', // COLOR 2
                     borderColor: '#939393', // COLOR 2
                     data: OFELaborPHData
                 },
                 {
-                    label: 'Animal, Machine, Fuel and Oil (%)',
+                    label: 'Animal, Machine, Fuel and Oil',
                     backgroundColor: '#FFC900', // COLOR 2
                     borderColor: '#FFC900', // COLOR 2
                     data: machinePHData
                 },
                 {
-                    label: 'Irrigation (%)',
+                    label: 'Irrigation',
                     backgroundColor: '#205ECD', // COLOR 2
                     borderColor: '#205ECD', // COLOR 2
                     data: irrigationPHData
                 },
                 {
-                    label: 'Machine and Land Rent (%)',
+                    label: 'Machine and Land Rent',
                     backgroundColor: '#60B328', // COLOR 2
                     borderColor: '#60B328', // COLOR 2
                     data: landRentPHData
                 },
                 {
-                    label: 'Interest on Capital (%)',
+                    label: 'Interest on Capital',
                     backgroundColor: '#08549B', // COLOR 2
                     borderColor: '#08549B', // COLOR 2
                     data: interestCapitalPHData
                 },
                 {
-                    label: 'Others (%)',
+                    label: 'Others',
                     backgroundColor: '#AD3A00', // COLOR 3
                     borderColor: '#AD3A00', // COLOR 3
                     data: otherInputsPHData
@@ -320,10 +306,35 @@
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
             },
             plugins: {
                 labels: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 15);
+                    });
+                  });
+                }
             }
         }
     });
@@ -352,14 +363,15 @@
         // Configuration options go here
         options: {
             aspectRatio: 2,
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var label = data.labels[tooltipItem.index];
-                        return label + ': (Yield: ' + tooltipItem.xLabel + ' mt/ha, Cost/kg: PhP ' + tooltipItem.yLabel + ')';
-                    }
-                }
-            },
+            tooltips: false,
+            // tooltips: {
+            //     callbacks: {
+            //         label: function(tooltipItem, data) {
+            //             var label = data.labels[tooltipItem.index];
+            //             return label + ': (Yield: ' + tooltipItem.xLabel + ' mt/ha, Cost/kg: PhP ' + tooltipItem.yLabel + ')';
+            //         }
+            //     }
+            // },
             legend: {
                 display: false
             },
@@ -407,6 +419,28 @@
                     }
                 }],
                 drawTime: "afterDraw" // (default)
+            },
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+              onComplete: function() {
+                let chartInstance = this.chart,
+                    ctx = chartInstance.ctx;
+
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillStyle = '#6c757d';
+
+                this.data.datasets.forEach(function(dataset, i){
+                  let meta = chartInstance.controller.getDatasetMeta(i);
+                  meta.data.forEach(function(bar, index) {
+                    let data = dataset.data[index];
+                    ctx.fillText(data.location_name, bar._model.x + 0 , bar._model.y + -5);
+                  });
+                });
+              }
             }
         }
     });
