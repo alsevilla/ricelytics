@@ -35,30 +35,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Average fertilizer use by N-P-K component in high-yielding provinces (2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in kilograms per hectare (kg/ha)</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxNPKUse" height="150"></canvas></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Percentage breakdown of costs of rice production (2009-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in Percentage (%) (PSA, 2020)</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxBreakdownPh" height="150"></canvas></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col">
             <div class="card mb-4">
                 <div class="card-header text-center">
@@ -71,6 +47,31 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Percentage breakdown of costs of rice production (2009-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Percentage (%) (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxBreakdownPh" height="150"></canvas></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Average fertilizer use by N-P-K component in high-yielding provinces (2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in kilograms per hectare (kg/ha)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxNPKUse" height="150"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock content %}
 {% block script %}
@@ -172,7 +173,7 @@
 
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
-                  ctx.fillStyle = '#6c757d';
+                  ctx.fillStyle = '#ffffff';
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
@@ -312,7 +313,7 @@
             plugins: {
                 labels: false
             },
-            tooltips: false,
+            // tooltips: false,
             hover: {
               animationDuration: 0
             },
@@ -324,7 +325,7 @@
 
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
-                  ctx.fillStyle = '#6c757d';
+                  ctx.fillStyle = '#ffffff';
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
@@ -363,15 +364,15 @@
         // Configuration options go here
         options: {
             aspectRatio: 2,
-            tooltips: false,
-            // tooltips: {
-            //     callbacks: {
-            //         label: function(tooltipItem, data) {
-            //             var label = data.labels[tooltipItem.index];
-            //             return label + ': (Yield: ' + tooltipItem.xLabel + ' mt/ha, Cost/kg: PhP ' + tooltipItem.yLabel + ')';
-            //         }
-            //     }
-            // },
+            // tooltips: false,
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+
+                        return  'Yield: ' + tooltipItem.xLabel + ' t/ha, Cost/kg: PhP ' + tooltipItem.yLabel;
+                    }
+                }
+            },
             legend: {
                 display: false
             },

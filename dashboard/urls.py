@@ -5,6 +5,9 @@ from django.urls import path
 from . import views # Calls all define classes from views.py
 
 urlpatterns = [
+    # ################################################# #
+    #             Rice Industry (National)              #
+    # ################################################# #
     path('', views.index, name='HomePage'),
     path('profile', views.profile, name='Profile'),
     path('productions', views.riceproduction, name='RiceProductions'),
@@ -17,4 +20,15 @@ urlpatterns = [
     path('valuations', views.valuations, name='Valuations'),
     path('incomes', views.incomes, name='Incomes'),
     path('yieldcost', views.yieldcost, name='YieldCost'),
+
+    # ################################################# #
+    #             Rice Farmer (National)                #
+    # ################################################# #
+    path('profile', views.profile, name='Profile'),
+    path('estimatedNetIncome', views.estimatedNetIncome, name='EstimatedNetIncome'),
+    path('agesexcivilstatus', views.agesexcivilstatus, name='AgeSexCivilStatus'),
+    path('farmaveragesize', views.farmaveragesize, name='FarmAverageSize'),
+    path('formalEducation', views.formalEducation, name='FormalEducation'),
+    path('household', views.household, name='Household'),
+    path('organizationTraining', views.organizationTraining, name='OrganizationTraining'),
 ]

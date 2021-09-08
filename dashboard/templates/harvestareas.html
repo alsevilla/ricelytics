@@ -61,7 +61,7 @@
                 <div class="card-header text-center">
                     <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by province</h5>
                     <p class="my-0 font-weight-normal text-muted">in hectares</p>
-                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top '20' only</span>
+                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
                 </div>
                 <div class="card-body">
                     <div id='area'><canvas id="ctxTopAreas"></canvas></div>
@@ -125,7 +125,6 @@
                     type: 'line',
                     fill: false,
                     data: areaAllData,
-                    pointStyle: 'line'
                 },
                 {
                     label: 'Irrigated',
@@ -238,6 +237,7 @@
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
                       ctx.fillText(data, bar._model.x + 30 , bar._model.y + 5);
                     });
                   });

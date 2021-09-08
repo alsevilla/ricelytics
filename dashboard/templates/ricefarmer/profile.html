@@ -1,196 +1,165 @@
 {% extends 'main.html' %}
 {% load static %}
+{% load mathfilters %}
 {% block content %}
-<!-- Body -->
-<div class="farmer container dashboard">
     <!-- Header --->
     <div id="main" class="jumbotron">
         <div class="jumbotron-content text-center">
-            <h2>Profile of the </h2>
-            <h1>Filipino Rice Farmer</h1>
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor<br />incididunt ut labore et dolore magna aliqua.</p>
-            <div class="card-note w-25 mx-auto rounded-pill bg-light">
-                <h6 class="text-dark p-1">Rice Farmers: <strong>2.1 MILLION</strong> (IRRI, 2013)</h6>
-            </div>
+            <h2>{{title2}}</h2>
+            <h1>{{title}}</h1>
+            <p>How do we characterize the rice farmers in the Philippines? Understand the important attributes that contributes to their overall being as our producers of rice.</p>
         </div>
-  </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="card mb-0">
-                <img class="card-img-top" src="{% static 'assets/filipino_rice_farmer.jpg' %}" alt="Card image cap">
-            </div>
-        </div>
-        <div class="col-9">
-            <div class="card-deck text-center mb-0 text-white">
-                <div class="card primary mb-4 bg-warning">
-                    <div class="card-body">
-                        <h5 class="card-title text-left"><a href="averageage.html" class="text-white stretched-link text-decoration-none">Average Age</a></h5>
-                        <h1 class="card-text font-weight-bold">56 <i class="bi bi-caret-up-fill text-primary"></i></h1>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <a class="text-black stretched-link text-decoration-none" href="{% url 'EstimatedNetIncome' %}">
+          <div class="card-deck text-center mb-0 text-white">
+              <div class="card primary mb-4 bg-warning">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-6 border-right">
+                        <h5 class="card-title">Estimated Monthly Income</h5>
+                        <h1 class="card-text font-weight-bold">P3,344<i class="bi bi-caret-up-fill text-primary"></i></h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">years</p>
+                            <p class="text-white">per capita</p>
                         </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-warning">
-                    <div class="card-body">
-                        <h5 class="card-title text-left"><a href="monthlyincome.html" class="text-white stretched-link text-decoration-none">Per Capita Income</a></h5>
-                        <h1 class="card-text font-weight-bold">6,534 <i class="bi bi-caret-up-fill text-primary"></i></h1>
+                      </div>
+                      <div class="col-6">
+                        <h5 class="card-title">Above Poverty Threshold</h5>
+                        <h1 class="card-text font-weight-bold">70%<i class="bi bi-caret-up-fill text-primary"></i></h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">pesos</p>
+                            <p class="text-white">of farmer-respondents</p>
                         </div>
+                      </div>
                     </div>
+                  </div>
+              </div>
+          </div>
+          </a>
+        </div>
+        <div class="col-8">
+          <div class="card-group farmer mb-2">
+            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+              <div class="card-body">
+                <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'AgeSexCivilStatus' %}">Average Age</a></h6>
+                <h2 class="card-text font-weight-bold mb-4">54<i class="bi bi-caret-up-fill"></i></h2>
+                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                    <p class="text-white">years old</p>
                 </div>
-                <div class="card primary mb-4 bg-warning">
-                    <div class="card-body">
-                        <h5 class="card-title text-left"><a href="povertythreshold.html" class="text-white stretched-link text-decoration-none">Above Poverty Threshold</a></h5>
-                        <h1 class="card-text font-weight-bold">72%<i class="bi bi-caret-up-fill text-primary"></i></h1>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">of farm households</p>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="card-deck mt-0 text-center text-white">
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body pl-3 pr-3 pb-0">
-                        <h6 class="card-title text-left mb-2"><a href="malefemale.html" class="text-dark stretched-link text-decoration-none">Sex</a></h6>
-                        <div><canvas id="ctxSex"></canvas></div>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
-                            <p class="text-white">male</p>
-                        </div>
-                    </div>
+            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+              <div class="card-body">
+                <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'AgeSexCivilStatus' %}">Gender</a></h6>
+                <div><canvas class="mb-2" id="ctxSex"></canvas></div>
+                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                    <p class="text-white">Male</p>
                 </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body pl-3 pr-3 pb-0">
-                        <h6 class="card-title text-left mb-2"><a href="civilstatus.html" class="text-dark stretched-link text-decoration-none">Civil Status</a></h6>
-                        <div><canvas id="ctxCivil"></canvas></div>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
-                            <p class="text-white">Married</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body pl-3 pr-3 pb-0">
-                        <h6 class="card-title text-left mb-2"><a href="sourcesofincome.html" class="text-dark stretched-link text-decoration-none">Income Source</a></h6>
-                        <div><canvas id="ctxIncome"></canvas></div>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1 p-0">
-                            <p class="text-white">Rice Farming</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body">
-                        <h6 class="card-title text-left"><a href="householdsize.html" class="text-dark stretched-link text-decoration-none">Household Size</a></h6>
-                        <h2 class="card-text">5<i class="bi bi-caret-up-fill text-primary"></i></h2>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-warning">
-                            <p class="text-white">Members</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body">
-                        <h6 class="card-title text-left"><a href="schooling.html" class="text-dark stretched-link text-decoration-none">Schooling</a></h6>
-                        <h2 class="card-text">8<i class="bi bi-dash text-primary"></i></h2>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p class="text-white">Years</p>
-                        </div>
-                    </div>
-                </div>
-
+              </div>
             </div>
-            <div class="card-deck mt-0 text-center text-dark">
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body pl-3 pr-3 pb-0">
-                        <h6 class="card-title text-left mb-2"><a href="training.html" class="text-dark stretched-link text-decoration-none">Training</a></h6>
-                        <div><canvas id="ctxTraining"></canvas></div>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
-                            <p class="text-white">Attended</p>
-                        </div>
-                    </div>
+            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
+              <div class="card-body">
+                <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'AgeSexCivilStatus' %}">Civil Status</a></h6>
+                <div><canvas class="mb-2" id="ctxCivil"></canvas></div>
+                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                    <p class="text-white">Married</p>
                 </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body pl-3 pr-3 pb-0">
-                        <h6 class="card-title text-left mb-2"><a href="orgmembers.html" class="text-dark stretched-link text-decoration-none">Organization</a></h6>
-                        <div><canvas id="ctxMembers"></canvas></div>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
-                            <p class="text-white">members</p>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'FarmAverageSize' %}">Average Farm Size</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">1.42<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Hectares</p>
+                  </div>
                 </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body pl-3 pr-3 pb-0">
-                        <h6 class="card-title text-left mb-2"><a href="tenurialstatus.html" class="text-dark stretched-link text-decoration-none">Tenurial Status</a></h6>
-                        <h2 class="card-text">62%<i class="bi bi-caret-up-fill text-primary"></i></h2>
-                        <div class="card-note w-100 mx-auto rounded-pill bg-warning mt-1">
-                            <p class="text-white">Owners</p>
-                        </div>
-                    </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'FarmAverageSize' %}">Farm Ownership</a></h6>
+                  <div><canvas class="mb-2" id="ctxTenurial"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">land owners</p>
+                  </div>
                 </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body">
-                        <h6 class="card-title text-left"><a href="farmsize.html" class="text-dark stretched-link text-decoration-none">Farm Size</a></h6>
-                        <h2 class="card-text">1.52<i class="bi bi-caret-up-fill text-primary"></i></h2>
-                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                            <p class="text-white">hectare</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 text-dark">
-                    <div class="card-body">
-                        <h6 class="card-title text-left"><a href="farmingexp.html" class="text-dark stretched-link text-decoration-none">Farming Exp.</a></h6>
-                        <h2 class="card-text">32<i class="bi bi-caret-up-fill text-primary"></i></h2>
-                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                            <p class="text-white">Years</p>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
         </div>
-    </div>
-
-    <!-- Footer --->
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
-                <small class="text-muted">Philippine Rice Research Institute.</small>
-            </div>
-            <div class="col-6 col-md">
-                <h5>State of the Rice Sector</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Rice Production</a></li>
-                    <li><a class="text-muted" href="#">Area Harvested</a></li>
-                    <li><a class="text-muted" href="#">Yield per Hectare</a></li>
-                    <li><a class="text-muted" href="#">Supply and Utilization</a></li>
-                    <li><a class="text-muted" href="#">Gross Value Added</a></li>
-                    <li><a class="text-muted" href="#">Farmer’s Income</a></li>
-                    <li><a class="text-muted" href="#">Palay & Rice Prices</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>Rice Farmer Characteristics</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Sociodemographics</a></li>
-                    <li><a class="text-muted" href="#">Farm Details</a></li>
-                    <li><a class="text-muted" href="#">Technology Awareness</a></li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>RCEF Updates</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Inbred Seeds</a></li>
-                    <li><a class="text-muted" href="#">Machineries</a></li>
-                    <li><a class="text-muted" href="#">Extension</a></li>
-                    <li><a class="text-muted" href="#">Credit</a></li>
-                </ul>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'FormalEducation' %}">Farm Education</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">8<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Years</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'FormalEducation' %}">Farm Experience</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">28<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Years</p>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
-    </footer>
-</div>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'Household' %}">Household Size</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">4<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">members</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'Household' %}">Major Income Source</a></h6>
+                  <div><canvas class="mb-2" id="ctxIncome"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">rice farming</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'OrganizationTraining' %}">Organization Membership</a></h6>
+                  <div><canvas class="mb-2" id="ctxMembers"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Members</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'OrganizationTraining' %}">Training Attendance</a></h6>
+                  <div><canvas class="mb-2" id="ctxTraining"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Attended Training</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
 {% endblock content %}
 {% block script %}
-{% endblock script %}
-{% block scriptChart %}
 <script>
     Chart.pluginService.register({
         beforeDraw: function(chart) {
@@ -303,13 +272,13 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.2,
+            aspectRatio: 3,
             legend: {
                 display: false
             },
             layout: {
                 padding: {
-                    bottom: 2
+                    bottom: 2,
                 }
             },
             responsive: true,
@@ -350,7 +319,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.2,
+            aspectRatio: 3,
             legend: {
                 display: false
             },
@@ -376,11 +345,65 @@
             }
         }
     });
-
     // CHART 3
 
-    var ctx3 = document.getElementById("ctxIncome");
+    var ctx3 = document.getElementById("ctxTenurial");
     var myChart3 = new Chart(ctx3, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [62, 1, 5, 1, 4, 5],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '62%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 4
+
+    var ctx4 = document.getElementById("ctxIncome");
+    var myChart4 = new Chart(ctx4, {
         type: 'pie',
         data: {
             datasets: [{
@@ -405,7 +428,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.2,
+            aspectRatio: 2,
             legend: {
                 display: false
             },
@@ -432,10 +455,10 @@
         }
     });
 
-    // CHART 4
+    // CHART 5
 
-    var ctx4 = document.getElementById("ctxTraining");
-    var myChart = new Chart(ctx4, {
+    var ctx5 = document.getElementById("ctxTraining");
+    var myChart = new Chart(ctx5, {
         type: 'pie',
         data: {
             datasets: [{
@@ -452,7 +475,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.2,
+            aspectRatio: 2,
             legend: {
                 display: false
             },
@@ -479,10 +502,10 @@
         }
     });
 
-    // CHART 5
+    // CHART 6
 
-    var ctx5 = document.getElementById("ctxMembers");
-    var myChart = new Chart(ctx5, {
+    var ctx6 = document.getElementById("ctxMembers");
+    var myChart = new Chart(ctx6, {
         type: 'pie',
         data: {
             datasets: [{
@@ -499,7 +522,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.2,
+            aspectRatio: 2,
             legend: {
                 display: false
             },
@@ -527,4 +550,4 @@
     });
 
 </script>
-{% endblock scriptChart %}
+{% endblock script %}

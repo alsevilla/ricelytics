@@ -337,14 +337,14 @@
 
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
-                  ctx.fillStyle = '#6c757d';
+                  ctx.fillStyle = '#ffffff';
 
                   this.data.datasets.forEach(function(dataset, i){
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
                       // data = parseInt(data).toLocaleString();
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 15);
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 20);
                     });
                   });
                 }

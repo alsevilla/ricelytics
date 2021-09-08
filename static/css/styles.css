@@ -203,7 +203,7 @@ div#main:before {
 .card.mb-4.bg-warning i.bi,
 .card.mb-2.bg-warning i.bi,
 .card.mb-2.bg-warning.col-6 i.bi {
-    color: #212529;
+    color: #2138b7;
 }
 
 .sublevel .card i.bi {
@@ -272,9 +272,8 @@ div#main:before {
 
 .farmer .card.primary h2 {
     margin-left: -15px;
-    font-size: 52px;
-    margin-top: 22px;
-    margin-bottom: 23px;
+    font-size: 60px;
+
 }
 
 .card.primary p {

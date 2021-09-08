@@ -11,10 +11,10 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="card-deck mb-2 text-center">
+            <div class="card-deck mb-4 text-center">
                 <div class="card primary mb-4 bg-alternate text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Irrigated Area ({{ irrigated_year }})</h5>
+                        <h5 class="card-title p-2">Irrigated Area ({{ irrigated_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ irrigated_value }}{% if irrigated_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif irrigated_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                             <p class="text-white">million metric tons</p>
@@ -61,7 +61,7 @@
                 <div class="card-header text-center">
                     <h5 class="my-0 p-2">Total palay produced per province (2020)</h5>
                     <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
-                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top '20' only</span>
+                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
                 </div>
                 <div class="card-body">
                     <div id="prov"><canvas id="ctxTopProv"></canvas></div>
@@ -124,7 +124,6 @@
                     type: 'line',
                     fill: false,
                     data: prodAllData,
-                    pointStyle: 'line'
                 },
                 {
                     label: 'Irrigated',

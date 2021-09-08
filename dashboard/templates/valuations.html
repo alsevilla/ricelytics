@@ -305,7 +305,7 @@
     var riceSecData = [...values_palay];
     var agriSectorChart = new Chart(agriSector, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
@@ -337,12 +337,14 @@
             },
             scales: {
                 xAxes: [{
+                    stacked: true,
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
                     }
                 }],
                 yAxes: [{
+                    stacked: true,
                     display: true,
                     ticks: {
                         suggestedMin: 0,
@@ -366,6 +368,32 @@
                     var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
                     return data.datasets[tooltipItem.datasetIndex].label + ': ' + parseInt(tooltipValue).toLocaleString();
                   }
+                }
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#ffffff';
+                  ctx.font = ctx.font.replace(/\d+px/, "9px");
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 20);
+                    });
+                  });
                 }
             }
         }
@@ -438,13 +466,37 @@
                     display: true,
                     ticks: {
                         suggestedMin: 0,
-                        suggestedMax: 100
+                        suggestedMax: 40
                     }
                 }]
             },
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
             }
         }
     });

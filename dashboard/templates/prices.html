@@ -143,7 +143,7 @@
     var farmPriceReal = [...values_r_prices];
     var farmPricesChart = new Chart(farmPrices, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
@@ -154,14 +154,16 @@
                 borderColor: '#A6CEE3', // COLOR 1
                 lineTension: 0,
                 fill: false,
-                data: farmPriceData
+                data: farmPriceData,
+                type: 'line'
             }, {
                 label: 'Real price (2012=100)',
                 backgroundColor: '#007FFE', // COLOR 2
                 borderColor: '#007FFE', // COLOR 2
                 lineTension: 0,
                 fill: false,
-                data: farmPriceReal
+                data: farmPriceReal,
+                type: 'line'
             }]
         },
 
@@ -191,7 +193,7 @@
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
             },
-            tooltips: false,
+            // tooltips: false,
             hover: {
               animationDuration: 0
             },
@@ -244,7 +246,7 @@
     var wPriceSp = [...values_w_prices];
     var wholesalePricesChart = new Chart(wholesalePrices, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
@@ -255,14 +257,16 @@
                 borderColor: '#007FFE', // COLOR 1
                 lineTension: 0,
                 fill: false,
-                data: wPriceData
+                data: wPriceData,
+                type: 'line'
             }, {
                 label: 'Well milled rice',
                 backgroundColor: '#A6CEE3', // COLOR 2
                 borderColor: '#A6CEE3', // COLOR 2
                 lineTension: 0,
                 fill: false,
-                data: wPriceSp
+                data: wPriceSp,
+                type: 'line'
             }]
         },
 
@@ -345,7 +349,7 @@
     var rPriceSp = [...values_wr_prices];
     var retailPricesChart = new Chart(retailPrices, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
@@ -356,14 +360,16 @@
                 borderColor: '#007FFE', // COLOR 1
                 lineTension: 0,
                 fill: false,
-                data: rPriceData
+                data: rPriceData,
+                type: 'line'
             }, {
                 label: 'Well milled rice',
                 backgroundColor: '#A6CEE3', // COLOR 2
                 borderColor: '#A6CEE3', // COLOR 2
                 lineTension: 0,
                 fill: false,
-                data: rPriceSp
+                data: rPriceSp,
+                type: 'line'
             }]
         },
 

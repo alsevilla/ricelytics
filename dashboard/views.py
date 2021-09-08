@@ -15,8 +15,13 @@ class DecimalEncoder(json.JSONEncoder):
             return float(o)
         super(DecimalEncoder,self).default(o)
 
+# ################################################# #
+#             Rice Industry (National)              #
+# ################################################# #
+
 # home page
 def index(request):
+    riceindustry = 'active-title'
     title = 'State of the Rice Sector in the Philippines' # Declared the title for the page title and tab title
     searchbartype = '1' # for differentiate the nav bar
     location_code = '999' # locCode in ids_location, Philippines
@@ -45,8 +50,9 @@ def index(request):
                                         			WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year>= %s AND year<= %s AND "k"."eco"= %s
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
-                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]):# assign values to %s (apples to apples type)
+                                        			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"\
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]):# assign values to %s (apples to apples type)
         rp_year = data.year # assign year value of the query to rp_year
         rp_value = data.value # assign value value of the query to rp_value
         rp_compare = data.compare # assign compare value of the query to rp_compare
@@ -72,7 +78,8 @@ def index(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""",
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""",
                                         [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]): # assign values to %s (apples to apples type)
         ah_year = data.year # assign year value of the query to ah_year
         ah_value = data.value # assign value value of the query to ah_value
@@ -100,7 +107,8 @@ def index(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]): # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, ecosystem, location_code, location_type, year_start, year_end, ecosystem]): # assign values to %s (apples to apples type)
         yph_year = data.year # assigned year of the query to yph_year
         yph_value = data.value # assigned value of the query to yph_value
         yph_compare = data.compare # assigned compare of the query to yph_compare
@@ -131,29 +139,29 @@ def index(request):
         utilization_value = data.utilization # assigned utilization of the query to utilization_value
         utilization_compare = data.utilization_compare # assigned utilization_compare of the query to utilization_compare
 
-    # locally Produced and Net Food Disposable
+    # Consumption
     # kpi_pay is a stand in model to make the raw sql query to work without a problem, doesnt affect the query if another model was used
     # get the location_name, year, suproduction, uttotalnet, suproduction_compare, uttotalnet_compare
     # Used self join to determined whether the compare value is negative or positive to identify if the value rosed or fell
     # Used tables kpi_sua, ids_location
-    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."suproduction", "t1"."uttotalnet", ("t1"."suproduction" - "t2"."suproduction") as suproduction_compare, ("t1"."uttotalnet" - "t2"."uttotalnet") as uttotalnet_compare
-                                        FROM (		SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUProduction")/1000::numeric,2) AS SUProduction, ROUND(((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)))/1000::numeric,2) AS UTTotalNet
-                                        			FROM "kpi_sua" "s"
-                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
-                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>=%s AND year<=%s
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."kgperyear","t1"."gmperday", ("t1"."kgperyear" - "t2"."kgperyear") as kgperyear_compare, ("t1"."gmperday" - "t2"."gmperday") as gmperday_compare
+                                        FROM (		SELECT "c"."id" AS id, "l"."locName" AS location_name, "c"."year" AS year, "c"."PerCapitaKg" AS KgPerYear, "c"."PerCapitaGram" AS GmPerDay
+                                        			FROM "kpi_percapita" "c"
+                                        			FULL JOIN "ids_location" "l" ON "c"."locCode" = "l"."locCode" AND "c"."locType" = "l"."locType"
+                                        			WHERE "c"."locCode" = %s AND "c"."locType" = %s AND year>=%s AND year<=%s
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t1"
-                                        INNER JOIN (SELECT "s"."id" AS id, "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUProduction")/1000::numeric,2) AS SUProduction, ROUND(((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)))/1000::numeric,2) AS UTTotalNet
-                                        			FROM "kpi_sua" "s"
-                                        			FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
-                                        			WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>=%s AND year<=%s
+                                        INNER JOIN (SELECT "c"."id" AS id, "l"."locName" AS location_name, "c"."year" AS year, "c"."PerCapitaKg" AS KgPerYear, "c"."PerCapitaGram" AS GmPerDay
+                                        			FROM "kpi_percapita" "c"
+                                        			FULL JOIN "ids_location" "l" ON "c"."locCode" = "l"."locCode" AND "c"."locType" = "l"."locType"
+                                        			WHERE "c"."locCode" = %s AND "c"."locType" = %s AND year>=%s AND year<=%s
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id" + 1
                                         LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
-        lp_value = data.suproduction # assigned suproduction of the query to lp_value
-        lp_compare = data.suproduction_compare # assigned suproduction_compare of the query to lp_compare
-        nf_value = data.uttotalnet # assigned uttotalnet of the query to nf_value
-        nf_compare = data.uttotalnet_compare # assigned uttotalnet_compareof the query to nf_compare
+        lp_value = data.kgperyear # assigned suproduction of the query to lp_value
+        lp_compare = data.kgperyear_compare # assigned suproduction_compare of the query to lp_compare
+        nf_value = data.gmperday # assigned uttotalnet of the query to nf_value
+        nf_compare = data.gmperday_compare # assigned uttotalnet_compareof the query to nf_compare
 
     # Import and Export
     # kpi_pay is a stand in model to make the raw sql query to work without a problem, doesnt affect the query if another model was used
@@ -312,7 +320,8 @@ def index(request):
             uc_value = data.value # assigned value of the query to uc_value
             uc_compare = data.compare # assigned compare of the query to uc_compare
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry':riceindustry,
+                'title': title,
                 'searchbartype': searchbartype,
                 'rp_year':rp_year,
                 'rp_value':rp_value,
@@ -357,16 +366,9 @@ def index(request):
                 'uc_compare':uc_compare,}
     return render(request, 'index.html', context) # render the page with the context
 
-#Profile
-def profile(request):
-    title = 'State of the Rice Sector in the Philippines'
-    searchbartype = '1'
-    context = { 'title': title,
-                'searchbartype': searchbartype,}
-    return render(request, 'profile.html', context)
-
 # rice productions
 def riceproduction(request):
+    riceindustry = 'active-title'
     title = 'Palay Production'# Declared the title for the page title and tab title
     location_code = '999'# locCode in ids_location, Philippines
     location_type = '2'# locType in ids_location, Provinces
@@ -396,7 +398,8 @@ def riceproduction(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
         irrigated_year = data.year # assign year to irrigated_year
         irrigated_value = data.value # assign value to irrigated_value
         irrigated_compare = data.compare # assign compare to irrigated_compare
@@ -422,7 +425,8 @@ def riceproduction(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
         all_eco_year = data.year
         all_eco_value = data.value
         all_eco_compare = data.compare
@@ -448,7 +452,8 @@ def riceproduction(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # Execute query (same Raw query execution as the precedent)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # Execute query (same Raw query execution as the precedent)
         non_irrigated_year = data.year # assign year to non_irrigated_year
         non_irrigated_value = data.value # assign value to non_irrigated_value
         non_irrigated_compare = data.compare # assign compare to non_irrigated_compare
@@ -461,7 +466,8 @@ def riceproduction(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '2'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end])  # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end])  # assign values to %s (apples to apples type)
     aeRows = aeCursor.fetchall() # fetch all data of the executed query
     aeResult = []  # store the values as an array or data dictionary
     for row in aeRows:
@@ -477,7 +483,8 @@ def riceproduction(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '1'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     iRows = iCursor.fetchall() # fetch all data of the executed query
     iResult = [] # store the values as an array or data dictionary
     for row in iRows:
@@ -493,7 +500,8 @@ def riceproduction(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '0'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     rfRows = rfCursor.fetchall() # fetch all data of the executed query
     rfResult = [] # store the values as an array or data dictionary
     for row in rfRows:
@@ -535,7 +543,8 @@ def riceproduction(request):
         tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry':riceindustry,
+                'title': title,
                 'irrigated_year':irrigated_year,
                 'irrigated_value':irrigated_value,
                 'irrigated_compare':irrigated_compare,
@@ -553,6 +562,7 @@ def riceproduction(request):
 
 # area harvested
 def areaharvested(request):
+    riceindustry = 'active-title'
     title = 'Area Harvested' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -582,7 +592,8 @@ def areaharvested(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
         irrigated_year = data.year  # assign year to irrigated_year
         irrigated_value = data.value  # assign value of the query to irrigated_value
         irrigated_compare = data.compare  # assign compare of the query to irrigated_compare
@@ -609,7 +620,8 @@ def areaharvested(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
         all_eco_year = data.year # assign year of the query to all_eco_year
         all_eco_value = data.value # assign year of the query to all_eco_value
         all_eco_compare = data.compare # assign year of the query to all_eco_compare
@@ -636,7 +648,8 @@ def areaharvested(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):  # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):  # assign values to %s (apples to apples type)
         rainfed_year = data.year # assign year of the query to rainfed_year
         rainfed_value = data.value # assign year of the query to rainfed_value
         rainfed_compare = data.compare # assign year of the query to rainfed_compare
@@ -652,7 +665,8 @@ def areaharvested(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '2'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     aeRows = aeCursor.fetchall() # fetch all data of the executed query
     aeResult = [] # store the values as an array or data dictionary
     for row in aeRows:
@@ -670,7 +684,8 @@ def areaharvested(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '1'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     iRows = iCursor.fetchall() # fetch all data of the executed query
     iResult = [] # store the values as an array or data dictionary
     for row in iRows:
@@ -688,7 +703,8 @@ def areaharvested(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '0'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     rfRows = rfCursor.fetchall() # fetch all data of the executed query
     rfResult = [] # store the values as an array or data dictionary
     for row in rfRows:
@@ -734,7 +750,8 @@ def areaharvested(request):
         tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry': riceindustry,
+                'title': title,
                 'irrigated_year':irrigated_year,
                 'irrigated_value':irrigated_value,
                 'irrigated_compare':irrigated_compare,
@@ -753,6 +770,7 @@ def areaharvested(request):
 
 #estimated yield
 def estimatedyield(request):
+    riceindustry = 'active-title'
     title = 'Rice Yield Per Hectare' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -782,7 +800,8 @@ def estimatedyield(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
         irrigated_year = data.year # assign year of the query to irrigated_year
         irrigated_value = data.value # assign value of the query to irrigated_value
         irrigated_compare = data.compare # assign compare of the query to irrigated_compare
@@ -809,7 +828,8 @@ def estimatedyield(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]): # assign values to %s (apples to apples type)
         all_eco_year = data.year # assign year of the query to all_eco_year
         all_eco_value = data.value # assign year of the query to all_eco_value
         all_eco_compare = data.compare # assign year of the query to all_eco_compare
@@ -836,7 +856,8 @@ def estimatedyield(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        LIMIT 1""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):# assign values to %s (apples to apples type)
+                                        ORDER BY "t1"."year" DESC
+                                        LIMIT 2""", [location_code, location_type, year_start, year_end,location_code, location_type, year_start, year_end]):# assign values to %s (apples to apples type)
         non_irrigated_year = data.year # assign year of the query to non_irrigated_year
         non_irrigated_value = data.value # assign year of the query to non_irrigated_value
         non_irrigated_compare = data.compare # assign year of the query to non_irrigated_compare
@@ -853,7 +874,8 @@ def estimatedyield(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '2'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     aeRows = aeCursor.fetchall() # fetch all data of the executed query
     aeResult = [] # store the values as an array or data dictionary
     for row in aeRows:
@@ -872,7 +894,8 @@ def estimatedyield(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '1'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     iRows = iCursor.fetchall() # fetch all data of the executed query
     iResult = [] # store the values as an array or data dictionary
     for row in iRows:
@@ -891,7 +914,8 @@ def estimatedyield(request):
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "k"."locCode"= %s AND "k"."locType"= %s AND "k"."year">= %s AND "k"."year"<= %s AND "k"."eco"= '0'
-                        GROUP BY year, location_name""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        GROUP BY year, location_name
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     rfRows = rfCursor.fetchall() # fetch all data of the executed query
     rfResult = [] # store the values as an array or data dictionary
     for row in rfRows:
@@ -935,7 +959,8 @@ def estimatedyield(request):
         tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry': riceindustry,
+                'title': title,
                 'irrigated_year':irrigated_year,
                 'irrigated_value':irrigated_value,
                 'irrigated_compare':irrigated_compare,
@@ -954,6 +979,7 @@ def estimatedyield(request):
 
 # supply and utilization
 def supplyUtilization(request):
+    riceindustry = 'active-title'
     title = 'Supply and Utilization' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -1060,7 +1086,8 @@ def supplyUtilization(request):
     # Local production, net food disposable and population
 
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry':riceindustry,
+                'title': title,
                 'supply_year':supply_year,
                 'supply_value':supply_value,
                 'supply_compare':supply_compare,
@@ -1076,6 +1103,7 @@ def supplyUtilization(request):
 
 # consumption
 def consumption(request):
+    riceindustry = 'active-title'
     title = 'Rice Consumption'  # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -1146,7 +1174,7 @@ def consumption(request):
     # Get location_name, year, SUBeginningStocks, SUProduction, SUImports
     # Table used kpi_sua, ids_location
     lpCursor = connection.cursor() # Connection cursor to postgres
-    lpCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, "s"."SUBeginningStocks", "s"."SUProduction", "s"."SUImports"
+    lpCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."SUBeginningStocks")/1000::numeric,2), ROUND(("s"."SUProduction")/1000::numeric,2), ROUND(("s"."SUImports")/1000::numeric,2)
                         FROM "kpi_sua" "s"
                         FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
                         WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>=%s AND year<=%s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
@@ -1161,7 +1189,7 @@ def consumption(request):
     # Get location_name, year, SUBeginningStocks, SUProduction, SUImports
     # Table used kpi_sua, ids_location
     nfCursor = connection.cursor() # Connection cursor to postgres
-    nfCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, "s"."UTExports", "s"."UTSeeds", "s"."UTFeedsWaste", "s"."UTProcessing", "s"."UTEndingStocks", (COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)) AS UTTotalNet
+    nfCursor.execute("""SELECT "l"."locName" AS location_name, "s"."year" AS year, ROUND(("s"."UTExports")/1000::numeric,2), ROUND(("s"."UTSeeds")/1000::numeric,2), ROUND(("s"."UTFeedsWaste")/1000::numeric,2), ROUND(("s"."UTProcessing")/1000::numeric,2), ROUND(("s"."UTEndingStocks")/1000::numeric,2), ROUND(((COALESCE("s"."SUBeginningStocks", 0) + COALESCE("s"."SUProduction", 0) + COALESCE("s"."SUImports", 0)) - (COALESCE("s"."UTExports", 0) + COALESCE("s"."UTSeeds", 0) + COALESCE("s"."UTFeedsWaste", 0) + COALESCE("s"."UTProcessing", 0) + COALESCE("s"."UTEndingStocks", 0)))/1000::numeric,2) AS UTTotalNet
                         FROM "kpi_sua" "s"
                         FULL JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
                         WHERE "s"."locCode" = %s AND "s"."locType" = %s AND year>=%s AND year<=%s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
@@ -1216,7 +1244,8 @@ def consumption(request):
         pResult.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     pData = json.dumps(pResult, cls=DecimalEncoder)# dumps the data as a json
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry':riceindustry,
+                'title': title,
                 'per_capita_year':per_capita_year,
                 'per_kapita_kg_value':per_kapita_kg_value,
                 'per_kapita_kg_compare':per_kapita_kg_compare,
@@ -1233,6 +1262,7 @@ def consumption(request):
 
 # import and export
 def importExport(request):
+    riceindustry = 'active-title'
     title = 'Imports and Exports' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -1294,7 +1324,8 @@ def importExport(request):
     for row in erRows:
         erResult.append(dict(zip(erKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
     erData = json.dumps(erResult, cls=DecimalEncoder) # dumps the data as a json
-    context = { 'title': title,
+    context = { 'riceindustry':riceindustry,
+                'title': title,
                 'imexport_year':imexport_year,
                 'import_value': import_value,
                 'import_compare':import_compare,
@@ -1306,6 +1337,7 @@ def importExport(request):
 
 # Prices
 def prices(request):
+    riceindustry = 'active-title'
     title = 'Rice Market Prices' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces
@@ -1465,7 +1497,8 @@ def prices(request):
         rwmResult.append(dict(zip(keys,row)))  # append all aeRows data with the keys defined above to a data dictionary
     rwmData = json.dumps(rwmResult, cls=DecimalEncoder)  # dumps the data as a json
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry': riceindustry,
+                'title': title,
                 'farmgate_year':farmgate_year,
                 'farmgate_value':farmgate_value,
                 'farmgate_compare':farmgate_compare,
@@ -1489,6 +1522,7 @@ def prices(request):
 
 # valuations
 def valuations(request):
+    riceindustry = 'active-title'
     title = 'Gross Value Added' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -1622,7 +1656,8 @@ def valuations(request):
         agdpsResult.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     agdpsData = json.dumps(agdpsResult, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry': riceindustry,
+                'title': title,
                 'aff_year':aff_year,
                 'aff_price':aff_price,
                 'aff_price_compare':aff_price_compare,
@@ -1644,6 +1679,7 @@ def valuations(request):
 
 # incomes
 def incomes(request):
+    riceindustry = 'active-title'
     title = "Farmer's Income"  # Declared the title for the page title and tab title
     location_code = '999'  # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -1722,7 +1758,8 @@ def incomes(request):
                             	GROUP BY "locCode", "locType", "year", "eco") "y"
                             FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
                             FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
-                            WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
+                            WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s
+                            ORDER BY year ASC""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
     agrRows = agrCursor.fetchall() # fetch all data of the executed query
     agrResult = [] # store the values as an array or data dictionary
     for row in agrRows:
@@ -1736,7 +1773,8 @@ def incomes(request):
     acCursor.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, "k"."costProduction" AS value
                         FROM "kpi_costs" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
-                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year >= %s AND year <= %s""", [location_code, location_type, year_start, year_end])
+                        WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year >= %s AND year <= %s
+                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end])
     acRows = acCursor.fetchall() # fetch all data of the executed query
     acResult = [] # store the values as an array or data dictionary
     for row in acRows:
@@ -1755,7 +1793,8 @@ def incomes(request):
                         FULL JOIN "kpi_costs" "c" ON "y"."locCode" = "c"."locCode" AND "y"."locType" = "c"."locType" AND "y"."year" = "c"."year"
                         FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
                         FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
-                        WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
+                        WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s
+                        ORDER BY year ASC""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
     anrRows = anrCursor.fetchall() # fetch all data of the executed query
     anrResult = [] # store the values as an array or data dictionary
     for row in anrRows:
@@ -1782,7 +1821,8 @@ def incomes(request):
         acnrResult.append(dict(zip(acnrKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
     acnrData = json.dumps(acnrResult, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
-    context = { 'title': title,
+    context = { 'riceindustry': riceindustry,
+                'title': title,
                 'gr_year':gr_year,
                 'gr_price':gr_price,
                 'gr_compare':gr_compare,
@@ -1800,6 +1840,7 @@ def incomes(request):
 
 # yield and production cost
 def yieldcost(request):
+    riceindustry = 'active-title'
     title = 'Yield vs. Production Cost'
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -1926,7 +1967,8 @@ def yieldcost(request):
     for row in yuRows:
         yuResult.append(dict(zip(yuKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
     yuData = json.dumps(yuResult, cls=DecimalEncoder)# dumps the data as a json
-    context = { 'title': title,
+    context = { 'riceindustry':riceindustry,
+                'title': title,
                 'yph_year':yph_year,
                 'yph_value':yph_value,
                 'yph_compare':yph_compare,
@@ -1937,3 +1979,79 @@ def yieldcost(request):
                 'pbcData':pbcData,
                 'yuData':yuData,}
     return render(request, 'yieldcost.html', context)
+
+# ################################################# #
+#             Rice Farmer (National)                #
+# ################################################# #
+#Profile
+def profile(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the'
+    title = 'Filipino Rice Farmer'
+    searchbartype = '1'
+
+    context = { 'ricefarmer': ricefarmer,
+                'title': title,
+                'title2':title2,
+                'searchbartype': searchbartype,}
+    return render(request, 'ricefarmer/profile.html', context)
+def estimatedNetIncome(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Estimated Net Income'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request,'ricefarmer/estimatedNetIncome.html', context)
+def agesexcivilstatus(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Age, Sex and Civil Status'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/agesexcivilstatus.html', context)
+def farmaveragesize(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Farm Average Size and Farm Ownership'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/farmaveragesize.html', context)
+def formalEducation(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Formal Education and Farming Experience'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/formalEducation.html', context)
+def household(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Household Size and Source of Income'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/household.html', context)
+def organizationTraining(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Household Size and Source of Income'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/organizationTraining.html',context)

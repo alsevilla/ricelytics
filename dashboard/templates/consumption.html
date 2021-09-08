@@ -62,7 +62,7 @@
             <div class="card mb-4">
                 <div class="card-header text-center">
                     <h5 class="my-0 p-2">Local production versus net food disposable (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in thousand tons ('000), population in millions (PSA, 2020)</p>
+                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxProdFood"></canvas></div>
@@ -193,12 +193,6 @@
                 fill: false,
                 data: totalFood,
                 yAxisID: 'A'
-            }, {
-                label: 'Population (in Million)',
-                backgroundColor: '#2138B7', // COLOR 2
-                borderColor: '#2138B7', // COLOR 2
-                data: populationPH,
-                yAxisID: 'B'
             }]
         },
 
@@ -221,18 +215,38 @@
                     id: 'A',
                     type: 'linear',
                     position: 'left',
-                }, {
-                    id: 'B',
-                    type: 'linear',
-                    position: 'right',
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
             },
             plugins: {
                 labels: false
             },
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
+            }
 
         }
     });
