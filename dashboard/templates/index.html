@@ -123,7 +123,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="col-12 p-0 ">
-                                <div class="card secondary text-center pt-2 border-0 bg-light">
+                                <div class="card secondary text-center pt-2 pb-2 border-0 bg-light">
                                   <h6 class="card-title "><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Value of Rice Production</a></h6>
                                   <h2 class="card-text">P {{ gva_value }}{% if gva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
                                   <p>BILLION</p>
@@ -131,14 +131,10 @@
                             </div>
                             <div class="col-12 p-0">
                                 <div class="card-group">
-                                    <div class="card secondary text-center border-top-0 border-left-0 border-bottom-0 pt-2 pl-2 bg-light">
-                                      <h6 class="text-center mb-0"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Share to Value of Agricultural Production</a></h6>
+                                    <div class="card secondary text-center border-0 bg-light">
+                                      <h6 class="text-center mb-0"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Percent share to Value of Agricultural Production</a></h6>
                                       <div class="card-body py-1"><canvas id="ctxAgriShare"></canvas></div>
                                       <!--<h2 class="card-text">20.7%<i class="bi bi-caret-up-fill"></i></h2>-->
-                                    </div>
-                                    <div class="card secondary text-center border-top-0 border-right-0 border-bottom-0 pt-2 pl-2 bg-light">
-                                      <h6 class="text-center mb-0"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Share to Gross Capital Formation</a></h6>
-                                      <div class="card-body py-1"><canvas id="ctxNationalShare"></canvas></div>
                                     </div>
                                 </div>
                             </div>
@@ -399,7 +395,7 @@
         options: {
 
             cutoutPercentage: 60,
-            aspectRatio: 1.1,
+            aspectRatio: 2.7,
             legend: {
                 display: false
             },
@@ -424,50 +420,6 @@
         }
     });
 
-    // CHART 3
-
-    var ctx2 = document.getElementById("ctxNationalShare");
-    var myChart2 = new Chart(ctx2, {
-        type: 'pie',
-        data: {
-            datasets: [{
-                data: [{{100|sub:gdpshare_value}}, {{ gdpshare_value }}],
-                backgroundColor: [
-                    '#A6CEE3', // COLOR 1
-                    '#2138B7' // COLOR 2
-                ],
-                borderColor: [
-                    '#A6CEE3', // COLOR 1
-                    '#2138B7' // COLOR 2
-                ]
-            }]
-        },
-        options: {
-            cutoutPercentage: 60,
-            aspectRatio: 1.1,
-            legend: {
-                display: false
-            },
-            layout: {
-                padding: 10
-            },
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                labels: false
-            },
-            elements: {
-                center: {
-                    text: '{{ gdpshare_value }}%',
-                    color: '#212529', // Default is #000000
-                    fontStyle: 'Poppins', // Default is Arial
-                    sidePadding: 20, // Default is 20 (as a percentage)
-                    minFontSize: 12, // Default is 20 (in px), set to false and text will not wrap.
-                    lineHeight: 25 // Default is 25 (in px), used for when text wraps
-                }
-            }
-        }
-    });
 
 </script>
 

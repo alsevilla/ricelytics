@@ -1523,7 +1523,7 @@ def prices(request):
 # valuations
 def valuations(request):
     riceindustry = 'active-title'
-    title = 'Gross Value Added' # Declared the title for the page title and tab title
+    title = 'Value of Production' # Declared the title for the page title and tab title
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
     year_start = '2000' # starting Date, for range
