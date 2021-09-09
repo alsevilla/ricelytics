@@ -1,0 +1,430 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+  <!-- Header --->
+  <div class="jumbotron">
+      <div class="text-center jumbotron-content">
+          <h2>State of the Rice Sector in the Philippines</h2>
+          <h1>{{title}}</h1>
+          <p>How does the price of un-hulled and de-hulled rice fare in the marketplace? Know the current and historical price of rice.</p>
+      </div>
+  </div>
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Dry Palay Farmgate Price</h5>
+                        <h1 class="card-text mt-4 font-weight-bold">P19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>per kilogram</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title">Bigas Wholesale Price</h5>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-6 border-right">
+                              <p>Well-Milled</p>
+                              <h1 class="card-text font-weight-bold smaller">P19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                          </div>
+                            <div class="col-6">
+                                <p>Regular-Milled</p>
+                                <h1 class="card-text font-weight-bold smaller">P19.29<i class="bi bi-caret-up-fill"></i></h1>
+                            </div>
+                        </div>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
+                            <p>per kilogram</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title">Bigas Retail Price</h5>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6 border-right">
+                              <p>Well-Milled</p>
+                              <h1 class="card-text font-weight-bold smaller">P19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                            </div>
+                            <div class="col-6">
+                                <p>Regular-Milled</p>
+                                <h1 class="card-text font-weight-bold smaller">P19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                            </div>
+                        </div>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
+                            <p>per kilogram</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Dry palay farmgate price (year range)(2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxFarmPrices"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Bigas wholesale price of regular and well-milled rice (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxWholesalePrices"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Bigas retail price of regular and well-milled rice (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxRetailPrices"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // CHART 1
+
+    var dbFarmPrices = {{ npData|safe }};
+    var dbFarmPricesR = {{ rpData|safe }};
+    let years = [];
+    let values_n_prices = [];
+    let values_r_prices = [];
+
+    try {
+        dbFarmPrices.map((item) => {
+            years.push(item.year);
+            values_n_prices.push(item.value);
+        });
+        dbFarmPricesR.map((item) => {
+            values_r_prices.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var farmPrices = document.getElementById('ctxFarmPrices').getContext('2d');
+    var tempFarmLabels = [...years];
+    var farmPriceData = [...values_n_prices];
+    var farmPriceReal = [...values_r_prices];
+    var farmPricesChart = new Chart(farmPrices, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempFarmLabels,
+            datasets: [{
+                label: 'Nominal price',
+                backgroundColor: '#A6CEE3', // COLOR 1
+                borderColor: '#A6CEE3', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: farmPriceData,
+                type: 'line'
+            }, {
+                label: 'Real price (2012=100)',
+                backgroundColor: '#007FFE', // COLOR 2
+                borderColor: '#007FFE', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: farmPriceReal,
+                type: 'line'
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 2.2,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            // tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    // CHART 2
+
+    var dbWPrice ={{ rmData|safe }};
+    var dbWPricesS ={{ wmData|safe }};
+    let years_w = [];
+    let values_rm_prices = [];
+    let values_w_prices = [];
+
+    try {
+        dbWPrice.map((item) => {
+            years_w.push(item.year);
+            values_rm_prices.push(item.value);
+        });
+        dbWPricesS.map((item) => {
+            values_w_prices.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var wholesalePrices = document.getElementById('ctxWholesalePrices').getContext('2d');
+    var tempWLabels = [...years_w];
+    var wPriceData = [...values_rm_prices];
+    var wPriceSp = [...values_w_prices];
+    var wholesalePricesChart = new Chart(wholesalePrices, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempWLabels,
+            datasets: [{
+                label: 'Regular milled rice',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: wPriceData,
+                type: 'line'
+            }, {
+                label: 'Well milled rice',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: wPriceSp,
+                type: 'line'
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 2.2,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    // CHART 3
+
+    var dbRTPrice = {{ rrmData|safe }};
+    var dbRTPricesS = {{ rwmData|safe }};
+    let years_r = [];
+    let values_rr_prices = [];
+    let values_wr_prices = [];
+
+    try {
+        dbRTPrice.map((item) => {
+            years_r.push(item.year);
+            values_rr_prices.push(item.value);
+        });
+        dbRTPricesS.map((item) => {
+            values_wr_prices.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var retailPrices = document.getElementById('ctxRetailPrices').getContext('2d');
+    var tempRLabels = [...years_r];
+    var rPriceData = [...values_rr_prices];
+    var rPriceSp = [...values_wr_prices];
+    var retailPricesChart = new Chart(retailPrices, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempWLabels,
+            datasets: [{
+                label: 'Regular milled rice',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: rPriceData,
+                type: 'line'
+            }, {
+                label: 'Well milled rice',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: rPriceSp,
+                type: 'line'
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 2.2,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+</script>
+{% endblock script %}

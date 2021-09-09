@@ -1,0 +1,479 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <!-- Header --->
+    <div class="jumbotron ">
+        <div class="jumbotron-content text-center">
+            <h2>State of the Rice Sector in the Philippines</h2>
+            <h1>{{ title }}</h1>
+            <p>How much do our farmers earn per season? Find out their net income through the years derived from the gross return minus the total cost of production. Explore the farmer earnings in the regions.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-alternate3">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Gross Return</h5>
+                        <h2 class="card-text font-weight-bold">P14.57<i class="bi bi-caret-up-fill"></i></h2>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">per hectare per cropping season</p>
+                        </div>
+                        <p class="mb-0 text-capitalize">Gross Return = Average Yield Per Hectare (Kg) x Farmgate Price (Pesos/Kg)</p>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Farmer's Net Returns</h5>
+                        <h2 class="card-text font-weight-bold">P19.29<i class="bi bi-caret-up-fill"></i></h2>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                            <p>per hectare per cropping season</p>
+                        </div>
+                        <p class="mb-0 text-capitalize">Net Return = Gross Return – Total Cost</p>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-alternate3">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Total Costs</h5>
+                        <h2 class="card-text font-weight-bold">P14.57<i class="bi bi-caret-up-fill"></i></h2>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">per hectare per cropping season</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Average gross return per hectare of rice production (2000-2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxGrossReturns"></canvas></div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Gross return, net return, and total cost per hectare of rice production by region (2019)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                      <div class="col-6">
+                        <canvas id="ctxTopRegions"></canvas>
+                      </div>
+                      <div class="col-3">
+                        <canvas id="ctxTopRegions2"></canvas>
+                      </div>
+                      <div class="col-3">
+                        <canvas id="ctxTopRegions3"></canvas>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    var dbNetReturns ={{ anrData|safe }};
+    let years_net = [];
+    let values_net = [];
+
+    try {
+        dbNetReturns.map((item) => {
+            years_net.push(item.year);
+            values_net.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var dbGrossReturns ={{ agrData|safe }};
+    let years_gross = [];
+    let values_gross = [];
+
+    try {
+        dbGrossReturns.map((item) => {
+            years_gross.push(item.year);
+            values_gross.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var dbCosts = {{ acData|safe }};
+    let years_costs = [];
+    let values_costs = [];
+
+    try {
+        dbCosts.map((item) => {
+            years_costs.push(item.year);
+            values_costs.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var grossReturns = document.getElementById('ctxGrossReturns').getContext('2d');
+    var tempGrossReturns = [...years_gross];
+    var grossNetData = [...values_net];
+    var grossReturnsData = [...values_gross];
+    var costsData = [...values_costs];
+    var grossReturnsChart = new Chart(grossReturns, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempGrossReturns,
+            datasets: [{
+                label: 'Gross return',
+                backgroundColor: '#2E382E', // COLOR 1
+                borderColor: '#2E382E', // COLOR 1
+                type: 'line',
+                lineTension: 0,
+                fill: false,
+                data: grossReturnsData
+            }, {
+                label: 'Total cost',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                // type: 'line',
+                fill: false,
+                data: costsData
+            }, {
+                label: 'Net return',
+                backgroundColor: '#2138B7', // COLOR 2
+                borderColor: '#2138B7', // COLOR 2
+                // type: 'line',
+                fill: false,
+                data: grossNetData
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 2,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 85000,
+                        beginAtZero:true,
+                        userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+                            return value;
+                          }
+                    }
+                }]
+            },
+            legend: {
+                display: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            plugins: {
+                labels: false
+            },
+            // tooltips: false,
+            tooltips: {
+              callbacks:{
+                label: function (tooltipItem, data) {
+                  var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                  return data.datasets[tooltipItem.datasetIndex].label + ': ' + parseInt(tooltipValue).toLocaleString();
+                }
+              }
+            },
+            // hover: {
+            //   animationDuration: 0
+            // },
+            // animation: {
+            //   duration: 1,
+            //     onComplete: function() {
+            //       let chartInstance = this.chart,
+            //           ctx = chartInstance.ctx;
+            //
+            //       ctx.textAlign = 'center';
+            //       ctx.textBaseline = 'bottom';
+            //       ctx.fillStyle = '#6c757d';
+            //
+            //       this.data.datasets.forEach(function(dataset, i){
+            //         let meta = chartInstance.controller.getDatasetMeta(i);
+            //         meta.data.forEach(function(bar, index) {
+            //           let data = dataset.data[index];
+            //           ctx.fillText(data, bar._model.x + 0 , bar._model.y + 80);
+            //         });
+            //       });
+            //     },
+            //
+            // }
+        }
+    });
+
+
+    // CHART 2
+
+    var dbRegs = {{ acnrData|safe }};
+    let regions = [];
+    let costs = [];
+    let netr = [];
+    let grossr=[]
+
+    try {
+        dbRegs.map((item) => {
+            regions.push(item.location_name);
+            costs.push(item.costs);
+            netr.push(item.net);
+            grossr.push(item.gross)
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempRgLabels = [...regions];
+    var topCostsData = [...costs];
+    var topNetData = [...netr];
+    var topGrossData = [...grossr]
+
+    var topReg = document.getElementById('ctxTopRegions').getContext('2d');
+    var topRegChart = new Chart(topReg, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempRgLabels,
+            datasets: [{
+              label: 'Gross Return',
+              backgroundColor: '#2E382E', // COLOR 4
+              borderColor: '#2E382E', // COLOR 4
+              fill: false,
+              data: topGrossData
+            }]
+        },
+
+        options: {
+            aspectRatio: 1,
+            scales: {
+                xAxes: [{
+                    // stacked: true,
+                    display: false,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 90100,
+                        beginAtZero:true,
+                        userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+                            return value;
+                          }
+                    }
+                }],
+                yAxes: [{
+                    // stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 7);
+                    });
+                  });
+                }
+            }
+        }
+    });
+    var topReg2 = document.getElementById('ctxTopRegions2').getContext('2d');
+    var topRegChart2 = new Chart(topReg2, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempRgLabels,
+            datasets: [{
+                label: 'Total Costs',
+                backgroundColor: '#A6CEE3', // COLOR 4
+                borderColor: '#A6CEE3', // COLOR 4
+                fill: false,
+                data: topCostsData
+            }]
+        },
+        options: {
+            aspectRatio: .484,
+            scales: {
+                xAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 80000,
+                        beginAtZero:true,
+                        userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+                            return value;
+                          }
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 7);
+                    });
+                  });
+                }
+            }
+        }
+    });
+    var topReg3 = document.getElementById('ctxTopRegions3').getContext('2d');
+    var topRegChart = new Chart(topReg3, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempRgLabels,
+            datasets: [{
+                label: 'Net Returns',
+                backgroundColor: '#2138B7', // COLOR 2
+                borderColor: '# 2138B7', // COLOR 2
+                data: topNetData
+            }]
+        },
+
+        options: {
+            aspectRatio: .484,
+            scales: {
+                xAxes: [{
+                    // stacked: true,
+                    display: false,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax: 40000,
+                        beginAtZero:true,
+                        userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+                            return value;
+                          }
+                    }
+                }],
+                yAxes: [{
+                    // stacked: true,
+                    display: false,
+                    ticks: {
+                        suggestedMin: 0
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 7);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+</script>
+{% endblock script %}

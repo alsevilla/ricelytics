@@ -1,0 +1,296 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+    <!-- Header --->
+    <div id="main" class="jumbotron">
+        <div class="jumbotron-content text-center">
+            <h2>{{title2}}</h2>
+            <h1>{{title}}</h1>
+            <p>How do we characterize the rice farmers in the Philippines? Understand the important attributes that contributes to their overall being as our producers of rice.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card farmer primary mb-4 bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Average Age</h5>
+                        <h1 class="card-text font-weight-bold">54<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p>years old</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 ">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-2">
+                          <h5 class="card-title mt-5 pt-3 text-left">Sex</h5>
+                        </div>
+                        <div class="col-5">
+                          <div><canvas class="mt-3" id="ctxSex"></canvas></div>
+                        </div>
+                        <div class="col-5 pt-3">
+                          <div class="mt-5 card-note w-100 mx-auto rounded-pill bg-primary text-white">
+                              <p>male</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 ">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-3">
+                          <h5 class="card-title mt-5 pt-3 text-left text-nowrap">Civil Status</h5>
+                        </div>
+                        <div class="col-5">
+                          <div><canvas class="mt-3" id="ctxCivil"></canvas></div>
+                        </div>
+                        <div class="col-4 pt-3">
+                          <div class="mt-5 card-note w-100 mx-auto rounded-pill bg-primary text-white">
+                              <p>Married</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col">
+              <div class="card mb-4">
+                  <div class="card-header text-center">
+                      <h5 class="my-0 p-2">Average age and age range per survey year</h5>
+                      <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+                  </div>
+                  <div class="card-body">
+                      <div><canvas id=""></canvas></div>
+                  </div>
+              </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Distribution of sex per survey year</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id=""></canvas></div>
+                </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Distribution of civil status per survey year</h5>
+                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id=""></canvas></div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="col">
+        <div class="card mb-4">
+            <div class="card-header text-center">
+                <h5 class="my-0 p-2">Age Information, Distribution of Sex, and Distribution of Civil Status per Province (2017)</h5>
+                <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+            </div>
+            <div class="card-body">
+                <div><canvas id=""></canvas></div>
+            </div>
+        </div>
+      </div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.pluginService.register({
+        beforeDraw: function(chart) {
+            if (chart.config.options.elements.center) {
+                // Get ctx from string
+                var ctx = chart.chart.ctx;
+
+                // Get options from the center object in options
+                var centerConfig = chart.config.options.elements.center;
+                var fontStyle = centerConfig.fontStyle || 'Arial';
+                var txt = centerConfig.text;
+                var color = centerConfig.color || '#000';
+                var maxFontSize = centerConfig.maxFontSize || 75;
+                var sidePadding = centerConfig.sidePadding || 20;
+                var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+                // Start with a base font of 30px
+                ctx.font = "30px " + fontStyle;
+
+                // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                var stringWidth = ctx.measureText(txt).width;
+                var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                // Find out how much the font can grow in width.
+                var widthRatio = elementWidth / stringWidth;
+                var newFontSize = Math.floor(30 * widthRatio);
+                var elementHeight = (chart.innerRadius * 2);
+
+                // Pick a new font size so it will not be larger than the height of label.
+                var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                var minFontSize = centerConfig.minFontSize;
+                var lineHeight = centerConfig.lineHeight || 25;
+                var wrapText = false;
+
+                if (minFontSize === undefined) {
+                    minFontSize = 20;
+                }
+
+                if (minFontSize && fontSizeToUse < minFontSize) {
+                    fontSizeToUse = minFontSize;
+                    wrapText = true;
+                }
+
+                // Set font settings to draw it correctly.
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                ctx.font = fontSizeToUse + "px " + fontStyle;
+                ctx.fillStyle = color;
+
+                if (!wrapText) {
+                    ctx.fillText(txt, centerX, centerY);
+                    return;
+                }
+
+                var words = txt.split(' ');
+                var line = '';
+                var lines = [];
+
+                // Break words up into multiple lines if necessary
+                for (var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = ctx.measureText(testLine);
+                    var testWidth = metrics.width;
+                    if (testWidth > elementWidth && n > 0) {
+                        lines.push(line);
+                        line = words[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+
+                // Move the center up depending on line height and number of lines
+                centerY -= (lines.length / 2) * lineHeight;
+
+                for (var n = 0; n < lines.length; n++) {
+                    ctx.fillText(lines[n], centerX, centerY);
+                    centerY += lineHeight;
+                }
+                //Draw text in center
+                ctx.fillText(line, centerX, centerY);
+            }
+        }
+    });
+
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 12;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // CHART 1
+
+    var ctx = document.getElementById("ctxSex");
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [82, 18],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 1.3,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2,
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '82%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 2
+
+    var ctx2 = document.getElementById("ctxCivil");
+    var myChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [85, 15],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 1.3,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '85%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+</script>
+{% endblock script %}

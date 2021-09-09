@@ -1,0 +1,338 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <!-- Header --->
+    <div class="jumbotron">
+        <div class="jumbotron-content text-center ">
+            <h2>State of the Rice Sector in the Philippines</h2>
+            <h1>{{title}}</h1>
+            <p>How wide was the accumulated area of the total harvested palay? Explore the estimated overall harvested area, the apportionment of irrigated and non-irrigated farms, and the size of extents in the provinces.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-alternate text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Irrigated Area Total</h5>
+                        <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">million hectares</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Region III Average Yield - Year</h5>
+                        <h1 class="card-text font-weight-bold">19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>million hectares</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-alternate2 text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Non-Irrigated Area Total</h5>
+                        <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">million hectares</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by year (2000-2020)</h5>
+                    <p class="my-0 font-weight-normal text-muted">in million hectares (ha)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxAreaStack"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by province</h5>
+                    <p class="my-0 font-weight-normal text-muted">in hectares</p>
+                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
+                </div>
+                <div class="card-body">
+                    <div id='area'><canvas id="ctxTopAreas"></canvas></div>
+                    <div id='area2' style='display: none'><canvas id="ctxTopAreas2"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // CHART 1
+
+    var dbTotal = {{ aeData|safe }} ;
+    var dbIrrigated ={{ iData|safe }} ;
+    var dbRainfed ={{ rfData|safe }} ;
+
+    let years = [];
+    let values_total = [];
+    let values_irrig = [];
+    let values_rain = [];
+
+    try {
+        dbTotal.map((item) => {
+            years.push(item.year);
+            values_total.push(item.value);
+        });
+        dbIrrigated.map((item) => {
+            values_irrig.push(item.value);
+        });
+        dbRainfed.map((item) => {
+            values_rain.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var areaStack = document.getElementById('ctxAreaStack').getContext('2d');
+    var tempALabels = [...years];
+    var areaAllData = [...values_total];
+    var areaIrrigData = [...values_irrig];
+    var areaRainData = [...values_rain];
+    var areaStackChart = new Chart(areaStack, {
+
+        type: 'bar',
+
+        data: {
+            labels: tempALabels,
+            datasets: [{
+                    label: 'All ecosystems',
+                    backgroundColor: '#007FFE', // COLOR 1
+                    borderColor: '#007FFE', // COLOR 1
+                    lineTension: 0,
+                    type: 'line',
+                    fill: false,
+                    data: areaAllData,
+                },
+                {
+                    label: 'Irrigated',
+                    backgroundColor: '#C45000', // COLOR 2
+                    borderColor: '#C45000', // COLOR 2
+                    data: areaIrrigData
+                },
+                {
+                    label: 'Rainfed',
+                    backgroundColor: '#FFB043', // COLOR 3
+                    borderColor: '#FFB043', // COLOR 3
+                    data: areaRainData
+                }
+            ]
+        },
+
+        options: {
+            aspectRatio: 2.5,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            }
+        }
+    });
+
+    // CHART 2
+
+    var dbProvs = {{ tpData|safe }};
+    let provinces = [];
+    let values = [];
+
+    try {
+        dbProvs.map((item) => {
+            provinces.push(item.location_name);
+            values.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempPrLabels = [...provinces];
+    var topProvData = [...values];
+
+    var topProv = document.getElementById('ctxTopAreas').getContext('2d');
+    var topProvChart = new Chart(topProv, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempPrLabels,
+            datasets: [{
+                label: 'Provincial total harvest areas',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData
+            }]
+        },
+
+        options: {
+            aspectRatio: 0.5,
+            scales: {
+                xAxes: [{
+                    display: false,
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 5);
+                    });
+                  });
+                }
+            }
+        }
+    });
+    function toggle(){
+      var checkbox = document.getElementById('checkbox');
+      var area = document.getElementById('area');
+      var area2 = document.getElementById('area2');
+      if (checkbox.checked == true){
+        area2.style.display = 'block';
+        area.style.display = 'none';
+      } else {
+        area2.style.display = 'none';
+        area.style.display = 'block';
+      }
+    }
+
+    var dbProvs2 = {{ tpData2|safe }};
+    let provinces2 = [];
+    let values2 = [];
+
+    try {
+        dbProvs2.map((item) => {
+            provinces2.push(item.location_name);
+            values2.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempPrLabels2 = [...provinces2];
+    var topProvData2 = [...values2];
+
+    var topProv2 = document.getElementById('ctxTopAreas2').getContext('2d');
+    var topProvChart2 = new Chart(topProv2, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempPrLabels2,
+            datasets: [{
+                label: 'Provincial total harvest areas',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData2
+            }]
+        },
+
+        options: {
+            aspectRatio: 2,
+            scales: {
+                xAxes: [{
+                    display: false,
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 5);
+                    });
+                  });
+                }
+            }
+        }
+    });
+</script>
+{% endblock script %}

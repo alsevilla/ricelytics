@@ -1,0 +1,553 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+    <!-- Header --->
+    <div id="main" class="jumbotron">
+        <div class="jumbotron-content text-center">
+            <h2>{{title2}}</h2>
+            <h1>{{title}}</h1>
+            <p>How do we characterize the rice farmers in the Philippines? Understand the important attributes that contributes to their overall being as our producers of rice.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <a class="text-black stretched-link text-decoration-none" href="{% url 'RegionEstimatedNetIncome' %}">
+          <div class="card-deck text-center mb-0 text-white">
+              <div class="card primary mb-4 bg-warning">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-6 border-right">
+                        <h5 class="card-title">Estimated Monthly Income</h5>
+                        <h1 class="card-text font-weight-bold">P4,344<i class="bi bi-caret-up-fill text-primary"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">per capita</p>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <h5 class="card-title">Above Poverty Threshold</h5>
+                        <h1 class="card-text font-weight-bold">70%<i class="bi bi-caret-up-fill text-primary"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">of farmer-respondents</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          </a>
+        </div>
+        <div class="col-8">
+          <div class="card-group farmer mb-2">
+            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+              <div class="card-body">
+                <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionAgeSexCivilStatus' %}">Average Age</a></h6>
+                <h2 class="card-text font-weight-bold mb-4">54<i class="bi bi-caret-up-fill"></i></h2>
+                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                    <p class="text-white">years old</p>
+                </div>
+                </div>
+            </div>
+            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+              <div class="card-body">
+                <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionAgeSexCivilStatus' %}">Gender</a></h6>
+                <div><canvas class="mb-2" id="ctxSex"></canvas></div>
+                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                    <p class="text-white">Male</p>
+                </div>
+              </div>
+            </div>
+            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
+              <div class="card-body">
+                <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionAgeSexCivilStatus' %}">Civil Status</a></h6>
+                <div><canvas class="mb-2" id="ctxCivil"></canvas></div>
+                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                    <p class="text-white">Married</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFarmAverageSize' %}">Average Farm Size</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">1.42<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Hectares</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFarmAverageSize' %}">Farm Ownership</a></h6>
+                  <div><canvas class="mb-2" id="ctxTenurial"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">land owners</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFormalEducation' %}">Farm Education</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">8<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Years</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFormalEducation' %}">Farm Experience</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">28<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Years</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title mb-4 pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionHousehold' %}">Household Size</a></h6>
+                  <h2 class="card-text font-weight-bold mb-4">4<i class="bi bi-caret-up-fill"></i></h2>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">members</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionHousehold' %}">Major Income Source</a></h6>
+                  <div><canvas class="mb-2" id="ctxIncome"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">rice farming</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <div class="col-4">
+            <div class="card-group farmer mb-2">
+              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionOrganizationTraining' %}">Organization Membership</a></h6>
+                  <div><canvas class="mb-2" id="ctxMembers"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Members</p>
+                  </div>
+                </div>
+              </div>
+              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card-body">
+                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionOrganizationTraining' %}">Training Attendance</a></h6>
+                  <div><canvas class="mb-2" id="ctxTraining"></canvas></div>
+                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                      <p class="text-white">Attended Training</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.pluginService.register({
+        beforeDraw: function(chart) {
+            if (chart.config.options.elements.center) {
+                // Get ctx from string
+                var ctx = chart.chart.ctx;
+
+                // Get options from the center object in options
+                var centerConfig = chart.config.options.elements.center;
+                var fontStyle = centerConfig.fontStyle || 'Arial';
+                var txt = centerConfig.text;
+                var color = centerConfig.color || '#000';
+                var maxFontSize = centerConfig.maxFontSize || 75;
+                var sidePadding = centerConfig.sidePadding || 20;
+                var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+                // Start with a base font of 30px
+                ctx.font = "30px " + fontStyle;
+
+                // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+                var stringWidth = ctx.measureText(txt).width;
+                var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+                // Find out how much the font can grow in width.
+                var widthRatio = elementWidth / stringWidth;
+                var newFontSize = Math.floor(30 * widthRatio);
+                var elementHeight = (chart.innerRadius * 2);
+
+                // Pick a new font size so it will not be larger than the height of label.
+                var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+                var minFontSize = centerConfig.minFontSize;
+                var lineHeight = centerConfig.lineHeight || 25;
+                var wrapText = false;
+
+                if (minFontSize === undefined) {
+                    minFontSize = 20;
+                }
+
+                if (minFontSize && fontSizeToUse < minFontSize) {
+                    fontSizeToUse = minFontSize;
+                    wrapText = true;
+                }
+
+                // Set font settings to draw it correctly.
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+                var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+                ctx.font = fontSizeToUse + "px " + fontStyle;
+                ctx.fillStyle = color;
+
+                if (!wrapText) {
+                    ctx.fillText(txt, centerX, centerY);
+                    return;
+                }
+
+                var words = txt.split(' ');
+                var line = '';
+                var lines = [];
+
+                // Break words up into multiple lines if necessary
+                for (var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = ctx.measureText(testLine);
+                    var testWidth = metrics.width;
+                    if (testWidth > elementWidth && n > 0) {
+                        lines.push(line);
+                        line = words[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+
+                // Move the center up depending on line height and number of lines
+                centerY -= (lines.length / 2) * lineHeight;
+
+                for (var n = 0; n < lines.length; n++) {
+                    ctx.fillText(lines[n], centerX, centerY);
+                    centerY += lineHeight;
+                }
+                //Draw text in center
+                ctx.fillText(line, centerX, centerY);
+            }
+        }
+    });
+
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 12;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // CHART 1
+
+    var ctx = document.getElementById("ctxSex");
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [82, 18],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 3,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2,
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '82%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 2
+
+    var ctx2 = document.getElementById("ctxCivil");
+    var myChart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [85, 15],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 3,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '85%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+    // CHART 3
+
+    var ctx3 = document.getElementById("ctxTenurial");
+    var myChart3 = new Chart(ctx3, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [62, 1, 5, 1, 4, 5],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '62%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 4
+
+    var ctx4 = document.getElementById("ctxIncome");
+    var myChart4 = new Chart(ctx4, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [84, 1, 5, 1, 4, 5],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '84%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 5
+
+    var ctx5 = document.getElementById("ctxTraining");
+    var myChart = new Chart(ctx5, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [65, 35],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '65%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 6
+
+    var ctx6 = document.getElementById("ctxMembers");
+    var myChart = new Chart(ctx6, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [58, 42],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '58%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 10
+                }
+            }
+        }
+    });
+
+</script>
+{% endblock script %}

@@ -1560,13 +1560,13 @@ def valuations(request):
     # get location_name, year, value, value_compare
     # Used tables kpi_value, ids_location
     for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."value", ("t1"."value" - "t2"."value") AS value_compare
-                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/10000::numeric,2) as value
+                                        FROM (		SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/1000::numeric,1) as value
                                         			FROM "kpi_value" "k"
                                         			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                                         			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
                                         			ORDER BY "k"."year" DESC
                                         			LIMIT 2) "t1"
-                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/10000::numeric,2) as value
+                                        INNER JOIN (SELECT "k"."id" AS id, "l"."locName" AS location_name, "k"."year", ROUND(("k"."palayValue")/1000::numeric,1) as value
                                         			FROM "kpi_value" "k"
                                         			FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                                         			WHERE "k"."locCode"=%s AND "k"."locType" = %s AND "k"."year">=%s AND "k"."year"<=%s
@@ -1981,6 +1981,97 @@ def yieldcost(request):
     return render(request, 'yieldcost.html', context)
 
 # ################################################# #
+#             Rice Industry (Regional)              #
+# ################################################# #
+def regional(request):
+    riceindustry = 'active-title'
+    title = 'Region III - Central Luzon'
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'regional/regional.html', context)
+def regionriceproduction(request):
+    riceindustry = 'active-title'
+    title = 'Palay Production'
+    title2 = 'State of the Rice Sector in Region III - Central Luzon'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'regional/regionproductions.html',context)
+def regionareaharvested(request):
+    riceindustry = 'active-title'
+    title = 'Area Harvested'
+    title2 = 'State of the Rice Sector in Region III - Central Luzon'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'regional/regionharvestareas.html', context)
+def regionestyields(request):
+    riceindustry = 'active-title'
+    title = 'Yield per Hectare'
+    title2 = 'State of the Rice Sector in Region III - Central Luzon'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request, 'regional/regionestyields.html', context)
+def regionvaluations(request):
+    riceindustry = 'active-title'
+    title = 'Rice Production Valuation'
+    title2 = 'State of the Rice Sector in Region III - Central Luzon'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request, 'regional/regionvaluations.html',context)
+def regionincomes(request):
+    riceindustry = 'active-title'
+    title = "Rice Farmer's Income"
+    title2 = 'State of the Rice Sector in Region III - Central Luzon'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'regional/regionincomes.html', context)
+def regionyieldcost(request):
+    riceindustry = 'active-title'
+    title = "Rice Yield vs. Production Cost"
+    title2 = 'State of the Rice Sector in Region III - Central Luzon'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request, 'regional/regionyieldcost.html', context)
+def regionprices(request):
+    riceindustry = 'active-title'
+    title = "Rice Market Price"
+    title2 = 'State of the Rice Sector in Region III - Central Luzon'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request, 'regional/regionprices.html', context)
+# ################################################# #
 #             Rice Farmer (National)                #
 # ################################################# #
 #Profile
@@ -1988,7 +2079,7 @@ def profile(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the'
     title = 'Filipino Rice Farmer'
-    searchbartype = '1'
+    searchbartype = '2'
 
     context = { 'ricefarmer': ricefarmer,
                 'title': title,
@@ -2055,3 +2146,78 @@ def organizationTraining(request):
     'title':title,
     }
     return render(request, 'ricefarmer/organizationTraining.html',context)
+# ################################################# #
+#             Rice Farmer (Regional)                #
+# ################################################# #
+def regionprofile(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Rice Farmers in'
+    title = 'Region III - Central Luzon'
+
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request,'ricefarmer/regional/regionprofile.html', context)
+def regionestimatedNetIncome(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Estimated Net Income'
+
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request,'ricefarmer/regional/regionestimatedNetIncome.html', context)
+def regionagesexcivilstatus(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the FIlipino Rice Farmers in Region III - Central Luzon'
+    title = 'Age, Sex and Civil Status'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/regional/regionagesexcivilstatus.html', context)
+def regionfarmaveragesize(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Farm Average Size and Farm Ownership'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/regional/regionfarmaveragesize.html', context)
+def regionformalEducation(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Formal Education and Farming Experience'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/regional/regionformalEducation.html', context)
+def regionhousehold(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Household Size and Source of Income'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/regional/regionhousehold.html', context)
+def regionorganizationTraining(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Household Size and Source of Income'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/regional/regionorganizationTraining.html',context)

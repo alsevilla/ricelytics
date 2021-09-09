@@ -9,26 +9,45 @@ urlpatterns = [
     #             Rice Industry (National)              #
     # ################################################# #
     path('', views.index, name='HomePage'),
-    path('profile', views.profile, name='Profile'),
-    path('productions', views.riceproduction, name='RiceProductions'),
-    path('harvestareas', views.areaharvested, name='HarvestAreas'),
-    path('estyields', views.estimatedyield, name='EstYields'),
-    path('supplyUtilization', views.supplyUtilization, name='SupplyUtilization'),
-    path('consumption', views.consumption, name='Consumption'),
-    path('importExport', views.importExport, name='ImportExport'),
-    path('prices', views.prices, name='Prices'),
-    path('valuations', views.valuations, name='Valuations'),
-    path('incomes', views.incomes, name='Incomes'),
-    path('yieldcost', views.yieldcost, name='YieldCost'),
-
+    path('National/RiceProductions', views.riceproduction, name='RiceProductions'),
+    path('National/HarvestAreas', views.areaharvested, name='HarvestAreas'),
+    path('National/EstYields', views.estimatedyield, name='EstYields'),
+    path('National/SupplyUtilization', views.supplyUtilization, name='SupplyUtilization'),
+    path('National/Consumption', views.consumption, name='Consumption'),
+    path('National/ImportExport', views.importExport, name='ImportExport'),
+    path('National/Prices', views.prices, name='Prices'),
+    path('National/Valuations', views.valuations, name='Valuations'),
+    path('National/Incomes', views.incomes, name='Incomes'),
+    path('National/YieldCost', views.yieldcost, name='YieldCost'),
+    # ################################################# #
+    #             Rice Industry (National)              #
+    # ################################################# #
+    path('Regional',views.regional, name='Regional'),
+    path('Regional/RegionRiceProduction', views.regionriceproduction, name='RegionRiceProduction'),
+    path('Regional/RegionAreaHarvested', views.regionareaharvested, name = 'RegionAreaHarvested'),
+    path('Regional/RegionEstYields', views.regionestyields, name = 'RegionEstYields'),
+    path('Regional/RegionValuations', views.regionvaluations, name = 'RegionValuations'),
+    path('Regional/RegionIncomes', views.regionincomes, name = 'RegionIncomes'),
+    path('Regional/RegionYieldCost', views.regionyieldcost, name = 'RegionYieldCost'),
+    path('Regional/RegionPrices', views.regionprices, name = 'RegionPrices'),
     # ################################################# #
     #             Rice Farmer (National)                #
     # ################################################# #
-    path('profile', views.profile, name='Profile'),
-    path('estimatedNetIncome', views.estimatedNetIncome, name='EstimatedNetIncome'),
-    path('agesexcivilstatus', views.agesexcivilstatus, name='AgeSexCivilStatus'),
-    path('farmaveragesize', views.farmaveragesize, name='FarmAverageSize'),
-    path('formalEducation', views.formalEducation, name='FormalEducation'),
-    path('household', views.household, name='Household'),
-    path('organizationTraining', views.organizationTraining, name='OrganizationTraining'),
+    path('NationalFarmer/Profile', views.profile, name='Profile'),
+    path('NationalFarmer/EstimatedNetIncome', views.estimatedNetIncome, name='EstimatedNetIncome'),
+    path('NationalFarmer/AgeSexCivilStatus', views.agesexcivilstatus, name='AgeSexCivilStatus'),
+    path('NationalFarmer/FarmAverageSize', views.farmaveragesize, name='FarmAverageSize'),
+    path('NationalFarmer/FormalEducation', views.formalEducation, name='FormalEducation'),
+    path('NationalFarmer/Household', views.household, name='Household'),
+    path('NationalFarmer/OrganizationTraining', views.organizationTraining, name='OrganizationTraining'),
+    # ################################################# #
+    #             Rice Farmer (Regional)                #
+    # ################################################# #
+    path('RegionalFarmer/RegionProfile', views.regionprofile, name='RegionProfile'),
+    path('RegionalFarmer/RegionEstimatedNetIncome', views.regionestimatedNetIncome, name='RegionEstimatedNetIncome'),
+    path('RegionalFarmer/RegionAgeSexCivilStatus', views.regionagesexcivilstatus, name='RegionAgeSexCivilStatus'),
+    path('RegionalFarmer/RegionFarmAverageSize', views.regionfarmaveragesize, name='RegionFarmAverageSize'),
+    path('RegionalFarmer/RegionFormalEducation', views.regionformalEducation, name='RegionFormalEducation'),
+    path('RegionalFarmer/RegionHousehold', views.regionhousehold, name='RegionHousehold'),
+    path('RegionalFarmer/RegionOrganizationTraining', views.regionorganizationTraining, name='RegionOrganizationTraining'),
 ]

@@ -5,7 +5,7 @@
     <!-- Header --->
     <div class="jumbotron">
         <div class="jumbotron-content text-center">
-            <h2>State of the Rice Sector in the Philippines</h2>
+            <h2>{{ title2 }}</h2>
             <h1>{{ title }}</h1>
             <p>How much does the rice farming sector contribute to national agricultural account? Learn the value of rice production, and its share in the overall value of agricultural production.</p>
         </div>
@@ -15,8 +15,8 @@
             <div class="card-deck mb-5 text-center">
                 <div class="card primary mb-5 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title">National Value of Rice Production ({{ rpgva_year }})</h5>
-                        <h1 class="card-text font-weight-bold mt-4">P{{ rpgva_price }}{% if rpgva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif rpgva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        <h5 class="card-title">Regional Rice Production Valuation - Year</h5>
+                        <h1 class="card-text font-weight-bold mt-4">19.29 <i class="bi bi-caret-up-fill"></i></h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>Trillion</p>
                         </div>
@@ -28,7 +28,7 @@
                         <div class="row">
                           <div class="col-6 border-right">
                             <h6 class="card-title">National Value of Agricultural Production ({{ aff_year }})</h6>
-                              <h1 class="card-text font-weight-bold mt-4" style="margin-left: -10px;">P{{ aff_price }}{% if aff_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                              <h1 class="card-text font-weight-bold mt-4" style="margin-left: -10px;">P17,527 <i class="bi bi-caret-up-fill"></i></h1>
                               <div class="card-note w-100 mx-auto rounded-pill bg-primary">
                                   <p class="text-white">Trillion</p>
                               </div>
@@ -36,7 +36,7 @@
                           </div>
                           <div class="col-6">
                             <h6 class="card-title">Percent Share of Rice Production</h6>
-                            <div class="card-body py-1">{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}<canvas id="GVA"></canvas></div>
+                            <div class="card-body py-1"><i class="bi bi-caret-up-fill"></i><canvas id="GVA"></canvas></div>
                             <!-- <h1 class="card-text align-middle font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1> -->
                           </div>
                         </div>
@@ -171,7 +171,7 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: [{{100|sub:aff_percent}}, {{ aff_percent }}],
+                data: [90, 10],
                 backgroundColor: [
                     '#FFFFFF', // COLOR 1
                     '#2138B7' // COLOR 2
@@ -201,7 +201,7 @@
             },
             elements: {
                 center: {
-                    text: '{{ aff_percent }}%',
+                    text: '2.11%',
                     color: '#2138B7', // Default is #000000
                     fontStyle: 'Poppins', // Default is Arial
                     sidePadding: 30, // Default is 20 (as a percentage)
@@ -212,227 +212,6 @@
         }
     });
 
-    // CHART 1
-
-    var dbPalay = {{ rpData|safe }};
-    var dbAgri ={{ asData|safe }};
-    let years = [];
-    let values_palay = [];
-    let values_agri = [];
-
-    try {
-        dbPalay.map((item) => {
-            years.push(item.year);
-            values_palay.push(item.value);
-        });
-        dbAgri.map((item) => {
-            values_agri.push(item.value);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-
-    var agriSector = document.getElementById('ctxAgriSector').getContext('2d');
-    var tempAgriLabels = [...years];
-    var agriSecData = [...values_agri];
-    var riceSecData = [...values_palay];
-    var agriSectorChart = new Chart(agriSector, {
-        // The type of chart we want to create
-        type: 'bar',
-
-        // The data for our dataset
-        data: {
-            labels: tempAgriLabels,
-            datasets: [{
-                    label: 'Rice production',
-                    backgroundColor: '#2138B7', // COLOR 1
-                    borderColor: '#2138B7', // COLOR 1
-                    lineTension: 0,
-                    data: riceSecData
-                },
-                {
-                    label: 'Agriculture sector',
-                    backgroundColor: '#007FFE', // COLOR 2
-                    borderColor: '#007FFE', // COLOR 2
-                    lineTension: 0,
-                    data: agriSecData
-                },
-            ]
-        },
-
-        // Configuration options go here
-        options: {
-            aspectRatio: 1.6,
-            elements: {
-                point: {
-                    radius: 2
-                }
-            },
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                    display: true,
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0)"
-                    }
-                }],
-                yAxes: [{
-                    stacked: true,
-                    display: true,
-                    ticks: {
-                        suggestedMin: 0,
-                        beginAtZero:true,
-                        userCallback: function(value, index, values) {
-                            value = value.toString();
-                            value = value.split(/(?=(?:...)*$)/);
-                            value = value.join(',');
-                            return value;
-                          }
-                    }
-                }]
-            },
-            legend: {
-                position: 'top',
-                onClick: (e) => e.stopPropagation(),
-            },
-            tooltips:{
-                callbacks:{
-                  label: function (tooltipItem, data) {
-                    var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                    return data.datasets[tooltipItem.datasetIndex].label + ': ' + parseInt(tooltipValue).toLocaleString();
-                  }
-                }
-            },
-            tooltips: false,
-            hover: {
-              animationDuration: 0
-            },
-            animation: {
-              duration: 0,
-                onComplete: function() {
-                  let chartInstance = this.chart,
-                      ctx = chartInstance.ctx;
-
-                  ctx.textAlign = 'center';
-                  ctx.textBaseline = 'bottom';
-                  ctx.fillStyle = '#ffffff';
-                  ctx.font = ctx.font.replace(/\d+px/, "9px");
-
-                  this.data.datasets.forEach(function(dataset, i)
-                                             {
-                    let meta = chartInstance.controller.getDatasetMeta(i);
-                    meta.data.forEach(function(bar, index) {
-                      let data = dataset.data[index];
-                      data = parseInt(data).toLocaleString();
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 20);
-                    });
-                  });
-                }
-            }
-        }
-    });
-
-    // CHART 2
-
-    var dbTotalSh ={{ tgdpsData|safe }};
-    var dbAgriSh = {{ agdpsData|safe }};
-    let shares_years = [];
-    let shares_agri = [];
-    let shares_total = [];
-
-    try {
-        dbAgriSh.map((item) => {
-            shares_years.push(item.year);
-            shares_agri.push(item.value);
-        });
-        dbTotalSh.map((item) => {
-            shares_total.push(item.value);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-
-    var agriShare = document.getElementById('ctxAgriShare').getContext('2d');
-    var tempShareLabels = [...shares_years];
-    var agriShareData = [...shares_agri];
-    var totalShareData = [...shares_total];
-    var agriShareChart = new Chart(agriShare, {
-        // The type of chart we want to create
-        type: 'line',
-
-        // The data for our dataset
-        data: {
-            labels: tempShareLabels,
-            datasets: [{
-                label: 'Total GDP share',
-                backgroundColor: '#2138B7', // COLOR 1
-                borderColor: '#2138B7', // COLOR 1
-                fill:false,
-                lineTension: 0,
-                data: totalShareData
-            }, {
-                label: 'Agriculture GDP share',
-                backgroundColor: '#007FFE', // COLOR 2
-                borderColor: '#007FFE', // COLOR 2
-                fill:false,
-                lineTension: 0,
-                data: agriShareData
-            }]
-        },
-
-        // Configuration options go here
-        options: {
-            aspectRatio: 1.6,
-            elements: {
-                point: {
-                    radius: 2
-                }
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0)"
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        suggestedMin: 0,
-                        suggestedMax: 40
-                    }
-                }]
-            },
-            legend: {
-                position: 'top',
-                onClick: (e) => e.stopPropagation(),
-            },
-            tooltips: false,
-            hover: {
-              animationDuration: 0
-            },
-            animation: {
-              duration: 0,
-                onComplete: function() {
-                  let chartInstance = this.chart,
-                      ctx = chartInstance.ctx;
-
-                  ctx.textAlign = 'center';
-                  ctx.textBaseline = 'bottom';
-                  ctx.fillStyle = '#6c757d';
-
-                  this.data.datasets.forEach(function(dataset, i)
-                                             {
-                    let meta = chartInstance.controller.getDatasetMeta(i);
-                    meta.data.forEach(function(bar, index) {
-                      let data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
-                    });
-                  });
-                }
-            }
-        }
-    });
 
 </script>
 {% endblock script %}

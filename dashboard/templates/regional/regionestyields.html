@@ -1,0 +1,391 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="jumbotron-content text-center">
+            <h2>State of the Rice Sector in the Philippines</h2>
+            <h1>{{ title }}</h1>
+            <p>How do our farmers perform in terms of yield per hectare? Check out the average metric tons of palay produced per hectare, the attainment in irrigated and non-irrigated areas, and the performance in each province.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card-deck mb-2 text-center">
+                <div class="card primary mb-4 bg-alternate text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Irrigated Area Average</h5>
+                        <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">metric tons per hectare</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Region III Average Yield - Year</h5>
+                        <h1 class="card-text font-weight-bold">19.29<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                            <p>metric tons per hectare</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card primary mb-4 bg-alternate2 text-white">
+                    <div class="card-body">
+                        <h5 class="card-title p-2">Non-Irrigated Area Average</h5>
+                        <h1 class="card-text font-weight-bold">14.57<i class="bi bi-caret-up-fill"></i></h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                            <p class="text-white">metric tons per hectare</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Total Estimated Yield per Hectare</h5>
+                    <p class="my-0 font-weight-normal text-muted">in metric tons per hectare (t/ha)</p>
+                </div>
+                <div class="card-body">
+                    <div><canvas id="ctxYieldStack"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h5 class="my-0 p-2">Estimated Yield per Province</h5>
+                    <p class="my-0 font-weight-normal text-muted">in metric tons per hectare (t/ha)</p>
+                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
+                </div>
+                <div class="card-body">
+                    <div id='yield'><canvas id="ctxTopYield"></canvas></div>
+                    <div id='yield2' style='display: none'><canvas id="ctxTopYield2"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block script %}
+<script>
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.tooltips.mode = 'index';
+    Chart.defaults.global.tooltips.intersect = false;
+    Chart.defaults.global.defaultFontFamily = 'Poppins';
+    Chart.defaults.global.defaultFontSize = 13;
+    Chart.defaults.global.animation.duration = 3000;
+
+    // CHART 1
+
+    var dbTotal = {{ aeData|safe }};
+    var dbIrrigated = {{ iData|safe }};
+    var dbRainfed = {{ rfData|safe }};
+    let years = [];
+    let values_total = [];
+    let values_irrig = [];
+    let values_rain = [];
+
+    try {
+        dbTotal.map((item) => {
+            years.push(item.year);
+            values_total.push(item.value);
+        });
+        dbIrrigated.map((item) => {
+            values_irrig.push(item.value);
+        });
+        dbRainfed.map((item) => {
+            values_rain.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var yieldStack = document.getElementById('ctxYieldStack').getContext('2d');
+    var tempYLabels = [...years];
+    var yieldAllData = [...values_total];
+    var yieldIrrigData = [...values_irrig];
+    var yieldRainData = [...values_rain];
+    var yieldStackChart = new Chart(yieldStack, {
+
+        type: 'bar',
+
+        data: {
+            labels: tempYLabels,
+            datasets: [{
+                    label: 'All ecosystems',
+                    backgroundColor: '#007FFE', // COLOR 1
+                    borderColor: '#007FFE', // COLOR 1
+                    lineTension: 0,
+                    type: 'line',
+                    fill: false,
+                    data: yieldAllData,
+                },
+                {
+                    label: 'Irrigated',
+                    backgroundColor: '#C45000', // COLOR 2
+                    borderColor: '#C45000', // COLOR 2
+                    lineTension: 0,
+                    type: 'line',
+                    fill: false,
+                    data: yieldIrrigData
+                },
+                {
+                    label: 'Rainfed',
+                    backgroundColor: '#FFB043', // COLOR 3
+                    borderColor: '#FFB043', // COLOR 3
+                    lineTension: 0,
+                    type: 'line',
+                    fill: false,
+                    data: yieldRainData
+                }
+            ]
+        },
+
+        options: {
+            aspectRatio: 2.5,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        stepSize:.7,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -5);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    // CHART 2
+
+    var dbProvs = {{ tpData|safe }};
+    let provinces = [];
+    let values = [];
+
+    try {
+        dbProvs.map((item) => {
+            provinces.push(item.location_name);
+            values.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempYLabels = [...provinces];
+    var topProvData = [...values];
+    let backgroundcolor = [];
+    let bordercolor = [];
+    for (i=0; i < topProvData.length; i++){
+      if (topProvData[i] < {{ all_eco_value }}){
+        backgroundcolor.push('red');
+        bordercolor.push('red');
+      }
+      else{
+          backgroundcolor.push('#2138B7');
+          bordercolor.push('#2138B7');
+      }
+    }
+    var topYield = document.getElementById('ctxTopYield').getContext('2d');
+    var topYieldChart = new Chart(topYield, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempYLabels,
+            datasets: [{
+                label: 'Above National Average',
+                backgroundColor: backgroundcolor, // COLOR 4
+                borderColor: bordercolor, // COLOR 4
+                fill: false,
+                data: topProvData
+            },
+            {
+              label: 'Below National Average',
+              data:false,
+              fill:false,
+              backgroundColor: 'red',
+              borderColor:'red',
+            }]
+        },
+
+        options: {
+            aspectRatio: 0.5,
+            scales: {
+                xAxes: [{
+                    display: false,
+                    stacked:true,
+                    ticks: {
+                        suggestedMin: 0,
+                        stepSize: 1.3
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    stacked:true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 20 , bar._model.y + 5);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    function toggle(){
+      var checkbox = document.getElementById('checkbox');
+      var yield1 = document.getElementById('yield');
+      var yield2 = document.getElementById('yield2');
+      if (checkbox.checked == true){
+        yield2.style.display = 'block';
+        yield1.style.display = 'none';
+      } else {
+        yield2.style.display = 'none';
+        yield1.style.display = 'block';
+      }
+    }
+
+    var dbProvs2 = {{ tpData2|safe }};
+    let provinces2 = [];
+    let values2 = [];
+
+    try {
+        dbProvs2.map((item) => {
+            provinces2.push(item.location_name);
+            values2.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempYLabels2 = [...provinces2];
+    var topProvData2 = [...values2];
+
+    var topYield2 = document.getElementById('ctxTopYield2').getContext('2d');
+    var topYieldChar2t = new Chart(topYield2, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempYLabels2,
+            datasets: [{
+                label: 'Yield per hectare (mt)',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData2
+            }]
+        },
+
+        options: {
+            aspectRatio: 2,
+            scales: {
+                xAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMin: 0,
+                        stepSize: 1.3
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 20 , bar._model.y + 5);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+</script>
+{% endblock script %}

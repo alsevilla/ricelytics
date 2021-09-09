@@ -79,7 +79,33 @@
                 <button class="dropdown-item" type="button">Province</button>
             </div>
         </div>
-        <a class="btn btn-info rounded-pill mr-4" href="#" role="button">Get Data</a>
+        <a class="btn btn-info rounded-pill mr-4" href="{% url 'Regional' %}" role="button">Get Data</a>
+        <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
+    </nav>
+    {% elif searchbartype == '2' %}
+    <nav class="nav navbar navbar-expand-lg navbar-light">
+        <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-house-fill"></i> National</a>
+        <div class="dropdown ml-3 mr-4">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Region
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+            </div>
+        </div>
+        <div class="dropdown mr-4">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Province
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+            </div>
+        </div>
+        <a class="btn btn-info rounded-pill mr-4" href="{% url 'RegionProfile' %}" role="button">Get Data</a>
         <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
     </nav>
     {% else %}
