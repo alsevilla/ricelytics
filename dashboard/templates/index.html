@@ -179,8 +179,8 @@
                         </div>
                         <div class="col-12 mt-3">
                             <div class="card mb-0">
-                              <h5 class="mb-1 pt-2 pl-3"><a href="productions">Top 10 Rice Producing Provinces</a></h5>
-                              <p class=" pl-3">in million metric tons (PSA, 2020)</p>
+                              <h5 class="mb-1 pt-2 pl-3"><a href="{%url 'RiceProductions'%}">Top 10 Rice Producing Provinces ({{rp_year}})</a></h5>
+                              <p class=" pl-3">in million metric tons</p>
                                 <div class="card-body text-center">
                                     <div><canvas id="ctxTopProv"></canvas></div>
                                 </div>
@@ -295,8 +295,7 @@
 
     // CHART 1
 
-    var dbProvs = JSON.parse('[{"location_name":"Nueva Ecija","year":"2020","value":"1.90"},{"location_name":"Isabela","year":"2020","value":"1.36"},{"location_name":"Pangasinan","year":"2020","value":"1.14"},{"location_name":"Iloilo","year":"2020","value":"0.99"},{"location_name":"Cagayan","year":"2020","value":"0.92"},{"location_name":"Camarines Sur","year":"2020","value":"0.65"},{"location_name":"Tarlac","year":"2020","value":"0.57"},{"location_name":"North Cotabato","year":"2020","value":"0.52"},{"location_name":"Maguindanao","year":"2020","value":"0.51"},{"location_name":"Negros Occidental","year":"2020","value":"0.49"}]');
-
+    var dbProvs = {{tpData|safe}};
     let provinces = [];
     let values = [];
 

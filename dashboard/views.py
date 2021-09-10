@@ -319,6 +319,25 @@ def index(request):
                                             LIMIT 1""", [location_code, location_type, year_start ,location_code, location_type, year_start, ecosystem,location_code, location_type, year_start,location_code, location_type, year_start, ecosystem]): # assign values to %s (apples to apples type)
             uc_value = data.value # assigned value of the query to uc_value
             uc_compare = data.compare # assigned compare of the query to uc_compare
+
+            #Top Provincial Production, 2020 only, All Ecosystem (Chart)
+            # Query method for json output (the precedent query didnt work for json output), This method is longer to code for outputing single type of data like in the main KPI Cards
+            tpCursor = connection.cursor() # Connection cursor to postgres
+            # Execute query (same Raw query execution as the precedent)
+            tpCursor.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) as value
+                                FROM "kpi_pay" "k"
+                                FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                                FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                                WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
+                                GROUP BY year, location_name
+                                ORDER BY value DESC
+                                LIMIT 10""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
+            tpRows = tpCursor.fetchall() # fetch all data of the executed query
+            keys = ('location_name','year','value')
+            tpResult = [] # store the values as an array or data dictionary
+            for row in tpRows:
+                tpResult.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
+            tpData = json.dumps(tpResult, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
     context = { 'riceindustry':riceindustry,
                 'title': title,
@@ -363,7 +382,8 @@ def index(request):
                 'nr_value':nr_value,
                 'nr_compare':nr_compare,
                 'uc_value':uc_value,
-                'uc_compare':uc_compare,}
+                'uc_compare':uc_compare,
+                'tpData':tpData,}
     return render(request, 'index.html', context) # render the page with the context
 
 # rice productions
