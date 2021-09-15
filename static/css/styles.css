@@ -82,17 +82,17 @@ h3 {
 h4 {
     font-family: 'Poppins' !important;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
 }
 h5 {
   font-family: 'Poppins' !important;
   font-weight: 100;
-  font-size: 14px;
+  font-size: 12px;
 }
 h6 {
   font-family: 'Poppins' !important;
   font-weight: 100;
-  font-size: 12px;
+  font-size: 11px;
 }
 p {
     font-family: 'Poppins' !important;
@@ -137,6 +137,12 @@ nav button {
 
 div#main:before {
     background-image: url("../assets/Heading.png") !important;
+}
+div#pp:before {
+    background-image: url("../assets/Industry/Print - Industry National – PP@2x.png") !important;
+}
+div#ah:before {
+    background-image: url("../assets/Industry/Print - Industry National – AH@2x.png") !important;
 }
 
 .jumbotron-content {
@@ -252,7 +258,7 @@ div#main:before {
 .card.primary h1 {
     font-family: 'Poppins' !important;
     font-weight: 600;
-    font-size: 60px;
+    font-size: 40px;
 }
 
 .card.primary h1.smaller {
@@ -276,13 +282,13 @@ div#main:before {
 
 }
 
-.card.primary p {
+/* .card.primary p {
     font-family: 'Poppins' !important;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
     margin-bottom: 9px;
-}
+} */
 
 .card.primary h2 i.bi {
     line-height: 50px;
@@ -299,13 +305,13 @@ div#main:before {
 .card.primary h5 {
     font-family: 'Poppins' !important;
     font-weight: normal;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .card.primary p {
     font-family: 'Poppins' !important;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
 }
 /* added by gelo */
@@ -381,6 +387,11 @@ ion-icon {
 .active-title{
   color: #FE7F00;
 }
+.h6-small{
+  font-family: 'Poppins' !important;
+  font-weight: lighter;
+  font-size: 8px;
+}
 .p-small{
   font-family: 'Poppins' !important;
   font-weight: lighter;
@@ -412,7 +423,7 @@ ion-icon {
 .card.secondary h1 {
     font-family: 'Poppins' !important;
     font-weight: 600;
-    font-size: 60px;
+    font-size: 40px;
 }
 
 .card.secondary h1.smaller {
@@ -458,4 +469,126 @@ ion-icon {
 }
 .card.bg-alternate3{
   background:#9EC5D9;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-right: 16px solid #17a2b8;
+  border-bottom: 16px solid #ffffff;
+  border-left: 16px solid #fe7f00;
+  width: 15px;
+  height: 15px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  z-index: 10000;
+  top: 9px;
+  right: 20px;
+  left:5;
+  bottom:5;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.line{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 23px;
+  margin-left: 3px;
+}
+.arrowup{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 15px;
+  margin-left: 3px;
+}
+.arrowdown{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 23px;
+  margin-left: 3px;
+}
+
+.line2{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 14px;
+  margin-left: 3px;
+}
+.arrowup2{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 3px;
+}
+.arrowdown2{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 15px;
+  margin-left: 3px;
+}
+.line3{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 45px;
+  margin-left: -7px;
+}
+.arrowup3{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 35px;
+  margin-left: -5px;
+}
+.arrowdown3{
+  height: auto;
+  width: 12px;
+  float: right;
+  display: inline;
+  vertical-align: middle;
+  position: absolute;
+  margin-top: 70px;
+  margin-left: -5px;
 }

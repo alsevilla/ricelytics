@@ -2,73 +2,127 @@
 {% load static %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>{{title}}</h1>
-            <p>What is the total volume of palay produced in the country? Know the latest and historical rice production information and the contribution of each province to the overall quantity.</p>
+    <div id='pp' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>State of the Rice Sector in the Philippines</h2>
+              <h1>{{title}}</h1>
+              <br>
+            </div>
+            <div class="col">
+              <br>
+              <p><i>What is the total volume of palay produced in the country?</i>
+                <br>Know the latest and historical rice production information and the contribution
+                <br> of each province to the overall quantity.</p>
+            </div>
+          </div>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card-deck mb-4 text-center">
-                <div class="card primary mb-4 bg-alternate text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Irrigated Area ({{ irrigated_year }})</h5>
-                        <h1 class="card-text font-weight-bold">{{ irrigated_value }}{% if irrigated_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif irrigated_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">million metric tons</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">National Total ({{ all_eco_year }})</h5>
-                        <h1 class="card-text font-weight-bold">{{ all_eco_value }}{% if all_eco_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif all_eco_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                          <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>million metric tons</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-alternate2 text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Non-Irrigated Area ({{non_irrigated_year}})</h5>
-                        <h1 class="card-text font-weight-bold">{{non_irrigated_value}}{% if non_irrigated_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif non_irrigated_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}<i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">million metric tons</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <div class="card-group text-white">
+                  <div class="card primary mb-2 bg-alternate text-white">
+                      <div class="card-body">
+                          <h5 class="card-title text-left">Irrigated Area ({{ irrigated_year }})</h5>
+                          <h1 class="card-text font-weight-semibold text-center">{{ irrigated_value }}
+                            {% if irrigated_compare > 0 %}
+                            <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                            {% elif irrigated_compare < 0 %}
+                            <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                            {% else %}
+                            <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                            {%endif%}</h1>
+                          <div class="card-note w-75 mx-auto rounded-pill bg-primary text-center">
+                              <p class="text-white">million metric tons</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card primary mb-2 ml-2 bg-primary text-white">
+                      <div class="card-body">
+                          <h5 class="card-title">National Total ({{ all_eco_year }})</h5>
+                          <h1 class="card-text font-weight-semibold text-center">{{ all_eco_value }}
+                            {% if all_eco_compare > 0 %}
+                            <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                            {% elif all_eco_compare < 0 %}
+                            <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                            {% else %}
+                            <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                            {%endif%}</h1>
+                            <div class="card-note w-75 mx-auto rounded-pill bg-warning text-center">
+                              <p>million metric tons</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card primary mb-2 ml-2 bg-alternate2 text-white">
+                      <div class="card-body">
+                          <h5 class="card-title">Non-Irrigated Area ({{non_irrigated_year}})</h5>
+                          <h1 class="card-text font-weight-semibold text-center">{{non_irrigated_value}}
+                            {% if non_irrigated_compare > 0 %}
+                            <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                            {% elif non_irrigated_compare < 0 %}
+                            <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                            {% else %}
+                            <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                            {%endif%}</h1>
+                          <div class="card-note w-75 mx-auto rounded-pill bg-primary text-center">
+                              <p class="text-white">million metric tons</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
+            <div class="col-12">
+              <div class="card mb-4">
+                  <div class="card-header text-center">
+                      <h5 class="my-0 p-2">Total palay produced by year (2000-2020)</h5>
+                      <p class="my-0 font-weight-normal text-muted">in million metric tons (mt)</p>
+                  </div>
+                  <div class="card-body">
+                      <div><canvas id="ctxProdStack"></canvas></div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card mb-4" data-toggle="modal" data-target="#exampleModalCenter">
+              <div class="card-header text-center" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                  <h5 class="my-0 p-2">Total palay produced per province ({{irrigated_year}})</h5>
+                  <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
+              </div>
+              <div class="card-body">
+                  <canvas id="ctxTopProv2"></canvas>
+              </div>
+          </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total palay produced by year (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million metric tons (mt)</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxProdStack"></canvas></div>
-                </div>
+    <div class="modal fade bd-example-modal-xl" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLongTitle">Top Palay Produced By Provinces</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-6">
+                <canvas id="ctxTopProv"></canvas>
+              </div>
+              <div class="col-6">
+                <canvas id="ctxTopProv3"></canvas>
+              </div>
             </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total palay produced per province ({{irrigated_year}})</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
-                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
-                </div>
-                <div class="card-body">
-                    <div id="prov"><canvas id="ctxTopProv"></canvas></div>
-                    <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 {% endblock content %}
 {% block script %}
@@ -132,7 +186,7 @@
                     data: prodIrrigData
                 },
                 {
-                    label: 'Rainfed',
+                    label: 'Non-Irrigated',
                     backgroundColor: '#FFB043', // COLOR 3
                     borderColor: '#FFB043', // COLOR 3
                     data: prodRainData
@@ -141,9 +195,12 @@
         },
 
         options: {
-            aspectRatio: 2.5,
+            aspectRatio: 1.55,
             scales: {
                 xAxes: [{
+                    ticks:{
+                      fontSize:10,
+                    },
                     stacked: true,
                     display: true,
                     gridLines: {
@@ -203,15 +260,19 @@
         },
 
         options: {
-            aspectRatio: 0.5,
+            aspectRatio: .8,
             scales: {
                 xAxes: [{
                     display: false,
+                    ticks:{
+                      suggestedMax: 2.1,
+                    },
                 }],
                 yAxes: [{
                     display: true,
                     ticks: {
                         suggestedMin: 0,
+                        // fontSize: 7,
                     },
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
@@ -233,13 +294,13 @@
 
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
-
+                  // ctx.font = ctx.font.replace(/\d+px/, "7px");
                   this.data.datasets.forEach(function(dataset, i)
                                              {
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x + 15 , bar._model.y + 5);
+                      ctx.fillText(data, bar._model.x + 15 , bar._model.y + 8);
                     });
                   });
                 }
@@ -247,18 +308,92 @@
         }
     });
 
-    function toggle(){
-      var checkbox = document.getElementById('checkbox');
-      var prov = document.getElementById('prov');
-      var prov2 = document.getElementById('prov2');
-      if (checkbox.checked == true){
-        prov2.style.display = 'block';
-        prov.style.display = 'none';
-      } else {
-        prov2.style.display = 'none';
-        prov.style.display = 'block';
-      }
+    // CHART 2
+
+    var dbProvs3 = {{ tpData3|safe }};
+    let provinces3 = [];
+    let values3 = [];
+
+    try {
+        dbProvs3.map((item) => {
+            provinces3.push(item.location_name);
+            values3.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
     }
+
+    var prodStack3 = document.getElementById('ctxProdStack').getContext('2d');
+    var tempPrLabels3 = [...provinces3];
+    var topProvData3 = [...values3];
+
+    var topProv3 = document.getElementById('ctxTopProv3').getContext('2d');
+    var topProvChart3 = new Chart(topProv3, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempPrLabels3,
+            datasets: [{
+                label: 'Provincial total production',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData3
+            }]
+        },
+
+        options: {
+            aspectRatio: .8,
+            scales: {
+                xAxes: [{
+                    display: false,
+                    ticks:{
+                      suggestedMax: 2.1,
+                    },
+                }],
+                yAxes: [{
+                    display: true,
+
+                    ticks: {
+                        suggestedMin: 0,
+                        // fontSize: 7,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  // ctx.font = ctx.font.replace(/\d+px/, "7px");
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 15 , bar._model.y + 8);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+
     var dbProvs2 = {{ tpData2|safe }};
     let provinces2 = [];
     let values2 = [];
@@ -293,7 +428,7 @@
         },
 
         options: {
-            aspectRatio: 2,
+            aspectRatio: 1.124,
             scales: {
                 xAxes: [{
                     display: false,

@@ -22,7 +22,8 @@ class DecimalEncoder(json.JSONEncoder):
 # home page
 def index(request):
     riceindustry = 'active-title'
-    title = 'State of the Rice Sector in the Philippines' # Declared the title for the page title and tab title
+    title = 'The Philippines'
+    title2 = 'State of the Rice Sector in ' # Declared the title for the page title and tab title
     searchbartype = '1' # for differentiate the nav bar
     location_code = '999' # locCode in ids_location, Philippines
     location_type = '2' # locType in ids_location, Provinces only
@@ -341,6 +342,7 @@ def index(request):
     # pass declared variables to templates
     context = { 'riceindustry':riceindustry,
                 'title': title,
+                'title2':title2,
                 'searchbartype': searchbartype,
                 'rp_year':rp_year,
                 'rp_value':rp_value,
@@ -472,8 +474,7 @@ def riceproduction(request):
                                         			GROUP BY year, location_name, l.id
                                         			ORDER BY year DESC
                                         			LIMIT 2) "t2" ON "t1"."id" = "t2"."id"
-                                        ORDER BY "t1"."year" DESC
-                                        LIMIT 2""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # Execute query (same Raw query execution as the precedent)
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): # Execute query (same Raw query execution as the precedent)
         non_irrigated_year = data.year # assign year to non_irrigated_year
         non_irrigated_value = data.value # assign value to non_irrigated_value
         non_irrigated_compare = data.compare # assign compare to non_irrigated_compare
@@ -538,7 +539,8 @@ def riceproduction(request):
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
                         GROUP BY year, location_name
-                        ORDER BY value DESC""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
+                        ORDER BY value DESC
+                        LIMIT 40""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
     tpRows = tpCursor.fetchall() # fetch all data of the executed query
     tpResult = [] # store the values as an array or data dictionary
     for row in tpRows:
@@ -563,6 +565,22 @@ def riceproduction(request):
         tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
+
+    tpCursor3 = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    tpCursor3.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND(SUM("k"."estProduction"/1000000)::numeric,2) as value
+                        FROM "kpi_pay" "k"
+                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
+                        GROUP BY year, location_name
+                        ORDER BY value DESC
+                        LIMIT 40 OFFSET 40""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
+    tpRows3 = tpCursor3.fetchall() # fetch all data of the executed query
+    tpResult3 = [] # store the values as an array or data dictionary
+    for row in tpRows3:
+        tpResult3.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    tpData3 = json.dumps(tpResult3, cls=DecimalEncoder) # dumps the data as a json
     context = { 'riceindustry':riceindustry,
                 'title': title,
                 'irrigated_year':irrigated_year,
@@ -573,11 +591,13 @@ def riceproduction(request):
                 'all_eco_compare':all_eco_compare,
                 'non_irrigated_year':non_irrigated_year,
                 'non_irrigated_value':non_irrigated_value,
+                'non_irrigated_compare':non_irrigated_compare,
                 'aeData': aeData,
                 'rfData': rfData,
                 'iData': iData,
                 'tpData': tpData,
-                'tpData2': tpData2}
+                'tpData2': tpData2,
+                'tpData3': tpData3}
     return render(request, 'productions.html', context) # render the page with the context
 
 # area harvested
@@ -743,7 +763,8 @@ def areaharvested(request):
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
                         GROUP BY year, location_name
-                        ORDER BY value DESC""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
+                        ORDER BY value DESC
+                        LIMIT 40""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
     tpRows = tpCursor.fetchall() # fetch all data of the executed query
     tpResult = [] # store the values as an array or data dictionary
     for row in tpRows:
@@ -769,6 +790,27 @@ def areaharvested(request):
     for row in tpRows2:
         tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
+
+    #Top Provincial Production, 2020 only, All Ecosystem (Chart)
+    # Query method for json output (the precedent query didnt work for json output), This method is longer to code for outputing single type of data like in the main KPI Cards
+    tpCursor3 = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    # Get location_name, year, value
+    # Table used kpi_pay, ids_location, ids_ecosystem
+    tpCursor3.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, SUM("k"."areaHarv") as value
+                        FROM "kpi_pay" "k"
+                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = %s AND "k"."eco"= '2'
+                        GROUP BY year, location_name
+                        ORDER BY value DESC
+                        LIMIT 40 OFFSET 40""", [location_code, location_type, year_end]) # assign values to %s (apples to apples type)
+    tpRows3 = tpCursor3.fetchall() # fetch all data of the executed query
+    tpResult3 = [] # store the values as an array or data dictionary
+    for row in tpRows3:
+        tpResult3.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    tpData3 = json.dumps(tpResult3, cls=DecimalEncoder) # dumps the data as a json
+
     # pass declared variables to templates
     context = { 'riceindustry': riceindustry,
                 'title': title,
@@ -785,7 +827,8 @@ def areaharvested(request):
                 'rfData': rfData,
                 'iData': iData,
                 'tpData': tpData,
-                'tpData2': tpData2}
+                'tpData2': tpData2,
+                'tpData3': tpData3}
     return render(request, 'harvestareas.html', context) # render the page with the context
 
 #estimated yield
@@ -953,7 +996,8 @@ def estimatedyield(request):
                         FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
                         WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = '2020' AND "k"."eco"= '2'
                         GROUP BY year, location_name
-                        ORDER BY value DESC""", [location_code, location_type]) # assign values to %s (apples to apples type)
+                        ORDER BY value DESC
+                        LIMIT 40""", [location_code, location_type]) # assign values to %s (apples to apples type)
     tpRows = tpCursor.fetchall() # fetch all data of the executed query
     tpResult = [] # store the values as an array or data dictionary
     for row in tpRows:
@@ -978,6 +1022,25 @@ def estimatedyield(request):
     for row in tpRows2:
         tpResult2.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
     tpData2 = json.dumps(tpResult2, cls=DecimalEncoder) # dumps the data as a json
+
+    #Top Provincial Production, 2020 only, All Ecosystem (Chart)
+    # Execute query (same Raw query execution as the precedent)
+    # Get location_name, year, value
+    # Table used kpi_pay, ids_location, ids_ecosystem
+    tpCursor3 = connection.cursor() # Connection cursor to postgres
+    tpCursor3.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND(AVG("k"."yieldEst")::numeric,2) as value
+                        FROM "kpi_pay" "k"
+                        FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
+                        FULL JOIN "ids_ecosystem" "e" ON "k"."eco" = "e"."eco"
+                        WHERE "l"."locCode"!=%s AND "k"."locType" = %s AND year = '2020' AND "k"."eco"= '2'
+                        GROUP BY year, location_name
+                        ORDER BY value DESC
+                        LIMIT 40 OFFSET 40""", [location_code, location_type]) # assign values to %s (apples to apples type)
+    tpRows3 = tpCursor3.fetchall() # fetch all data of the executed query
+    tpResult3 = [] # store the values as an array or data dictionary
+    for row in tpRows3:
+        tpResult3.append(dict(zip(keys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    tpData3 = json.dumps(tpResult3, cls=DecimalEncoder) # dumps the data as a json
     # pass declared variables to templates
     context = { 'riceindustry': riceindustry,
                 'title': title,
@@ -994,7 +1057,8 @@ def estimatedyield(request):
                 'rfData': rfData,
                 'iData': iData,
                 'tpData': tpData,
-                'tpData2': tpData2}
+                'tpData2': tpData2,
+                'tpData3': tpData3}
     return render (request, 'estyields.html', context) # render the page with the context
 
 # supply and utilization
@@ -1626,7 +1690,8 @@ def valuations(request):
     rpCursor.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND("k"."palayValue") AS value
                         FROM "kpi_value" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
-                        WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
+                        ORDER BY year DESC""", [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     rpRows = rpCursor.fetchall() # fetch all data of the executed query
     rpResult = [] # store the values as an array or data dictionary
     for row in rpRows:
@@ -1640,7 +1705,8 @@ def valuations(request):
     asCursor.execute("""SELECT "l"."locName" AS location_name, "k"."year" AS year, ROUND("k"."agriValue") AS value
                         FROM "kpi_value" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode"="l"."locCode" AND "k"."locType" = "l"."locType"
-                        WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
+                        WHERE "k"."locCode" = %s AND "k"."locType"=%s AND "k"."year" >= %s AND "k"."year" <= %s
+                        ORDER BY year DESC """, [location_code, location_type, year_start, year_end]) # assign values to %s (apples to apples type)
     asRows = asCursor.fetchall() # fetch all data of the executed query
     asResult = [] # store the values as an array or data dictionary
     for row in asRows:

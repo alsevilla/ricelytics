@@ -2,109 +2,128 @@
 {% load static %}
 {% block content %}
   <!-- Header --->
-  <div class="jumbotron">
-      <div class="text-center jumbotron-content">
-          <h2>State of the Rice Sector in the Philippines</h2>
-          <h1>{{title}}</h1>
-          <p>How does the price of un-hulled and de-hulled rice fare in the marketplace? Know the current and historical price of rice.</p>
+  <div id='prices' class="jumbotron">
+      <div class="jumbotron-content text-left">
+        <div class="row">
+          <div class="col">
+            <h2>State of the Rice Sector in the Philippines</h2>
+            <h1>{{title}}</h1>
+            <br>
+          </div>
+          <div class="col">
+            <br>
+            <p><i>How does the price of un-hulled and de-hulled rice fare in the marketplace?</i>
+              <br>Know the current and historical price of rice.</p>
+          </div>
+        </div>
       </div>
   </div>
     <div class="row">
-        <div class="col">
-            <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">Dry Palay Farmgate Price ({{ farmgate_year }})</h5>
-                        <h1 class="card-text mt-4 font-weight-bold">P{{ farmgate_value }}{% if farmgate_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif farmgate_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>per kilogram</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-primary text-white">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title">Bigas Wholesale Price ({{ wholesale_year }})</h5>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                          <div class="col-6 border-right">
-                              <p>Well-Milled</p>
-                              <h1 class="card-text font-weight-bold smaller">P{{ wholesale_spprice }}{% if wholesale_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                          </div>
-                            <div class="col-6">
-                                <p>Regular-Milled</p>
-                                <h1 class="card-text font-weight-bold smaller">P{{ wholesale_price }}{% if wholesale_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                            </div>
-                        </div>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
-                            <p>per kilogram</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-primary text-white">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title">Bigas Retail Price ({{ retail_year }})</h5>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-6 border-right">
-                              <p>Well-Milled</p>
-                              <h1 class="card-text font-weight-bold smaller">P{{ retail_spprice }}{% if retail_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                            </div>
-                            <div class="col-6">
-                                <p>Regular-Milled</p>
-                                <h1 class="card-text font-weight-bold smaller">P{{ retail_price }}{% if retail_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                            </div>
-                        </div>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
-                            <p>per kilogram</p>
-                        </div>
+      <div class="col-6 text-center">
+        <div class="row">
+          <div class="col-12">
+            <div class="card primary mb-2 bg-primary text-white">
+                <div class="card-body" style="padding:5px;">
+                    <h5 class="card-title mt-2">Dry Palay Farmgate Price ({{ farmgate_year }})</h5>
+                    <h1 class="card-text font-weight-bold">P{{ farmgate_value }}{% if farmgate_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif farmgate_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                    <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                        <p>per kilogram (kg)</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
+          </div>
+          <div class="col-12">
+            <div class="card primary mb-2 bg-primary text-white">
+                <div class="card-body" style="padding:5px;">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title mt-1">Bigas Wholesale Price ({{ wholesale_year }})</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6 border-right">
+                          <h6>WELL-MILLED</h6>
+                          <h1 class="card-text font-weight-bold smaller">P{{ wholesale_spprice }}{% if wholesale_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                      </div>
+                        <div class="col-6">
+                            <h6>REGULAR-MILLED</h6>
+                            <h1 class="card-text font-weight-bold smaller">P{{ wholesale_price }}{% if wholesale_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        </div>
+                    </div>
+                    <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
+                        <p>per kilogram (kg)</p>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card primary mb-2 bg-primary text-white">
+                <div class="card-body" style="padding:5px;">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title mt-2">Bigas Retail Price ({{ retail_year }})</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 border-right">
+                          <h6>WELL-MILLED</h6>
+                          <h1 class="card-text font-weight-bold smaller">P{{ retail_spprice }}{% if retail_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        </div>
+                        <div class="col-6">
+                            <h6>REGULAR-MILLED</h6>
+                            <h1 class="card-text font-weight-bold smaller">P{{ retail_price }}{% if retail_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        </div>
+                    </div>
+                    <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
+                        <p>per kilogram (kg)</p>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Dry palay farmgate price (year range)(2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso</p>
+                    <h5 class="my-0">Dry palay farmgate price (year range)(2000-2019)</h5>
+                    <h5 class="my-0 font-weight-normal text-muted">in Philippine Peso</h5>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxFarmPrices"></canvas></div>
                 </div>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+        <div class="col-12">
+          <div class="card mb-2">
+              <div class="card-header text-center">
+                  <h5 class="my-0">Bigas wholesale price of regular and well-milled rice (2000-2019)</h5>
+                  <h5 class="my-0 font-weight-normal text-muted">in Philippine Peso</h5>
+              </div>
+              <div class="card-body">
+                  <div><canvas id="ctxWholesalePrices"></canvas></div>
+              </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card mb-2">
+              <div class="card-header text-center">
+                  <h5 class="my-0">Bigas retail price of regular and well-milled rice (2000-2019)</h5>
+                  <h5 class="my-0 font-weight-normal text-muted">in Philippine Peso</h5>
+              </div>
+              <div class="card-body">
+                  <div><canvas id="ctxRetailPrices"></canvas></div>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
     </div>
+
     <div class="row">
         <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Bigas wholesale price of regular and well-milled rice (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxWholesalePrices"></canvas></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Bigas retail price of regular and well-milled rice (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxRetailPrices"></canvas></div>
-                </div>
-            </div>
+
         </div>
     </div>
 {% endblock content %}
@@ -169,7 +188,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.2,
+            aspectRatio: 3.1  ,
             elements: {
                 point: {
                     radius: 2
@@ -178,14 +197,19 @@
             scales: {
                 xAxes: [{
                     display: true,
+                    ticks:{
+                      fontSize:10,
+                    },
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
                     }
                 }],
                 yAxes: [{
-                    display: true,
+                    display: false,
                     ticks: {
-                        suggestedMin: 0,
+                        suggestedMin: 10,
+                        suggestedMax: 21,
+                        stepSize: 4,
                     }
                 }]
             },
@@ -206,13 +230,13 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
-
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
                   this.data.datasets.forEach(function(dataset, i)
                                              {
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -5);
                     });
                   });
                 }
@@ -272,7 +296,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.2,
+            aspectRatio: 2.5,
             elements: {
                 point: {
                     radius: 2
@@ -281,14 +305,19 @@
             scales: {
                 xAxes: [{
                     display: true,
+                    ticks: {
+                      fontSize:10,
+                    },
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
                     }
                 }],
                 yAxes: [{
-                    display: true,
+                    display: false,
                     ticks: {
-                        suggestedMin: 0,
+                        suggestedMin: 15,
+                        suggestedMax: 50,
+                        stepSize: 15,
                     }
                 }]
             },
@@ -309,13 +338,14 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -7);
                     });
                   });
                 }
@@ -375,7 +405,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.2,
+            aspectRatio: 2.5,
             elements: {
                 point: {
                     radius: 2
@@ -384,14 +414,19 @@
             scales: {
                 xAxes: [{
                     display: true,
+                    ticks:{
+                      fontSize: 10,
+                    },
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
                     }
                 }],
                 yAxes: [{
-                    display: true,
+                    display: false,
                     ticks: {
-                        suggestedMin: 0,
+                        suggestedMin: 10,
+                        suggestedMax: 60,
+                        stepSize: 10,
                     }
                 }]
             },
@@ -412,13 +447,14 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -5);
                     });
                   });
                 }

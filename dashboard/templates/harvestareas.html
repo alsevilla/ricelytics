@@ -2,48 +2,79 @@
 {% load static %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron">
-        <div class="jumbotron-content text-center ">
-            <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>{{title}}</h1>
-            <p>How wide was the accumulated area of the total harvested palay? Explore the estimated overall harvested area, the apportionment of irrigated and non-irrigated farms, and the size of extents in the provinces.</p>
+    <div id='ah' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>State of the Rice Sector in the Philippines</h2>
+              <h1>{{title}}</h1>
+              <br>
+            </div>
+            <div class="col">
+              <br>
+              <p><i>How wide was the accumalated area of the harvest palay</i>
+                <br>Explore the estimated overall harvested area, the apportionment of irrigated and
+                <br>non-irrigated farms, and the size of extents in the provinces.</p>
+            </div>
+          </div>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-alternate text-white">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12">
+            <div class="card-group text-center">
+                <div class="card primary mb-2 bg-alternate text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Irrigated Area Total ({{irrigated_year}})</h5>
-                        <h1 class="card-text font-weight-bold">{{ irrigated_value }}{% if irrigated_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif irrigated_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                        <h5 class="card-title text-left">Irrigated Area ({{irrigated_year}})</h5>
+                        <h1 class="card-text font-weight-bold">{{ irrigated_value }}
+                          {% if irrigated_compare > 0 %}
+                          <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                          {% elif irrigated_compare < 0 %}
+                          <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                          {% else %}
+                          <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                          {%endif%}</h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-primary">
                             <p class="text-white">million hectares</p>
                         </div>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-primary text-white">
+                <div class="card primary mb-2 ml-2 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">National Total ({{all_eco_year}})</h5>
-                        <h1 class="card-text font-weight-bold">{{all_eco_value}}{% if all_eco_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif all_eco_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                        <h5 class="card-title text-left">National Total ({{all_eco_year}})</h5>
+                        <h1 class="card-text font-weight-bold">{{all_eco_value}}
+                          {% if all_eco_compare > 0 %}
+                          <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                          {% elif all_eco_compare < 0 %}
+                          <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                          {% else %}
+                          <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                          {%endif%}</h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                             <p>million hectares</p>
                         </div>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-alternate2 text-white">
+                <div class="card primary mb-2 ml-2 bg-alternate2 text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Non-Irrigated Area Total ({{rainfed_year}})</h5>
-                        <h1 class="card-text font-weight-bold">{{rainfed_value}}{% if rainfed_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif rainfed_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                        <h5 class="card-title text-left">Non-Irrigated Area ({{rainfed_year}})</h5>
+                        <h1 class="card-text font-weight-bold">{{rainfed_value}}
+                          {% if rainfed_compare > 0 %}
+                          <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                          {% elif rainfed_compare < 0 %}
+                          <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                          {% else %}
+                          <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                          {%endif%}</h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-primary">
                             <p class="text-white">million hectares</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
+          </div>
+          <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header text-center">
                     <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by year (2000-2020)</h5>
@@ -53,22 +84,45 @@
                     <div><canvas id="ctxAreaStack"></canvas></div>
                 </div>
             </div>
+          </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by province</h5>
-                    <p class="my-0 font-weight-normal text-muted">in hectares</p>
-                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
-                </div>
-                <div class="card-body">
-                    <div id='area'><canvas id="ctxTopAreas"></canvas></div>
-                    <div id='area2' style='display: none'><canvas id="ctxTopAreas2"></canvas></div>
-                </div>
+      </div>
+      <div class="col-6">
+        <div class="card mb-4" data-toggle="modal" data-target="#exampleModalCenter">
+            <div class="card-header text-center  data-toggle="tooltip" data-placement="top" title="Click to view all">
+                <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by province ({{irrigated_year}})</h5>
+                <p class="my-0 font-weight-normal text-muted">in hectares</p>
+            </div>
+            <div class="card-body">
+              <canvas id="ctxTopAreas2"></canvas>
             </div>
         </div>
+      </div>
+    </div>
+    <div class="modal fade bd-example-modal-xl" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLongTitle">Total accumulated size of area of harvested palay by province</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-6">
+                <canvas id="ctxTopAreas"></canvas>
+              </div>
+              <div class="col-6">
+                <canvas id="ctxTopAreas3"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 {% endblock content %}
 {% block script %}
@@ -133,7 +187,7 @@
                     data: areaIrrigData
                 },
                 {
-                    label: 'Rainfed',
+                    label: 'Non-Irrigated',
                     backgroundColor: '#FFB043', // COLOR 3
                     borderColor: '#FFB043', // COLOR 3
                     data: areaRainData
@@ -142,11 +196,14 @@
         },
 
         options: {
-            aspectRatio: 2.5,
+            aspectRatio: 1.55,
             scales: {
                 xAxes: [{
                     stacked: true,
                     display: true,
+                    ticks:{
+                      fontSize:10,
+                    },
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
                     }
@@ -201,7 +258,169 @@
         },
 
         options: {
-            aspectRatio: 0.5,
+            aspectRatio: 0.8,
+            scales: {
+                xAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMax: 400000,
+                    },
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 8);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var dbProvs3 = {{ tpData3|safe }};
+    let provinces3 = [];
+    let values3 = [];
+
+    try {
+        dbProvs3.map((item) => {
+            provinces3.push(item.location_name);
+            values3.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempPrLabels3 = [...provinces3];
+    var topProvData3 = [...values3];
+
+    var topProv3 = document.getElementById('ctxTopAreas3').getContext('2d');
+    var topProvChar3t = new Chart(topProv3, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempPrLabels3,
+            datasets: [{
+                label: 'Provincial total harvest areas',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData3
+            }]
+        },
+
+        options: {
+            aspectRatio: 0.8,
+            scales: {
+                xAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMax: 400000,
+                    },
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 8);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var dbProvs2 = {{ tpData2|safe }};
+    let provinces2 = [];
+    let values2 = [];
+
+    try {
+        dbProvs2.map((item) => {
+            provinces2.push(item.location_name);
+            values2.push(item.value);
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    var tempPrLabels2 = [...provinces2];
+    var topProvData2 = [...values2];
+
+    var topProv2 = document.getElementById('ctxTopAreas2').getContext('2d');
+    var topProvChart2 = new Chart(topProv2, {
+        // The type of chart we want to create
+        type: 'horizontalBar',
+
+        data: {
+            labels: tempPrLabels2,
+            datasets: [{
+                label: 'Provincial total harvest areas',
+                backgroundColor: '#2138B7', // COLOR 4
+                borderColor: '#2138B7', // COLOR 4
+                fill: false,
+                data: topProvData2
+            }]
+        },
+
+        options: {
+            aspectRatio: 1.124,
             scales: {
                 xAxes: [{
                     display: false,
@@ -238,95 +457,6 @@
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
                       data = parseInt(data).toLocaleString();
-                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 5);
-                    });
-                  });
-                }
-            }
-        }
-    });
-    function toggle(){
-      var checkbox = document.getElementById('checkbox');
-      var area = document.getElementById('area');
-      var area2 = document.getElementById('area2');
-      if (checkbox.checked == true){
-        area2.style.display = 'block';
-        area.style.display = 'none';
-      } else {
-        area2.style.display = 'none';
-        area.style.display = 'block';
-      }
-    }
-
-    var dbProvs2 = {{ tpData2|safe }};
-    let provinces2 = [];
-    let values2 = [];
-
-    try {
-        dbProvs2.map((item) => {
-            provinces2.push(item.location_name);
-            values2.push(item.value);
-        });
-    } catch (error) {
-        console.log(error);
-    }
-
-    var tempPrLabels2 = [...provinces2];
-    var topProvData2 = [...values2];
-
-    var topProv2 = document.getElementById('ctxTopAreas2').getContext('2d');
-    var topProvChart2 = new Chart(topProv2, {
-        // The type of chart we want to create
-        type: 'horizontalBar',
-
-        data: {
-            labels: tempPrLabels2,
-            datasets: [{
-                label: 'Provincial total harvest areas',
-                backgroundColor: '#2138B7', // COLOR 4
-                borderColor: '#2138B7', // COLOR 4
-                fill: false,
-                data: topProvData2
-            }]
-        },
-
-        options: {
-            aspectRatio: 2,
-            scales: {
-                xAxes: [{
-                    display: false,
-                }],
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        suggestedMin: 0,
-                    },
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0)"
-                    }
-                }]
-            },
-            legend: {
-                display: false
-            },
-            tooltips: false,
-            hover: {
-              animationDuration: 0
-            },
-            animation: {
-              duration: 0,
-                onComplete: function() {
-                  let chartInstance = this.chart,
-                      ctx = chartInstance.ctx;
-
-                  ctx.textAlign = 'center';
-                  ctx.textBaseline = 'bottom';
-
-                  this.data.datasets.forEach(function(dataset, i)
-                                             {
-                    let meta = chartInstance.controller.getDatasetMeta(i);
-                    meta.data.forEach(function(bar, index) {
-                      let data = dataset.data[index];
                       ctx.fillText(data, bar._model.x + 30 , bar._model.y + 5);
                     });
                   });

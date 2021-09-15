@@ -57,9 +57,10 @@
       </div>
     </div>
     {% if searchbartype == '1'%}
-    <nav class="nav navbar navbar-expand-lg navbar-light">
-        <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-house-fill"></i> National</a>
-        <div class="dropdown ml-3 mr-4">
+    <nav class="nav navbar navbar-expand-lg navbar-light justify-content-between">
+      <div class="row">
+        <a class="btn btn-warning ml-3 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-house-fill"></i> National</a>
+        <div class="dropdown ml-4 mr-4">
             <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Region
             </button>
@@ -81,11 +82,17 @@
         </div>
         <a class="btn btn-info rounded-pill mr-4" href="{% url 'Regional' %}" role="button">Get Data</a>
         <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
+      </div>
+      <div>
+        <a class="btn" href="#"><i class="bi bi-box-arrow-in-down"></i></a>
+        <a class="btn" href="#" onclick="pdf()"><i class="bi bi-printer-fill"></i>  </ion-icon></a>
+      </div>
     </nav>
     {% elif searchbartype == '2' %}
-    <nav class="nav navbar navbar-expand-lg navbar-light">
-        <a class="btn btn-warning mr-2 text-white" href="{% url 'HomePage' %}" role="button"><i class="bi bi-house-fill"></i> National</a>
-        <div class="dropdown ml-3 mr-4">
+    <nav class="nav navbar navbar-expand-lg navbar-light justify-content-between">
+      <div class="row">
+        <a class="btn btn-warning ml-3 text-white" href="{% url 'Profile' %}" role="button"><i class="bi bi-house-fill"></i> National</a>
+        <div class="dropdown ml-4 mr-4">
             <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Select Region
             </button>
@@ -107,6 +114,11 @@
         </div>
         <a class="btn btn-info rounded-pill mr-4" href="{% url 'RegionProfile' %}" role="button">Get Data</a>
         <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
+      </div>
+      <div>
+        <a class="btn" href="#"><i class="bi bi-box-arrow-in-down"></i></a>
+        <a class="btn" onclick="pdf()" href="#"><i class="bi bi-printer-fill"></i>  </ion-icon></a>
+      </div>
     </nav>
     {% else %}
     <!-- Navigation --->
@@ -116,20 +128,21 @@
       </div>
       <div>
         <a class="btn" href="#"><i class="bi bi-box-arrow-in-down"></i></a>
-        <a class="btn" href="#"><i class="bi bi-printer-fill"></i>  </ion-icon></a>
+        <a class="btn" onclick="pdf()" href="#"><i class="bi bi-printer-fill"></i>  </ion-icon></a>
       </div>
     </nav>
     {% endif %}
     <!-- Body -->
     <div class="container">
+    <div class="loader" style="display: none;"></div>
     {% block content %}
 
     {% endblock %}
     <!-- Footer --->
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <footer class="pt-2 border-top">
         <div class="row">
             <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">2021. RiceLytics Data Initative.</small>
+                <small class="d-block text-muted">2021. RiceLytics Data Initative.</small>
                 <small class="text-muted">Philippine Rice Research Institute.</small>
             </div>
             <div class="col-6 col-md">
@@ -167,11 +180,27 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/chart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jspdf.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/html2canvas.min.js' %}"></script>
     <!-- <script type="text/javascript" src="{% static 'js/chartjs-plugin-labels.min.js' %}"></script> -->
     {% block script %}
 
     {% endblock%}
-
-
+    <script type="text/javascript">
+      function pdf(){
+        const fileName = String(new Date().valueOf());
+            const element = document.querySelector('.container');
+            const loader = document.querySelector('.loader')
+            const regionCanvas = element.getBoundingClientRect();
+            loader.style.display = 'block';
+            html2canvas(element, { scale: 3 }).then(async canvas => {
+                const pdf = new jsPDF('l', 'mm', 'a4');
+                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 3, 3, 291, (291 / regionCanvas.width) * regionCanvas.height);
+                await window.open(pdf.output('bloburl', { filename: fileName }), '_blank');
+                loader.style.display = 'none';
+                // await pdf.save(fileName, { returnPromise: true });
+            });
+          }
+    </script>
   </body>
 </html>

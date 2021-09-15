@@ -3,72 +3,111 @@
 {% load mathfilters %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>{{ title }}</h1>
-            <p>How much does the rice farming sector contribute to national agricultural account? Learn the value of rice production, and its share in the overall value of agricultural production.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card-deck mb-5 text-center">
-                <div class="card primary mb-5 bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">National Value of Rice Production ({{ rpgva_year }})</h5>
-                        <h1 class="card-text font-weight-bold mt-4">P{{ rpgva_price }}{% if rpgva_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif rpgva_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>Trillion</p>
-                        </div>
-                        <p>(At 2018 Constant Prices)</p>
-                    </div>
-                </div>
-                <div class="card primary mb-5 bg-alternate3">
-                    <div class="card-body">
-                        <div class="row">
-                          <div class="col-6 border-right">
-                            <h6 class="card-title">National Value of Agricultural Production ({{ aff_year }})</h6>
-                              <h1 class="card-text font-weight-bold mt-4" style="margin-left: -10px;">P{{ aff_price }}{% if aff_price_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_price_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                              <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                  <p class="text-white">Trillion</p>
-                              </div>
-                              <p class="card-title-note">(At 2018 Constant Prices)</p>
-                          </div>
-                          <div class="col-6">
-                            <h6 class="card-title">Percent Share of Rice Production</h6>
-                            <div class="card-body py-1">{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}<canvas id="GVA"></canvas></div>
-                            <!-- <h1 class="card-text align-middle font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1> -->
-                          </div>
-                        </div>
-                    </div>
-                </div>
-
+    <div id='pp' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>State of the Rice Sector in the Philippines</h2>
+              <h1>{{title}}</h1>
+              <br>
             </div>
+            <div class="col">
+              <br>
+              <p><i>How much does the rice farming sector contribute to national agricultural account?</i>
+                <br>Learn the Gross Value Added of rice production, and its share in the GVA of
+                <br>agricultural, forestry, fishing and portion in the National Gross.</p>
+            </div>
+          </div>
         </div>
     </div>
     <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12">
+            <div class="card-deck text-center">
+              <div class="card primary mb-2 bg-primary text-white">
+                  <div class="card-body">
+                      <h5 class="card-title">National Value of Rice Production ({{ rpgva_year }})</h5>
+                      <h1 class="card-text font-weight-bold mt-2">P{{ rpgva_price }}
+                        {% if rpgva_compare > 0 %}
+                        <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                        {% elif rpgva_compare < 0 %}
+                        <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                        {% else %}
+                        <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                        {%endif%}</h1>
+                      <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                          <p>Trillion</p>
+                      </div>
+                      <h5>(At 2018 Constant Prices)</h5>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card-deck text-center">
+              <div class="card primary mb-2 bg-alternate3">
+                  <div class="card-body">
+                      <div class="row">
+                        <div class="col-6 border-right">
+                          <h6 class="card-title">National Value of Agricultural Production ({{ aff_year }})</h6>
+                            <h1 class="card-text font-weight-bold mt-2" style="margin-left: -10px;">P{{ aff_price }}
+                              {% if aff_price_compare > 0 %}
+                              <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                              {% elif aff_price_compare < 0 %}
+                              <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                              {% else %}
+                              <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                              {%endif%}</h1>
+                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
+                                <p class="text-white">Trillion</p>
+                            </div>
+                            <h5 class="card-title-note">(At 2018 Constant Prices)</h5>
+                        </div>
+                        <div class="col-6">
+                          <h6 class="card-title">Percent Share of Rice Production</h6>
+                          <div class="card-body py-1">
+                            {% if aff_percent_compare > 0 %}
+                            <img class='arrowup3' src="{% static 'assets/arrow_industry up.png' %}" >
+                            {% elif aff_percent_compare < 0 %}
+                            <img class='arrowdown3' src="{% static 'assets/arrow_industry down.png' %}" >
+                            {% else %}
+                            <img class='line3' src="{% static 'assets/line_industry.png' %}" >
+                            {%endif%}<canvas id="GVA"></canvas></div>
+                          <!-- <h1 class="card-text align-middle font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1> -->
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+              <div class="card mb-4">
+                  <div class="card-header text-center">
+                      <h5 class="my-0 p-2">Percent Share of Value of Rice Production to Value of Agricultural Production (2000-2020)</h5>
+                      <p class="my-0 font-weight-normal text-muted">Percentage (%), At Constant 2018 Prices (PSA, 2021)</p>
+                  </div>
+                  <div class="card-body">
+                      <div><canvas id="ctxAgriShare"></canvas></div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header text-center">
                     <h5 class="my-0 p-2">GVA in Rice Production and GVA in Agriculture, Forestry, and Fishing (2000-2020)</h5>
                     <p class="my-0 font-weight-normal text-muted">in billion pesos, At Constant 2018 Prices (PSA, 2021)</p>
                 </div>
-                <div class="card-body mt-4">
-                    <div><canvas id="ctxAgriSector" height="150"></canvas></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Percent Share of Rice Production to GVA in Agriculture, Forestry, and Fishing and to National GDP (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">Percentage (%), At Constant 2018 Prices (PSA, 2021)</p>
-                </div>
                 <div class="card-body">
-                    <div><canvas id="ctxAgriShare" height="150"></canvas></div>
+                    <div><canvas id="ctxAgriSector"></canvas></div>
                 </div>
             </div>
         </div>
+
+      </div>
     </div>
 
 {% endblock content %}
@@ -187,7 +226,7 @@
               enabled: false
             },
             cutoutPercentage: 60,
-            aspectRatio: 1.9,
+            aspectRatio: 2.5,
             legend: {
                 display: false
             },
@@ -238,7 +277,7 @@
     var riceSecData = [...values_palay];
     var agriSectorChart = new Chart(agriSector, {
         // The type of chart we want to create
-        type: 'bar',
+        type: 'horizontalBar',
 
         // The data for our dataset
         data: {
@@ -262,7 +301,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 1.6,
+            aspectRatio: 1.05,
             elements: {
                 point: {
                     radius: 2
@@ -270,8 +309,17 @@
             },
             scales: {
                 xAxes: [{
+                      ticks:{
+                        beginAtZero:true,
+                        userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join(',');
+                            return value;
+                          }
+                    },
                     stacked: true,
-                    display: true,
+                    display: false,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
                     }
@@ -281,13 +329,6 @@
                     display: true,
                     ticks: {
                         suggestedMin: 0,
-                        beginAtZero:true,
-                        userCallback: function(value, index, values) {
-                            value = value.toString();
-                            value = value.split(/(?=(?:...)*$)/);
-                            value = value.join(',');
-                            return value;
-                          }
                     }
                 }]
             },
@@ -295,14 +336,14 @@
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
             },
-            tooltips:{
-                callbacks:{
-                  label: function (tooltipItem, data) {
-                    var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                    return data.datasets[tooltipItem.datasetIndex].label + ': ' + parseInt(tooltipValue).toLocaleString();
-                  }
-                }
-            },
+            // tooltips:{
+            //     callbacks:{
+            //       label: function (tooltipItem, data) {
+            //         var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+            //         return data.datasets[tooltipItem.datasetIndex].label + ': ' + parseInt(tooltipValue).toLocaleString();
+            //       }
+            //     }
+            // },
             tooltips: false,
             hover: {
               animationDuration: 0
@@ -316,7 +357,7 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#ffffff';
-                  ctx.font = ctx.font.replace(/\d+px/, "9px");
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
@@ -324,7 +365,7 @@
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
                       data = parseInt(data).toLocaleString();
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 20);
+                      ctx.fillText(data, bar._model.x + -25 , bar._model.y + 5);
                     });
                   });
                 }
@@ -358,31 +399,34 @@
     var totalShareData = [...shares_total];
     var agriShareChart = new Chart(agriShare, {
         // The type of chart we want to create
-        type: 'line',
+        type: 'bar',
 
         // The data for our dataset
         data: {
             labels: tempShareLabels,
-            datasets: [{
-                label: 'Total GDP share',
-                backgroundColor: '#2138B7', // COLOR 1
-                borderColor: '#2138B7', // COLOR 1
-                fill:false,
-                lineTension: 0,
-                data: totalShareData
-            }, {
+            datasets: [
+            // {
+            //     label: 'Total GDP share',
+            //     backgroundColor: '#2138B7', // COLOR 1
+            //     borderColor: '#2138B7', // COLOR 1
+            //     fill:false,
+            //     lineTension: 0,
+            //     data: totalShareData
+            // },
+            {
                 label: 'Agriculture GDP share',
                 backgroundColor: '#007FFE', // COLOR 2
                 borderColor: '#007FFE', // COLOR 2
                 fill:false,
                 lineTension: 0,
-                data: agriShareData
+                data: agriShareData,
+                type:'line'
             }]
         },
 
         // Configuration options go here
         options: {
-            aspectRatio: 1.6,
+            aspectRatio: 2.9,
             elements: {
                 point: {
                     radius: 2
@@ -390,6 +434,9 @@
             },
             scales: {
                 xAxes: [{
+                    ticks:{
+                      fontSize:10,
+                    },
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
@@ -420,6 +467,7 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
