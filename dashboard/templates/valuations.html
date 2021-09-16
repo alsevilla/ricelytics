@@ -3,7 +3,7 @@
 {% load mathfilters %}
 {% block content %}
     <!-- Header --->
-    <div id='pp' class="jumbotron">
+    <div id='valuation' class="jumbotron">
         <div class="jumbotron-content text-left">
           <div class="row">
             <div class="col">
@@ -83,9 +83,9 @@
           </div>
           <div class="col-12">
               <div class="card mb-4">
-                  <div class="card-header text-center">
-                      <h5 class="my-0 p-2">Percent Share of Value of Rice Production to Value of Agricultural Production (2000-2020)</h5>
-                      <p class="my-0 font-weight-normal text-muted">Percentage (%), At Constant 2018 Prices (PSA, 2021)</p>
+                  <div class="card-header text-left">
+                      <h5 class="my-0 font-weight-bold">Percent Share of Value of Rice Production to Value of Agricultural Production (2000-2020)</h5>
+                      <h6 class="my-0 font-weight-normal text-muted">Percentage (%), At Constant 2018 Prices (PSA, 2021)</h6>
                   </div>
                   <div class="card-body">
                       <div><canvas id="ctxAgriShare"></canvas></div>
@@ -97,9 +97,9 @@
       <div class="col-6">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">GVA in Rice Production and GVA in Agriculture, Forestry, and Fishing (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in billion pesos, At Constant 2018 Prices (PSA, 2021)</p>
+                <div class="card-header text-left">
+                    <h5 class="my-0 font-weight-bold">GVA in Rice Production and GVA in Agriculture, Forestry, and Fishing (2000-2020)</h5>
+                    <h5 class="my-0 font-weight-normal text-muted">in billion pesos, At Constant 2018 Prices (PSA, 2021)</h5>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxAgriSector"></canvas></div>
@@ -301,7 +301,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 1.05,
+            aspectRatio: .965,
             elements: {
                 point: {
                     radius: 2
@@ -426,7 +426,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.9,
+            aspectRatio: 2.35,
             elements: {
                 point: {
                     radius: 2

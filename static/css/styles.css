@@ -116,8 +116,8 @@ nav button {
 .jumbotron {
     position: relative;
     padding: 1em;
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .jumbotron:before {
@@ -144,7 +144,30 @@ div#pp:before {
 div#ah:before {
     background-image: url("../assets/Industry/Print - Industry National – AH@2x.png") !important;
 }
-
+div#ey:before {
+  background-image: url("../assets/Industry/Print - Industry National – EY@2x@2x.png") !important;
+}
+div#valuation:before {
+  background-image: url("../assets/Industry/Print - Industry National – GVA@2x.png") !important;
+}
+div#prices:before {
+  background-image: url("../assets/Industry/Print - Industry National – MP@2x.png") !important;
+}
+div#incomes:before {
+  background-image: url("../assets/Industry/Print - Industry National – FI@2x.png") !important;
+}
+div#yieldcost:before {
+  background-image: url("../assets/Industry/Print - Industry National – YvPC@2x.png") !important;
+}
+div#supply:before {
+  background-image: url("../assets/Industry/Print - Industry National – S_U@2x.png") !important;
+}
+div#consumption:before {
+  background-image: url("../assets/Industry/Print - Industry National – C@2x.png") !important;
+}
+div#impexport:before {
+  background-image: url("../assets/Industry/Print - Industry National – I_E@2x.png") !important;
+}
 .jumbotron-content {
     position: relative;
 }
@@ -273,7 +296,7 @@ div#ah:before {
 
 .card.primary h2 {
     margin-left: -15px;
-    font-size: 45px;
+    font-size: 30px;
 }
 
 .farmer .card.primary h2 {

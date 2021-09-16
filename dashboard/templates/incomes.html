@@ -2,78 +2,121 @@
 {% load static %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron ">
-        <div class="jumbotron-content text-center">
-            <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>{{ title }}</h1>
-            <p>How much do our farmers earn per season? Find out their net income through the years derived from the gross return minus the total cost of production. Explore the farmer earnings in the regions.</p>
+    <div id='incomes' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>State of the Rice Sector in the Philippines</h2>
+              <h1>{{title}}</h1>
+              <br>
+            </div>
+            <div class="col">
+              <br>
+              <p><i>How much do our farmers earn per season?</i>
+                <br>Find out their net income through the years derived from the gross return
+                <br>minus the total cost of production. farmer earnings in the regions. </p>
+            </div>
+          </div>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-alternate3">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12">
+            <div class="card primary mb-2 bg-primary text-white text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Farmer's Net Returns ({{ nr_year }})</h5>
+                    <h2 class="card-text font-weight-bold">P{{ nr_price }}
+                      {% if nr_compare > 0 %}
+                      <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
+                      {% elif nr_compare < 0 %}
+                      <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
+                      {% else %}
+                      <img class='line2' src="{% static 'assets/line_industry.png' %}" >
+                      {%endif%}</h2>
+                    <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                        <p>per hectare per cropping season</p>
+                    </div>
+                    <h6 class="mb-0 text-capitalize">Net Return = Gross Return – Total Cost</h6>
+                </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card-group mb-2 text-center">
+                <div class="card primary bg-alternate3">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Gross Return ({{ gr_year }})</h5>
-                        <h2 class="card-text font-weight-bold">P{{ gr_price }}{% if gr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif gr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <h5 class="card-title">Gross Return ({{ gr_year }})</h5>
+                        <h2 class="card-text font-weight-bold">P{{ gr_price }}
+                          {% if gr_compare > 0 %}
+                          <img class='arrowup2' src="{% static 'assets/arrow_industry up2.png' %}" >
+                          {% elif gr_compare < 0 %}
+                          <img class='arrowdown2' src="{% static 'assets/arrow_industry down2.png' %}" >
+                          {% else %}
+                          <img class='line2' src="{% static 'assets/line_industry2.png' %}" >
+                          {%endif%}</h2>
                         <div class="card-note w-75 mx-auto rounded-pill bg-primary">
                             <p class="text-white">per hectare per cropping season</p>
                         </div>
-                        <p class="mb-0 text-capitalize">Gross Return = Average Yield Per Hectare (Kg) x Farmgate Price (Pesos/Kg)</p>
+                        <h6 class="mb-0 text-capitalize">Gross Return = Average Yield Per Hectare (Kg) x Farmgate Price (Pesos/Kg)</h6>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-primary text-white">
+                <div class="card primary bg-alternate3">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Farmer's Net Returns ({{ nr_year }})</h5>
-                        <h2 class="card-text font-weight-bold">P{{ nr_price }}{% if nr_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif nr_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
-                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                            <p>per hectare per cropping season</p>
-                        </div>
-                        <p class="mb-0 text-capitalize">Net Return = Gross Return – Total Cost</p>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-alternate3">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Total Costs ({{ pc_year }})</h5>
-                        <h2 class="card-text font-weight-bold">P{{ pc_price }}{% if pc_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif pc_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h2>
+                        <h5 class="card-title">Total Costs ({{ pc_year }})</h5>
+                        <h2 class="card-text font-weight-bold">P{{ pc_price }}
+                          {% if pc_compare > 0 %}
+                          <img class='arrowup2' src="{% static 'assets/arrow_industry up2.png' %}" >
+                          {% elif pc_compare < 0 %}
+                          <img class='arrowdown2' src="{% static 'assets/arrow_industry down2.png' %}" >
+                          {% else %}
+                          <img class='line2' src="{% static 'assets/line_industry2.png' %}" >
+                          {%endif%}</h2>
                         <div class="card-note w-75 mx-auto rounded-pill bg-primary">
                             <p class="text-white">per hectare per cropping season</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Average gross return per hectare of rice production (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+          </div>
+          <div class="col-12">
+            <div class="card mb-2">
+                <div class="card-header text-left">
+                    <h5 class="my-0 font-weight-bold">Average gross return per hectare of rice production (2000-2019)</h5>
+                    <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxGrossReturns"></canvas></div>
                 </div>
             </div>
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Gross return, net return, and total cost per hectare of rice production by region (2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                      <div class="col-6">
-                        <canvas id="ctxTopRegions"></canvas>
-                      </div>
-                      <div class="col-3">
-                        <canvas id="ctxTopRegions2"></canvas>
-                      </div>
-                      <div class="col-3">
-                        <canvas id="ctxTopRegions3"></canvas>
-                      </div>
-                    </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card mb-4">
+            <div class="card-header text-left">
+                <h5 class="my-0 font-weight-bold">Gross return, net return, and total cost per hectare of rice production by region (2019)</h5>
+                <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <canvas id="ctxTopRegions"></canvas>
+                  </div>
+                  <div class="col-3">
+                    <canvas id="ctxTopRegions2"></canvas>
+                  </div>
+                  <div class="col-3">
+                    <canvas id="ctxTopRegions3"></canvas>
+                  </div>
                 </div>
             </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+
+
         </div>
     </div>
 {% endblock content %}
@@ -164,18 +207,21 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2,
+            aspectRatio: 2.06,
             scales: {
                 xAxes: [{
                     stacked: true,
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks:{
+                      fontSize:10,
                     }
                 }],
                 yAxes: [{
                     stacked: true,
-                    display: true,
+                    display: false,
                     ticks: {
                         suggestedMin: 0,
                         suggestedMax: 85000,
@@ -192,6 +238,9 @@
             legend: {
                 display: 'top',
                 onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize:10,
+                }
             },
             plugins: {
                 labels: false
@@ -273,14 +322,14 @@
         },
 
         options: {
-            aspectRatio: 1,
+            aspectRatio: .482,
             scales: {
                 xAxes: [{
                     // stacked: true,
                     display: false,
                     ticks: {
                         suggestedMin: 0,
-                        suggestedMax: 90100,
+                        suggestedMax: 90000,
                         beginAtZero:true,
                         userCallback: function(value, index, values) {
                             value = value.toString();
@@ -304,6 +353,9 @@
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize:10,
+                }
             },
             tooltips:false,
             hover: {
@@ -318,13 +370,14 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i){
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
                       data = parseInt(data).toLocaleString();
-                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 7);
+                      ctx.fillText(data, bar._model.x + 18.5 , bar._model.y + 7);
                     });
                   });
                 }
@@ -347,13 +400,13 @@
             }]
         },
         options: {
-            aspectRatio: .484,
+            aspectRatio: .222,
             scales: {
                 xAxes: [{
                     display: false,
                     ticks: {
                         suggestedMin: 0,
-                        suggestedMax: 80000,
+                        suggestedMax: 90000,
                         beginAtZero:true,
                         userCallback: function(value, index, values) {
                             value = value.toString();
@@ -373,6 +426,9 @@
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize:10,
+                }
             },
             tooltips:false,
             hover: {
@@ -387,13 +443,14 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i){
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
                       data = parseInt(data).toLocaleString();
-                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 7);
+                      ctx.fillText(data, bar._model.x + 18.5 , bar._model.y + 7);
                     });
                   });
                 }
@@ -416,14 +473,14 @@
         },
 
         options: {
-            aspectRatio: .484,
+            aspectRatio: .222,
             scales: {
                 xAxes: [{
                     // stacked: true,
                     display: false,
                     ticks: {
                         suggestedMin: 0,
-                        suggestedMax: 40000,
+                        suggestedMax: 90000,
                         beginAtZero:true,
                         userCallback: function(value, index, values) {
                             value = value.toString();
@@ -447,6 +504,9 @@
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize:10,
+                }
             },
             tooltips:false,
             hover: {
@@ -461,13 +521,14 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i){
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
                       data = parseInt(data).toLocaleString();
-                      ctx.fillText(data, bar._model.x + 30 , bar._model.y + 7);
+                      ctx.fillText(data, bar._model.x + 18.5 , bar._model.y + 7);
                     });
                   });
                 }

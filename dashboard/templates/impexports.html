@@ -2,30 +2,54 @@
 {% load static %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>{{ title }}</h1>
-            <p class="lead">Nostrum et aut alias aut ea distinctio accusamus. Ea dolores expedita autem eius. <br />Voluptatibus fuga nulla quia et.</p>
+    <div id='impexport' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>State of the Rice Sector in the Philippines</h2>
+              <h1>{{title}}</h1>
+              <br>
+            </div>
+            <div class="col">
+              <br>
+              <p><i>How much rice do we import and export?</i>
+                <br>Find out the country’s yearly rice importation and exportation information, as well as
+                <br>the percentage share of imported and locally produced rice to the total supply.</p>
+            </div>
+          </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-primary text-white">
+            <div class="card-deck text-center">
+                <div class="card primary mb-2 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Total Import ({{ imexport_year }})</h5>
-                        <h1 class="card-text font-weight-bold">{{ import_value }}{% if import_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif import_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        <h5 class="card-title">Total Import ({{ imexport_year }})</h5>
+                        <h1 class="card-text font-weight-bold">{{ import_value }}
+                          {% if import_compare > 0 %}
+                          <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                          {% elif import_compare < 0 %}
+                          <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                          {% else %}
+                          <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                          {%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>million metric tons</p>
                         </div>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-primary text-white">
+                <div class="card primary mb-2 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Total Export ({{ imexport_year }})</h5>
-                        <h1 class="card-text font-weight-bold">&lt; {% if export_value <= 0 %} 1000 {% else %} {{ export_value }} {% endif %}{% if export_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif export_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        <div class="card-note w-25 mx-auto rounded-pill bg-warning">
+                        <h5 class="card-title">Total Export ({{ imexport_year }})</h5>
+                        <h1 class="card-text font-weight-bold">&lt; {% if export_value <= 0 %} 1000 {% else %} {{ export_value }} {% endif %}
+                          {% if export_compare > 0 %}
+                          <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                          {% elif export_compare < 0 %}
+                          <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                          {% else %}
+                          <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                          {%endif%}</h1>
+                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>metric tons</p>
                         </div>
                     </div>
@@ -34,43 +58,111 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Yearly imported rice (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
-                </div>
-                <div class="card-body mt-4 mb-4">
-                    <div><canvas id="ctxImports"></canvas></div>
-                </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <div class="card mb-2" data-toggle="modal" data-target="#table1">
+                  <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                      <h5 class="my-0 font-weight-bold">Yearly imported rice (2000-2019)</h5>
+                      <h6 class="my-0 font-weight-normal text-muted">in million metric tons</h6>
+                  </div>
+                  <div class="card-body">
+                      <div><canvas id="ctxImports"></canvas></div>
+                  </div>
+              </div>
             </div>
+            <div class="col-12">
+              <div class="card mb-2" data-toggle="modal" data-target="#table2">
+                  <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                      <h5 class="my-0 font-weight-bold">Percent share of rice imports and local production to total rice supply (2000-2019)</h5>
+                      <h6 class="my-0 font-weight-normal text-muted">Excluding beginning stocks</h6>
+                  </div>
+                  <div class="card-body">
+                      <div><canvas id="ctxImportLocal"></canvas></div>
+                  </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Yearly exported rice (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxExports"></canvas></div>
-                </div>
-                <div class="card-footer text-muted">Note: less than 1,000 tons exported = 0 (y-axis) </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12">
+              <div class="card mb-2" data-toggle="modal" data-target="#table3">
+                  <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                      <h5 class="my-0 font-weight-bold">Yearly exported rice (2000-2019)</h5>
+                      <h6 class="my-0 font-weight-normal text-muted">in million metric tons</h6>
+                      <h6 class="my-0 font-weight-normal text-muted">Note: less than 1,000 tons exported = 0 (y-axis)</h6>
+                  </div>
+                  <div class="card-body">
+                      <div><canvas id="ctxExports"></canvas></div>
+                  </div>
+              </div>
             </div>
+            <div class="col-12">
+                <img src="{%static 'assets/Import Export@2x.png' %}" height="295" width="735" alt="">
+            </div>
+          </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Percent share of rice imports and local production to total rice supply (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">Excluding beginning stocks</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxImportLocal"></canvas></div>
-                </div>
-                <div class="card-footer text-muted">Note: Excluding beginning stocks in total rice supply</div>
+    <div class="modal fade bd-example-modal-xl" id="table1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLongTitle">Yearly imported rice (2000-2019)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+              <div class="row">
+                <canvas id="ctxImports2"></canvas>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="modal fade bd-example-modal-xl" id="table2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLongTitle">Percent share of rice imports and local production to total rice supply (2000-2019)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <canvas id="ctxImportLocal2"></canvas>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade bd-example-modal-xl" id="table3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLongTitle">Yearly exported rice (2000-2019)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <canvas id="ctxExports2"></canvas>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 {% endblock content %}
 {% block script %}
@@ -143,7 +235,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 1.6,
+            aspectRatio: 3.1,
             elements: {
                 point: {
                     radius: 2
@@ -154,7 +246,87 @@
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks:{
+                      fontSize:10,
                     }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        fontSize:10,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize: 10,
+                }
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var importsC2 = document.getElementById('ctxImports2').getContext('2d');
+
+    var importsChart2 = new Chart(importsC2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLab,
+            datasets: [{
+                label: 'Imported Rice',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                type:'line',
+                lineTension: 0,
+                fill: false,
+                data: totalImports
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
                 }],
                 yAxes: [{
                     display: true,
@@ -166,6 +338,7 @@
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+
             },
             tooltips:false,
             hover: {
@@ -216,7 +389,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 1.6,
+            aspectRatio: 3.1,
             elements: {
                 point: {
                     radius: 2
@@ -227,7 +400,89 @@
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks: {
+                        fontSize:10,
                     }
+                }],
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        suggestedMax:2.5,
+                        fontSize:10,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+                labels:{
+                    fontSize:10,
+                }
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+
+    var exportsC2 = document.getElementById('ctxExports2').getContext('2d');
+
+    var exportsChart2 = new Chart(exportsC2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLab,
+            datasets: [{
+                label: 'Exported Rice',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                type:'line',
+                fill: false,
+                data: totalExports
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 2,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
                 }],
                 yAxes: [{
                     display: true,
@@ -296,7 +551,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.5,
+            aspectRatio: 3.2,
             elements: {
                 point: {
                     radius: 2
@@ -308,7 +563,98 @@
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks:{
+                        fontSize:10,
                     }
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        suggestedMin: 0,
+                        fontSize:10,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+                labels:{
+                    fontSize:10,
+                }
+            },
+            plugins: {
+                labels: false
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#ffffff';
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 12);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var ImportLocal2 = document.getElementById('ctxImportLocal2').getContext('2d');
+
+    var ImportLocalChart2 = new Chart(ImportLocal2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLab,
+            datasets: [{
+                label: 'Locally Produced Rice (%)',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                lineTension: 0,
+                fill: true,
+                data: totalProduceP
+            }, {
+                label: 'Imported Rice (%)',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                fill: true,
+                data: totalImportsP
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
                 }],
                 yAxes: [{
                     stacked: true,
@@ -351,6 +697,8 @@
             }
         }
     });
+
+    
 
 </script>
 {% endblock script %}

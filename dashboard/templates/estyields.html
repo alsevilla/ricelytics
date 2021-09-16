@@ -73,10 +73,10 @@
             </div>
           </div>
           <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Average yield of palay per hectare by year (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in metric tons per hectare (t/ha)</p>
+            <div class="card mb-2">
+                <div class="card-header text-left">
+                    <h5 class="my-0 font-weight-bold">Average yield of palay per hectare by year (2000-2020)</h5>
+                    <h5 class="my-0 font-weight-normal text-muted">in metric tons per hectare (t/ha)</h5>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxYieldStack"></canvas></div>
@@ -86,10 +86,10 @@
         </div>
       </div>
       <div class="col-6">
-        <div class="card mb-4" data-toggle="modal" data-target="#exampleModalCenter">
-            <div class="card-header text-center" data-toggle="tooltip" data-placement="top" title="Click to view all"">
-                <h5 class="my-0 p-2">Average yield of palay per hectare by province (2020)</h5>
-                <p class="my-0 font-weight-normal text-muted">in metric tons per hectare (t/ha)</p>
+        <div class="card mb-2" data-toggle="modal" data-target="#exampleModalCenter">
+            <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all"">
+                <h5 class="my-0 font-weight-bold">Average yield of palay per hectare by province (2020)</h5>
+                <h5 class="my-0 font-weight-normal text-muted">in metric tons per hectare (t/ha)</h5>
             </div>
             <div class="card-body">
                 <canvas id="ctxTopYield2"></canvas>
@@ -121,6 +121,7 @@
           </div>
         </div>
       </div>
+    </div>
 {% endblock content %}
 {% block script %}
 <script>
@@ -214,12 +215,16 @@
                     ticks: {
                         suggestedMin: 0,
                         stepSize:.7,
+                        fontSize:10,
                     }
                 }]
             },
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize:10,
+                }
             },
             tooltips: false,
             hover: {

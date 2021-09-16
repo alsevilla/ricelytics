@@ -75,10 +75,10 @@
               </div>
             </div>
             <div class="col-12">
-              <div class="card mb-4">
-                  <div class="card-header text-center">
-                      <h5 class="my-0 p-2">Total palay produced by year (2000-2020)</h5>
-                      <p class="my-0 font-weight-normal text-muted">in million metric tons (mt)</p>
+              <div class="card mb-2">
+                  <div class="card-header text-left">
+                      <h5 class="my-0 font-weight-bold">Total palay produced by year (2000-2020)</h5>
+                      <h5 class="my-0 font-weight-normal text-muted">in million metric tons (mt)</h5>
                   </div>
                   <div class="card-body">
                       <div><canvas id="ctxProdStack"></canvas></div>
@@ -88,10 +88,10 @@
           </div>
         </div>
         <div class="col-6">
-          <div class="card mb-4" data-toggle="modal" data-target="#exampleModalCenter">
-              <div class="card-header text-center" data-toggle="tooltip" data-placement="top" title="Click to view all">
-                  <h5 class="my-0 p-2">Total palay produced per province ({{irrigated_year}})</h5>
-                  <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
+          <div class="card mb-2" data-toggle="modal" data-target="#exampleModalCenter">
+              <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                  <h5 class="my-0 font-weight-bold">Total palay produced per province ({{irrigated_year}})</h5>
+                  <h5 class="my-0 font-weight-normal text-muted">in million metric tons</h5>
               </div>
               <div class="card-body">
                   <canvas id="ctxTopProv2"></canvas>
@@ -195,7 +195,7 @@
         },
 
         options: {
-            aspectRatio: 1.55,
+            aspectRatio: 1.315,
             scales: {
                 xAxes: [{
                     ticks:{
@@ -220,6 +220,9 @@
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize:10,
+                }
             }
         }
     });
@@ -280,7 +283,7 @@
                 }]
             },
             legend: {
-                display: false
+                display: false,
             },
             tooltips: false,
             hover: {
@@ -428,7 +431,7 @@
         },
 
         options: {
-            aspectRatio: 1.124,
+            aspectRatio: 1,
             scales: {
                 xAxes: [{
                     display: false,

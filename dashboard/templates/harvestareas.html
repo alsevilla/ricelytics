@@ -75,10 +75,10 @@
             </div>
           </div>
           <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by year (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million hectares (ha)</p>
+            <div class="card mb-2">
+                <div class="card-header text-left">
+                    <h5 class="my-0 font-weight-bold">Total accumulated size of area of harvested palay by year (2000-2020)</h5>
+                    <h5 class="my-0 font-weight-normal text-muted">in million hectares (ha)</h5>
                 </div>
                 <div class="card-body">
                     <div><canvas id="ctxAreaStack"></canvas></div>
@@ -88,10 +88,10 @@
         </div>
       </div>
       <div class="col-6">
-        <div class="card mb-4" data-toggle="modal" data-target="#exampleModalCenter">
-            <div class="card-header text-center  data-toggle="tooltip" data-placement="top" title="Click to view all">
-                <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by province ({{irrigated_year}})</h5>
-                <p class="my-0 font-weight-normal text-muted">in hectares</p>
+        <div class="card mb-2" data-toggle="modal" data-target="#exampleModalCenter">
+            <div class="card-header text-left  data-toggle="tooltip" data-placement="top" title="Click to view all">
+                <h5 class="my-0 font-weight-bold">Total accumulated size of area of harvested palay by province ({{irrigated_year}})</h5>
+                <h5 class="my-0 font-weight-normal text-muted">in hectares</h5>
             </div>
             <div class="card-body">
               <canvas id="ctxTopAreas2"></canvas>
@@ -196,7 +196,7 @@
         },
 
         options: {
-            aspectRatio: 1.55,
+            aspectRatio: 1.315,
             scales: {
                 xAxes: [{
                     stacked: true,
@@ -219,6 +219,9 @@
             legend: {
                 position: 'top',
                 onClick: (e) => e.stopPropagation(),
+                labels: {
+                  fontSize:10,
+                }
             }
         }
     });
@@ -420,7 +423,7 @@
         },
 
         options: {
-            aspectRatio: 1.124,
+            aspectRatio: 1,
             scales: {
                 xAxes: [{
                     display: false,

@@ -25,7 +25,14 @@
             <div class="card primary mb-2 bg-primary text-white">
                 <div class="card-body" style="padding:5px;">
                     <h5 class="card-title mt-2">Dry Palay Farmgate Price ({{ farmgate_year }})</h5>
-                    <h1 class="card-text font-weight-bold">P{{ farmgate_value }}{% if farmgate_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif farmgate_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                    <h1 class="card-text font-weight-bold">P{{ farmgate_value }}
+                      {% if farmgate_compare > 0 %}
+                      <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                      {% elif farmgate_compare < 0 %}
+                      <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                      {% else %}
+                      <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                      {%endif%}</h1>
                     <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                         <p>per kilogram (kg)</p>
                     </div>
@@ -33,57 +40,115 @@
             </div>
           </div>
           <div class="col-12">
-            <div class="card primary mb-2 bg-primary text-white">
-                <div class="card-body" style="padding:5px;">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title mt-1">Bigas Wholesale Price ({{ wholesale_year }})</h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-6 border-right">
-                          <h6>WELL-MILLED</h6>
-                          <h1 class="card-text font-weight-bold smaller">P{{ wholesale_spprice }}{% if wholesale_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+            <div class="card-group">
+              <div class="card primary mb-2 mr-2 bg-alternate3 text-black">
+                  <div class="card-body" style="padding:5px;">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title mt-1">Bigas Wholesale Price ({{ wholesale_year }})</h5>
+                          </div>
                       </div>
-                        <div class="col-6">
-                            <h6>REGULAR-MILLED</h6>
-                            <h1 class="card-text font-weight-bold smaller">P{{ wholesale_price }}{% if wholesale_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif wholesale_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-4">
+                              <h6 class="mt-4 ml-2 text-left">WELL-MILLED</h6>
+                            </div>
+                            <div class="col-8">
+                              <h2 class="card-text font-weight-bold smaller">P{{ wholesale_spprice }}
+                                {% if wholesale_spcompare > 0 %}
+                                <img class='arrowup2' src="{% static 'assets/arrow_industry up2.png' %}" >
+                                {% elif wholesale_spcompare < 0 %}
+                                <img class='arrowdown2' src="{% static 'assets/arrow_industry down2.png' %}" >
+                                {% else %}
+                                <img class='line2' src="{% static 'assets/line_industry2.png' %}" >
+                                {%endif%}</h2>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary mt-2 text-white">
+                                    <p>per kilogram (kg)</p>
+                                </div>
+                            </div>
+                          </div>
                         </div>
-                    </div>
-                    <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
-                        <p>per kilogram (kg)</p>
-                    </div>
-                </div>
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-4">
+                              <h6 class="mt-4 ml-2 text-left">REGULAR-MILLED</h6>
+                            </div>
+                            <div class="col-8">
+                              <h2 class="card-text font-weight-bold smaller">P{{ wholesale_price }}
+                                {% if wholesale_compare > 0 %}
+                                <img class='arrowup2' src="{% static 'assets/arrow_industry up2.png' %}" >
+                                {% elif wholesale_compare < 0 %}
+                                <img class='arrowdown2' src="{% static 'assets/arrow_industry down2.png' %}" >
+                                {% else %}
+                                <img class='line2' src="{% static 'assets/line_industry2.png' %}" >
+                                {%endif%}</h2>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary mt-2 text-white">
+                                    <p>per kilogram (kg)</p>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="card primary mb-2 bg-alternate3 text-black">
+                  <div class="card-body" style="padding:5px;">
+                      <div class="row">
+                          <div class="col">
+                              <h5 class="card-title mt-2">Bigas Retail Price ({{ retail_year }})</h5>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-4">
+                              <h6 class="mt-4 ml-2 text-left">WELL-MILLED</h6>
+                            </div>
+                            <div class="col-8">
+                              <h2 class="card-text font-weight-bold smaller">P{{ retail_spprice }}
+                                {% if retail_spcompare > 0 %}
+                                <img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" >
+                                {% elif retail_spcompare < 0 %}
+                                <img class='arrowdown' src="{% static 'assets/arrow_industry down2.png' %}" >
+                                {% else %}
+                                <img class='line' src="{% static 'assets/line_industry2.png' %}" >
+                                {%endif%}</h2>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary mt-2 text-white">
+                                    <p>per kilogram (kg)</p>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-4">
+                              <h6 class="mt-4 ml-2 text-left">REGULAR-MILLED</h6>
+                            </div>
+                            <div class="col-8">
+                              <h2 class="card-text font-weight-bold smaller">P{{ retail_price }}
+                                {% if retail_compare > 0 %}
+                                <img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" >
+                                {% elif retail_compare < 0 %}
+                                <img class='arrowdown' src="{% static 'assets/arrow_industry down2.png' %}" >
+                                {% else %}
+                                <img class='line' src="{% static 'assets/line_industry2.png' %}" >
+                                {%endif%}</h2>
+                              <div class="card-note w-75 mx-auto rounded-pill bg-primary mt-2 text-white">
+                                  <p>per kilogram (kg)</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
             </div>
           </div>
           <div class="col-12">
-            <div class="card primary mb-2 bg-primary text-white">
-                <div class="card-body" style="padding:5px;">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title mt-2">Bigas Retail Price ({{ retail_year }})</h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 border-right">
-                          <h6>WELL-MILLED</h6>
-                          <h1 class="card-text font-weight-bold smaller">P{{ retail_spprice }}{% if retail_spcompare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_spcompare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        </div>
-                        <div class="col-6">
-                            <h6>REGULAR-MILLED</h6>
-                            <h1 class="card-text font-weight-bold smaller">P{{ retail_price }}{% if retail_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif retail_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
-                        </div>
-                    </div>
-                    <div class="card-note w-50 mx-auto rounded-pill bg-warning mt-2">
-                        <p>per kilogram (kg)</p>
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0">Dry palay farmgate price (year range)(2000-2019)</h5>
+            <div class="card mb-2" data-toggle="modal" data-target="#table1">
+                <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                    <h5 class="my-0 font-weight-bold">Dry palay farmgate price (2000-2019)</h5>
                     <h5 class="my-0 font-weight-normal text-muted">in Philippine Peso</h5>
                 </div>
                 <div class="card-body">
@@ -96,9 +161,9 @@
       <div class="col-6">
         <div class="row">
         <div class="col-12">
-          <div class="card mb-2">
-              <div class="card-header text-center">
-                  <h5 class="my-0">Bigas wholesale price of regular and well-milled rice (2000-2019)</h5>
+          <div class="card mb-2" data-toggle="modal" data-target="#table2">
+              <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                  <h5 class="my-0 font-weight-bold">Bigas wholesale price of regular and well-milled rice (2000-2019)</h5>
                   <h5 class="my-0 font-weight-normal text-muted">in Philippine Peso</h5>
               </div>
               <div class="card-body">
@@ -107,9 +172,9 @@
           </div>
         </div>
         <div class="col-12">
-          <div class="card mb-2">
-              <div class="card-header text-center">
-                  <h5 class="my-0">Bigas retail price of regular and well-milled rice (2000-2019)</h5>
+          <div class="card mb-2" data-toggle="modal" data-target="#table3">
+              <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                  <h5 class="my-0 font-weight-bold">Bigas retail price of regular and well-milled rice (2000-2019)</h5>
                   <h5 class="my-0 font-weight-normal text-muted">in Philippine Peso</h5>
               </div>
               <div class="card-body">
@@ -120,11 +185,59 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
-        <div class="col">
-
+    <div class="modal fade bd-example-modal-xl" id="table1" tabindex="-1" role="dialog" aria-labelledby="table1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLongTitle">Dry palay farmgate price (2000-2019)</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <canvas id="ctxFarmPrices2"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="modal fade bd-example-modal-xl" id="table2" tabindex="-1" role="dialog" aria-labelledby="table1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLongTitle">Bigas wholesale price of regular and well-milled rice (2000-2019)</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <canvas id="ctxWholesalePrices2"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade bd-example-modal-xl" id="table3" tabindex="-1" role="dialog" aria-labelledby="table1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLongTitle">Bigas retail price of regular and well-milled rice (2000-2019)</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                <canvas id="ctxRetailPrices2"></canvas>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 {% endblock content %}
 {% block script %}
@@ -188,7 +301,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 3.1  ,
+            aspectRatio: 2.03,
             elements: {
                 point: {
                     radius: 2
@@ -231,6 +344,92 @@
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
                   ctx.font = ctx.font.replace(/\d+px/, "10px");
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -5);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var farmPrices2 = document.getElementById('ctxFarmPrices2').getContext('2d');
+
+    var farmPricesChart2 = new Chart(farmPrices2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempFarmLabels,
+            datasets: [{
+                label: 'Nominal price',
+                backgroundColor: '#A6CEE3', // COLOR 1
+                borderColor: '#A6CEE3', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: farmPriceData,
+                type: 'line'
+            }, {
+                label: 'Real price (2012=100)',
+                backgroundColor: '#007FFE', // COLOR 2
+                borderColor: '#007FFE', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: farmPriceReal,
+                type: 'line'
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks:{
+                      fontSize:10,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMin: 10,
+                        suggestedMax: 21,
+                        stepSize: 4,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            // tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+                  // ctx.font = ctx.font.replace(/\d+px/, "10px");
                   this.data.datasets.forEach(function(dataset, i)
                                              {
                     let meta = chartInstance.controller.getDatasetMeta(i);
@@ -296,7 +495,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.5,
+            aspectRatio: 2.31,
             elements: {
                 point: {
                     radius: 2
@@ -339,6 +538,92 @@
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
                   ctx.font = ctx.font.replace(/\d+px/, "10px");
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -7);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var wholesalePrices2 = document.getElementById('ctxWholesalePrices2').getContext('2d');
+    var wholesalePricesChart2 = new Chart(wholesalePrices2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempWLabels,
+            datasets: [{
+                label: 'Regular milled rice',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: wPriceData,
+                type: 'line'
+            }, {
+                label: 'Well milled rice',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: wPriceSp,
+                type: 'line'
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks: {
+                      fontSize:10,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMin: 15,
+                        suggestedMax: 50,
+                        stepSize: 15,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+                  // ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
@@ -405,7 +690,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.5,
+            aspectRatio: 2.31,
             elements: {
                 point: {
                     radius: 2
@@ -448,6 +733,92 @@
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
                   ctx.font = ctx.font.replace(/\d+px/, "10px");
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -5);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var retailPrices2 = document.getElementById('ctxRetailPrices2').getContext('2d');
+    var retailPricesChart2 = new Chart(retailPrices2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: tempWLabels,
+            datasets: [{
+                label: 'Regular milled rice',
+                backgroundColor: '#007FFE', // COLOR 1
+                borderColor: '#007FFE', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: rPriceData,
+                type: 'line'
+            }, {
+                label: 'Well milled rice',
+                backgroundColor: '#A6CEE3', // COLOR 2
+                borderColor: '#A6CEE3', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: rPriceSp,
+                type: 'line'
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    ticks:{
+                      fontSize: 10,
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        suggestedMin: 10,
+                        suggestedMax: 60,
+                        stepSize: 10,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+            },
+            tooltips: false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+                  // ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {

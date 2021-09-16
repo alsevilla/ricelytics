@@ -2,28 +2,37 @@
 {% load static %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>{{ title }}</h1>
-            <p>How much rice do Filipinos consume each day and year? Explore the information of per capita consumption and the comparison of our local consumption and local food consumption.</p>
+    <div id='consumption' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>State of the Rice Sector in the Philippines</h2>
+              <h1>{{title}}</h1>
+            </div>
+            <div class="col">
+              <br>
+              <p><i>How much rice do Filipinos consume each day and year? </i>
+                <br>Explore the information of per capita consumption and the comparison of our local
+                <br>consumption and local food consumption.
+            </div>
+          </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-primary text-white">
+            <div class="card-deck text-center">
+                <div class="card primary mb-2 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Average Annual Capita Consumption ({{ per_capita_year }})</h5>
+                        <h5 class="card-title">Average Annual Capita Consumption ({{ per_capita_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ per_kapita_kg_value }}{% if per_kapita_kg_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif per_kapita_kg_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>kilograms</p>
                         </div>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-primary text-white">
+                <div class="card primary mb-2 bg-primary text-white">
                     <div class="card-body">
-                        <h5 class="card-title p-2">Average Daily Per Capita Consumption ({{ per_capita_year }})</h5>
+                        <h5 class="card-title">Average Daily Per Capita Consumption ({{ per_capita_year }})</h5>
                         <h1 class="card-text font-weight-bold">{{ per_kapita_gram_value }}{% if per_kapita_gram_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif per_kapita_gram_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>grams</p>
@@ -34,42 +43,106 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Average annual per capita consumption per survey year (1999-2016)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in kilograms (kg) (FNRI and PSA, 2019)</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-2" data-toggle="modal" data-target="#table1">
+                        <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                            <h5 class="my-0 font-weight-bold" >Average annual per capita consumption per survey year (1999-2016)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in kilograms (kg) (FNRI and PSA, 2019)</h6>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id="ctxKgCapita"></canvas></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div><canvas id="ctxKgCapita"></canvas></div>
+                <div class="col-12">
+                    <div class="card mb-2" data-toggle="modal" data-target="#table2">
+                        <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                            <h5 class="my-0 font-weight-bold" >Local production versus net food disposable (2000-2019)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in million metric tons</h6>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id="ctxProdFood"></canvas></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Average daily per capita consumption per survey year (1999-2016)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in grams (gms) (FNRI and PSA, 2019)</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-2" data-toggle="modal" data-target="#table3">
+                        <div class="card-header text-left" data-toggle="tooltip" data-placement="top" title="Click to view all">
+                            <h5 class="my-0 font-weight-bold">Average daily per capita consumption per survey year (1999-2016)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in grams (gms) (FNRI and PSA, 2019)</h6>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id="ctxGramCapita"></canvas></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div><canvas id="ctxGramCapita"></canvas></div>
+                <div class="col-12">
+                    <img src="{%static 'assets/Chart1@2x.png' %}" height="324" width="735" alt="">
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Local production versus net food disposable (2000-2019)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxProdFood"></canvas></div>
-                </div>
+    <div class="modal fade bd-example-modal-xl" id="table1" tabindex="-1" role="dialog" aria-labelledby="table1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLongTitle">Average annual per capita consumption per survey year (1999-2016)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
+            <div class="modal-body">
+                  <canvas id="ctxKgCapita2"></canvas>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+      <div class="modal fade bd-example-modal-xl" id="table2" tabindex="-1" role="dialog" aria-labelledby="table1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLongTitle">Local production versus net food disposable (2000-2019)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                  <canvas id="ctxProdFood2"></canvas>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade bd-example-modal-xl" id="table3" tabindex="-1" role="dialog" aria-labelledby="table1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLongTitle">Average daily per capita consumption per survey year (1999-2016)</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                  <canvas id="ctxGramCapita2"></canvas>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 {% endblock content %}
 {% block script %}
 <script type="text/javascript" src="{% static 'js/chartjs-plugin-labels.min.js' %}"></script>
@@ -198,7 +271,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 2.5,
+            aspectRatio: 3,
             elements: {
                 point: {
                     radius: 2
@@ -209,12 +282,115 @@
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks:{
+                        fontSize:10,
                     }
                 }],
                 yAxes: [{
                     id: 'A',
                     type: 'linear',
                     position: 'left',
+                    ticks:{
+                        fontSize:10,
+                        stepSize: 1,
+                        min: 7,
+                        max: 14,
+                    }
+                }]
+            },
+            legend: {
+                position: 'top',
+                onClick: (e) => e.stopPropagation(),
+                labels: {
+                    fontSize:10,
+                }
+            },
+            plugins: {
+                labels: false
+            },
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
+
+                  this.data.datasets.forEach(function(dataset, i)
+                                             {
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -10);
+                    });
+                  });
+                }
+            }
+
+        }
+    });
+
+    var ProdFood2 = document.getElementById('ctxProdFood2').getContext('2d');
+
+    var ProdFoodChart2 = new Chart(ProdFood2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLab,
+            datasets: [{
+                type: 'line',
+                label: 'Local Production',
+                backgroundColor: '#A6CEE3', // COLOR 1
+                borderColor: '#A6CEE3', // COLOR 1
+                lineTension: 0,
+                fill: false,
+                data: totalProduce,
+                yAxisID: 'A'
+            }, {
+                type: 'line',
+                label: 'Net Food Disposable',
+                backgroundColor: '#007FFE', // COLOR 2
+                borderColor: '#007FFE', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: totalFood,
+                yAxisID: 'A'
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            elements: {
+                point: {
+                    radius: 2
+                }
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
+                }],
+                yAxes: [{
+                    id: 'A',
+                    type: 'linear',
+                    position: 'left',
+                    ticks:{
+                        stepSize: 1,
+                        min: 7,
+                        max: 14,
+                    }
                 }]
             },
             legend: {
@@ -236,13 +412,14 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                //   ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i)
                                              {
                     let meta = chartInstance.controller.getDatasetMeta(i);
                     meta.data.forEach(function(bar, index) {
                       let data = dataset.data[index];
-                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -15);
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + -10);
                     });
                   });
                 }
@@ -272,13 +449,16 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 1.75,
+            aspectRatio: 3,
             scales: {
                 xAxes: [{
                     stacked: true,
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks:{
+                        fontSize:10,
                     }
                 }],
                 yAxes: [{
@@ -286,11 +466,15 @@
                     display: true,
                     ticks: {
                         min: 95,
+                        fontSize:10,
                     }
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'bottom',
+                labels:{
+                    fontSize:10,
+                }
             },
             datalabels: {
                 display: false
@@ -311,6 +495,82 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 0);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var KgCapita2 = document.getElementById('ctxKgCapita2').getContext('2d');
+
+    var KgCapitaChart2 = new Chart(KgCapita2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLabAct,
+            datasets: [{
+                label: 'Per Capita (kg/year)',
+                backgroundColor: '#007FFE', // COLOR 2
+                borderColor: '#007FFE', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: totalKgCapitaAct
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        min: 95,
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom',
+            },
+            datalabels: {
+                display: false
+            },
+            plugins: {
+                labels: false
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+                //   ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i){
                     let meta = chartInstance.controller.getDatasetMeta(i);
@@ -346,13 +606,16 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 1.75,
+            aspectRatio: 3,
             scales: {
                 xAxes: [{
                     stacked: true,
                     display: true,
                     gridLines: {
                         color: "rgba(0, 0, 0, 0)"
+                    },
+                    ticks:{
+                        fontSize:10,
                     }
                 }],
                 yAxes: [{
@@ -360,11 +623,15 @@
                     display: true,
                     ticks: {
                         min: 200,
+                        fontSize:10,
                     }
                 }]
             },
             legend: {
-                position: 'bottom'
+                position: 'bottom',
+                labels:{
+                    fontSize:10,
+                }
             },
             datalabels: {
                 display: false
@@ -385,6 +652,82 @@
                   ctx.textAlign = 'center';
                   ctx.textBaseline = 'bottom';
                   ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "10px");
+
+                  this.data.datasets.forEach(function(dataset, i){
+                    let meta = chartInstance.controller.getDatasetMeta(i);
+                    meta.data.forEach(function(bar, index) {
+                      let data = dataset.data[index];
+                      // data = parseInt(data).toLocaleString();
+                      ctx.fillText(data, bar._model.x + 0 , bar._model.y + 0);
+                    });
+                  });
+                }
+            }
+        }
+    });
+
+    var GramCapita2 = document.getElementById('ctxGramCapita2').getContext('2d');
+
+    var GramCapitaChart2 = new Chart(GramCapita2, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: yearsLabAct,
+            datasets: [{
+                label: 'Per Capita (gram/day)',
+                backgroundColor: '#007FFE', // COLOR 2
+                borderColor: '#007FFE', // COLOR 2
+                lineTension: 0,
+                fill: false,
+                data: totalGmCapitaAct
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            aspectRatio: 1.5,
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    display: true,
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)"
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    display: true,
+                    ticks: {
+                        min: 200,
+                    }
+                }]
+            },
+            legend: {
+                position: 'bottom',
+            },
+            datalabels: {
+                display: false
+            },
+            plugins: {
+                labels: false
+            },
+            tooltips:false,
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  ctx.fillStyle = '#6c757d';
+                //   ctx.font = ctx.font.replace(/\d+px/, "10px");
 
                   this.data.datasets.forEach(function(dataset, i){
                     let meta = chartInstance.controller.getDatasetMeta(i);
