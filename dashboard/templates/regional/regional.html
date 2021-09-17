@@ -4,171 +4,177 @@
 {% block content %}
     <!-- Header --->
     <div id="main" class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>{{ title2 }}</h2>
-            <h1>{{ title }}</h1>
-            <p>What is the status of the rice industry in the country? Explore and get insights about the trend of the key performance <br /> indicators of rice production, utilization, and economics.</p>
-            <div class="w-25 mx-auto rounded-pill bg-light">
-                <h6 class="text-dark p-2">Population: <strong>108.8 MILLION</strong> (PSA, 2021)</h6>
+        <div class="jumbotron-content">
+          <div class="row">
+            <div class="col-8">
+              <h2>{{ title2 }}</h2>
+              <h1>{{ title }}</h1>
+              <p>What is the status of the rice industry in the country? Explore and get insights about the trend of the key performance <br /> indicators of rice production, utilization, and economics.</p>
             </div>
+            <div class="col-4">
+              <div class="w-50 float-right text-center mx-auto rounded-pill bg-light">
+                <h6 class="text-dark pt-2">Population: <span class="font-weight-bold">108.8 MILLION</span> (PSA, 2021)</h6>
+            </div>
+            </div>
+          </div> 
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <div class="card-deck mb-2 text-center text-white">
-                <div class="card secondary mb-4 bg-primary">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12"> 
+              <div class="card-group text-center text-white">
+                <div class="card secondary mb-2 bg-primary">
                     <div class="card-body">
-                        <h4 class="card-title text-left"><a href="{% url 'RegionRiceProduction' %}" class="text-white stretched-link text-decoration-none">Palay Production</a></h4>
-                        <h1 class="card-text font-weight-semibold">12.34<i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                        <h4 class="card-title text-left"><a href="{% url 'RegionRiceProduction' %}" class="text-white stretched-link text-decoration-none">Palay Production (Year)</a></h4>
+                        <h1 class="card-text font-weight-semibold">12.34<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                             <h5 class="text-white">MILLION METRIC TONS</h5>
                         </div>
                     </div>
                 </div>
-                <div class="card secondary mb-4 bg-primary">
+                <div class="card secondary mb-2 ml-2 bg-primary">
                     <div class="card-body">
-                        <h4 class="card-title text-left"><a href="{% url 'RegionAreaHarvested' %}" class="text-white stretched-link text-decoration-none">Area Harvested</a></h4>
-                        <h1 class="card-text font-weight-semibold">5.67<i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                        <h4 class="card-title text-left"><a href="{% url 'RegionAreaHarvested' %}" class="text-white stretched-link text-decoration-none">Area Harvested (Year)</a></h4>
+                        <h1 class="card-text font-weight-semibold">5.67<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                             <h5 class="text-white">MILLION HECTARES</h5>
                         </div>
                     </div>
                 </div>
-                <div class="card secondary mb-4 bg-primary">
+                <div class="card secondary mb-2 ml-2 bg-primary">
                     <div class="card-body">
-                        <h4 class="card-title text-left"><a href="{% url 'RegionEstYields' %}" class="text-white stretched-link text-decoration-none">Yield per Hectare</a></h4>
-                        <h1 class="card-text font-weight-semibold">8.90<i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                        <h4 class="card-title text-left"><a href="{% url 'RegionEstYields' %}" class="text-white stretched-link text-decoration-none">Yield per Hectare (Year)</a></h4>
+                        <h1 class="card-text font-weight-semibold">8.90<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
+                        <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                             <h5 class="text-white">TONS PER HECTARE</h5>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-      <div class="col-9">
-          <div class="row">
-              <div class="col-6">
-                  <div class="card-group mb-2">
-                    <div class="col-12 p-0 ">
-                        <div class="card secondary text-center pt-2 pb-2 border-0 bg-light">
-                          <h6 class="card-title "><a href="{% url 'RegionValuations' %}" class="text-black stretched-link text-decoration-none">Value of Rice Production</a></h6>
-                          <h2 class="card-text">P 369.205 <i class="bi bi-caret-up-fill"></i></h2>
-                          <p>BILLION</p>
-                        </div>
+          </div>
+          <div class="col-6">
+            <div class="card secondary text-center border-0 bg-light mb-2">
+              <div class="px-3 pt-4 pb-4">
+                  <h6 class="card-title text-center"><a href="{% url 'RegionIncomes' %}" class="text-black stretched-link text-decoration-none">Farmer's Net Income</a></h6>
+                  <h2 class="card-text mt-3">P 21,237<i class="bi bi-caret-down-fill"></i></h2>
+                  <p class="mt-2 pt-2">PER HECTARE</p>
+                  <hr>
+                  <div class="row py-2">
+                    <div class="col-4">
+                      <h6 class="text-left text-nowrap pt-1"><a href="{% url 'RegionIncomes' %}" class="text-black stretched-link text-decoration-none">Gross Income</a></h6>
                     </div>
-                    <div class="col-12 p-0">
-                        <div class="card-group">
-                            <div class="card secondary text-center border-0 bg-light">
-                              <h6 class="text-center mb-0"><a href="{% url 'RegionValuations' %}" class="text-black stretched-link text-decoration-none">Percent share to Value of Agricultural Production</a></h6>
-                              <div class="card-body py-1"><canvas id="ctxAgriShare"></canvas></div>
-                              <!--<h2 class="card-text">20.7%<i class="bi bi-caret-up-fill"></i></h2>-->
-                            </div>
-                        </div>
+                    <div class="col-4">
+                      <h3 class="text-center">P 11.20 <i class="bi bi-caret-down-fill"></i></h3>
+                    </div>
+                    <div class="col-4 pt-1">
+                      <p>PER HECTARE</p>
                     </div>
                   </div>
               </div>
-              <div class="col-6">
-                <div class="col-12 p-0">
-                    <div class="card secondary text-center border-0 bg-light mb-2">
-                        <div class="px-3 pt-2 pb-1">
-                            <h6 class="card-title text-center"><a href="{% url 'RegionIncomes' %}" class="text-black stretched-link text-decoration-none">Farmer's Net Income</a></h6>
-                            <h2 class="card-text">P 21,237<i class="bi bi-caret-down-fill"></i></h2>
-                            <p>PER HECTARE</p>
-                            <hr>
-                            <div class="row py-2">
-                              <div class="col-4">
-                                <h6 class="text-left text-nowrap pt-1"><a href="{% url 'RegionIncomes' %}" class="text-black stretched-link text-decoration-none">Gross Income</a></h6>
-                              </div>
-                              <div class="col-4">
-                                <h3 class="text-center">P 11.20 <i class="bi bi-caret-down-fill"></i></h3>
-                              </div>
-                              <div class="col-4 pt-1">
-                                <p>PER HECTARE</p>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card secondary border-0 bg-light pt-3 mb-2">
+              <h6 class="text-center pt-1"><a href="{% url 'RegionYieldCost' %}" class="text-black stretched-link text-decoration-none">Total Cost</a></h6>
+              <h2 class="text-center mt-1">P 11.20 <i class="bi bi-caret-down-fill"></i></h2>
+              <p class="text-center mt-2 pb-2">PER KILOGRAM</p>
+
+              <h6 class="text-center pt-1"><a href="{% url 'RegionYieldCost' %}" class="text-black stretched-link text-decoration-none">Cost of Production</a></h6>
+              <h2 class="text-center mt-1">P 11.20 <i class="bi bi-caret-down-fill"></i></h2>
+              <p class="text-center mt-2 pb-2">PER KILOGRAM</p>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <div class="card secondary text-center border-0 bg-light">
+                  <div class="card-body">
+                    <h6 class="card-title text-center mt-2"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Palay Farmgate Price (Dry) per Kilogram</a></h6>
+                    <h2 class="card-text py-2">P 11.20<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
                 </div>
-                <div class="col-12 p-0">
-                    <div class="card secondary border-0 bg-light pt-3 pb-2">
-                        <div class="px-3 row">
-                          <div class="col-4">
-                            <h6 class="text-nowrap pt-2"><a href="{% url 'RegionYieldCost' %}" class="text-black stretched-link text-decoration-none">Cost of Production</a></h6>
-                          </div>
-                          <div class="col-4">
-                            <h3 class="text-center">P 11.20 <i class="bi bi-caret-down-fill"></i></h3>
-                          </div>
-                          <div class="col-4 pt-2">
-                            <p class="text-center">PER KILOGRAM</p>
-                          </div>
-                        </div>
-                    </div>
+            </div>
+            <div class="card secondary text-center border-0 bg-light">
+              <h6 class="text-center py-2">Wholesale Price per Kilogram</h6>
+            </div>
+            <div class="card-group">
+              <div class="card secondary py-2 mb-0 pl-2 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="row py-3">
+                  <div class="col-5">
+                    <h6 class="pt-2"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">WELL-MILLED RICE</a></h6>
+                  </div>
+                  <div class="col-7">
+                    <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
+                  </div>
                 </div>
+              </div>
+              <div class="card secondary py-2 mb-0 pl-2 text-center border-0 bg-light">
+                <div class="row py-3">
+                  <div class="col-5">
+                    <h6 class="pt-2"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">REGULAR MILLED RICE</a></h6>
+                  </div>
+                  <div class="col-7">
+                    <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card secondary mb-0 py-3 pl-2 text-center border-0 bg-light">
+              <h6 class="text-center pt-3">Retail Price per Kilogram</h6>
+            </div>
+            <div class="card-group">
+              <div class="card secondary py-2 mb-0 pl-2 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <div class="row py-3">
+                  <div class="col-5">
+                    <h6 class="pt-2"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">WELL-MILLED RICE</a></h6>
+                  </div>
+                  <div class="col-7">
+                    <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
+                  </div>
+                </div>
+              </div>
+              <div class="card secondary py-2 mb-0 pl-2 text-center border-0 bg-light">
+                <div class="row py-3">
+                  <div class="col-5">
+                    <h6 class="pt-2"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">REGULAR MILLED RICE</a></h6>
+                  </div>
+                  <div class="col-7">
+                    <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-group">
+              <div class="card secondary mb-0 pb-3 text-center border-0 pt-3 pl-2 bg-light"></div>
+            </div>
+          </a>
+        </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12 mb-2">
+            <div class="card-group">
+                <div class="card secondary text-center py-3 border-left-0 border-top-0 border-bottom-0 bg-light">
+                  <h6 class="card-title mt-2"><a href="{% url 'RegionValuations' %}" class="text-black stretched-link text-decoration-none">Value of Rice Production</a></h6>
+                  <h1 class="card-text mt-3">P 369.205 <i class="bi bi-caret-up-fill"></i></h1>
+                  <p class="mt-2">BILLION</p>
+                </div>
+                <div class="card secondary pt-3 text-center border-0 bg-light">
+                  <h6 class="text-center mt-2"><a href="{% url 'RegionValuations' %}" class="text-black stretched-link text-decoration-none">Percent share to Value of Agricultural Production</a></h6>
+                  <canvas id="ctxAgriShare"></canvas>
+                  <!--<h2 class="card-text">20.7%<i class="bi bi-caret-up-fill"></i></h2>-->
+                </div>
+              </div>
             </div>
             <div class="col-12">
-              <div class="card-group">
-                  <div class="card secondary text-center mt-2 border-left-0 border-bottom-0 border-top-0  bg-light">
-                        <div class="card-body">
-                          <h6 class="card-title text-center"><a href="{% url 'RegionPrices' %}" class="text-black stretched-link text-decoration-none">Palay Farmgate Price (Dry) per Kilogram</a></h6>
-                          <h2 class="card-text">P 16.72 <i class="bi bi-caret-up-fill"></i></h2>
-                      </div>
-                  </div>
-                  <div class="card secondary mt-2 border-left-0 border-bottom-0 border-top-0  bg-light">
-                    <div class="card-body">
-                      <h6 class="card-title text-center"><a href="#" <a href="#" class="text-black stretched-link text-decoration-none">Wholesale Price per Kilogram</a></h6>
-                      <div class="px-3 row">
-                        <div class="col">
-                          <h6 class="text-nowrap pt-2"><a href="#" class="text-black stretched-link text-decoration-none text-left">WELL-MILLED RICE</a></h6>
-                        </div>
-                        <div class="col">
-                          <h2 class="text-center">P 11.20 <i class="bi bi-caret-up-fill"></i></h2>
-                        </div>
-                      </div>
-                      <div class="px-3 row">
-                        <div class="col">
-                          <h6 class="text-nowrap pt-2"><a href="#" class="text-black stretched-link text-decoration-none text-left">REGULAR-MILLED RICE</a></h6>
-                        </div>
-                        <div class="col">
-                          <h2 class="text-center">P 11.20 <i class="bi bi-caret-up-fill"></i></h2>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card secondary mt-2 border-right-0 border-bottom-0 border-top-0  bg-light">
-                    <div class="card-body">
-                      <h6 class="card-title text-center"><a href="#" <a href="#" class="text-black stretched-link text-decoration-none">Retail Price per Kilogram</a></h6>
-                      <div class="px-3 row">
-                        <div class="col">
-                          <h6 class="text-nowrap pt-2"><a href="#" class="text-black stretched-link text-decoration-none text-left">WELL-MILLED RICE</a></h6>
-                        </div>
-                        <div class="col">
-                          <h2 class="text-center">P 11.20 <i class="bi bi-caret-up-fill"></i></h2>
-                        </div>
-                      </div>
-                      <div class="px-3 row">
-                        <div class="col">
-                          <h6 class="text-nowrap pt-2"><a href="#" class="text-black stretched-link text-decoration-none text-left">REGULAR-MILLED RICE</a></h6>
-                        </div>
-                        <div class="col">
-                          <h2 class="text-center">P 11.20 <i class="bi bi-caret-up-fill"></i></h2>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
+              <a class="text-decoration-none" href="https://prism.philrice.gov.ph/dataproducts/">
+                <div class="card">
+                    <img class="card-img-top" height="595px" width="auto" src="{% static 'assets/prism_sample.jpg' %}" alt="Card image cap">
+                </div>
+                <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
+              </a>
             </div>
           </div>
-
-      </div>
-      <div class="col-3">
-        <a class="text-decoration-none" href="https://prism.philrice.gov.ph/dataproducts/">
-          <div class="card mb-0">
-              <img class="card-img-top" height="350px" width="auto" src="{% static 'assets/prism_sample.jpg' %}" alt="Card image cap">
-          </div>
-          <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
-        </a>
+        </div>
       </div>
     </div>
 {% endblock content %}
@@ -286,7 +292,7 @@
         options: {
 
             cutoutPercentage: 60,
-            aspectRatio: 4.3,
+            aspectRatio: 3,
             legend: {
                 display: false
             },

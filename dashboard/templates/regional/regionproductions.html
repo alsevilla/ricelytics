@@ -3,65 +3,73 @@
 {% block content %}
     <!-- Header --->
     <div class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>{{title2}}</h2>
-            <h1>{{title}}</h1>
-            <p>What is the total volume of palay produced in the country? Know the latest and historical rice production information and the contribution of each province to the overall quantity.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card-deck mb-4 text-center">
-                <div class="card primary mb-4 bg-alternate text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Irrigated Area</h5>
-                        <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">million metric tons</p>
-                        </div>
-                    </div>
+        <div class="jumbotron-content text-left">
+            <div class="row">
+                <div class="col-7">
+                    <h2>{{title2}}</h2>
+                    <h1>{{title}}</h1>
+                    <p><i>What is the total volume of palay produced in the country? </i>
+                        <br>Know the latest and historical rice production information and the contribution
+                        <br>of each province to the overall quantity.</p>
                 </div>
-                <div class="card primary mb-4 bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Region III Total Production - Year</h5>
-                        <h1 class="card-text font-weight-bold">19.29 <i class="bi bi-caret-up-fill"></i></h1>
-                          <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>million metric tons</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-alternate2 text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Non-Irrigated Area Total</h5>
-                        <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">million metric tons</p>
-                        </div>
-                    </div>
+                <div class="col-5">
+
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total palay produced by year (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million metric tons (mt)</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-group text-center">
+                        <div class="card primary mb-2 bg-alternate text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-left">Irrigated Area</h5>
+                                <h1 class="card-text font-weight-bold">14.57 <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                    <p class="text-white">million metric tons</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card primary mb-2 ml-2 bg-primary text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-left">Total Production - Year</h5>
+                                <h1 class="card-text font-weight-bold">19.29 <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
+                                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                                    <p>million metric tons</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card primary mb-2 ml-2 bg-alternate2 text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-left">Non-Irrigated Area Total</h5>
+                                <h1 class="card-text font-weight-bold">14.57 <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                    <p class="text-white">million metric tons</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div><canvas id="ctxProdStack"></canvas></div>
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Total palay produced by year (2000-2020)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in million metric tons (mt)</h6>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id="ctxProdStack"></canvas></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total palay produced per province (2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million metric tons</p>
-                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header text-left">
+                    <h5 class="my-0 font-weight-bold">Total palay produced per province (2020)</h5>
+                    <h6 class="my-0 font-weight-normal text-muted">in million metric tons</h6>
                 </div>
                 <div class="card-body">
                     <div id="prov"><canvas id="ctxTopProv"></canvas></div>

@@ -8,13 +8,13 @@
             <div class="col">
               <h2>State of the Rice Sector in the Philippines</h2>
               <h1>{{title}}</h1>
-              <br>
-            </div>
-            <div class="col">
-              <br>
               <p><i>What is the total volume of palay produced in the country?</i>
                 <br>Know the latest and historical rice production information and the contribution
                 <br> of each province to the overall quantity.</p>
+            </div>
+            <div class="col">
+              <br>
+              
             </div>
           </div>
         </div>
@@ -212,8 +212,8 @@
                     display: true,
                     ticks: {
                         suggestedMin: 0,
-                        stepSize: 5
-
+                        stepSize: 5,
+                        
                     }
                 }]
             },
@@ -223,8 +223,40 @@
                 labels: {
                   fontSize:10,
                 }
+            },
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 0,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  // ctx.font = ctx.font.replace(/\d+px/, "7px");
+                  this.data.datasets.forEach(function(dataset, i){
+                    if(dataset.label == 'All ecosystems' ){
+                        let meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function(bar, index) {
+                        let data = dataset.data[index];
+                        ctx.fillText(data, bar._model.x + 0 , bar._model.y + -10);
+                        });
+                    } else {
+                        let meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function(bar, index) {
+                        let data = dataset.data[index];
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(data, bar._model.x + 0 , bar._model.y + 30);
+                        });
+                    }
+                    
+                  });
+                }
             }
         }
+        
     });
 
     // CHART 2

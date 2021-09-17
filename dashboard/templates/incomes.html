@@ -8,13 +8,13 @@
             <div class="col">
               <h2>State of the Rice Sector in the Philippines</h2>
               <h1>{{title}}</h1>
-              <br>
-            </div>
-            <div class="col">
-              <br>
               <p><i>How much do our farmers earn per season?</i>
                 <br>Find out their net income through the years derived from the gross return
                 <br>minus the total cost of production. farmer earnings in the regions. </p>
+            </div>
+            <div class="col">
+              <br>
+              
             </div>
           </div>
         </div>
@@ -254,29 +254,41 @@
                 }
               }
             },
-            // hover: {
-            //   animationDuration: 0
-            // },
-            // animation: {
-            //   duration: 1,
-            //     onComplete: function() {
-            //       let chartInstance = this.chart,
-            //           ctx = chartInstance.ctx;
-            //
-            //       ctx.textAlign = 'center';
-            //       ctx.textBaseline = 'bottom';
-            //       ctx.fillStyle = '#6c757d';
-            //
-            //       this.data.datasets.forEach(function(dataset, i){
-            //         let meta = chartInstance.controller.getDatasetMeta(i);
-            //         meta.data.forEach(function(bar, index) {
-            //           let data = dataset.data[index];
-            //           ctx.fillText(data, bar._model.x + 0 , bar._model.y + 80);
-            //         });
-            //       });
-            //     },
-            //
-            // }
+            hover: {
+              animationDuration: 0
+            },
+            animation: {
+              duration: 1,
+                onComplete: function() {
+                  let chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+                  
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'bottom';
+                  // ctx.fillStyle = '#6c757d';
+                  ctx.font = ctx.font.replace(/\d+px/, "9px");
+                  this.data.datasets.forEach(function(dataset, i){
+                    if(dataset.label == 'Gross return' ){
+                        let meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function(bar, index) {
+                        let data = dataset.data[index];
+                        data = parseInt(data).toLocaleString(); 
+                        ctx.fillText(data, bar._model.x + 0 , bar._model.y + -10);
+                        });
+                    } else {
+                        let meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function(bar, index) {
+                        let data = dataset.data[index];
+                        data = parseInt(data).toLocaleString();
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(data, bar._model.x + 0 , bar._model.y + 25);
+                        });
+                    }
+                    
+                  });
+                },
+            
+            }
         }
     });
 

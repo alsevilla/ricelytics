@@ -8,12 +8,13 @@
             <div class="col">
               <h2>State of the Rice Sector in the Philippines</h2>
               <h1>{{title}}</h1>
+              <p><i>How much rice do Filipinos consume each day and year? </i>
+                <br>Explore the information of per capita consumption and the comparison of our local
+                <br>consumption and local food consumption.</p>
             </div>
             <div class="col">
               <br>
-              <p><i>How much rice do Filipinos consume each day and year? </i>
-                <br>Explore the information of per capita consumption and the comparison of our local
-                <br>consumption and local food consumption.
+              
             </div>
           </div>
         </div>
@@ -24,7 +25,14 @@
                 <div class="card primary mb-2 bg-primary text-white">
                     <div class="card-body">
                         <h5 class="card-title">Average Annual Capita Consumption ({{ per_capita_year }})</h5>
-                        <h1 class="card-text font-weight-bold">{{ per_kapita_kg_value }}{% if per_kapita_kg_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif per_kapita_kg_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        <h1 class="card-text font-weight-bold">{{ per_kapita_kg_value }}
+                            {% if per_kapita_kg_compare > 0 %} 
+                            <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                            {% elif per_kapita_kg_compare < 0 %} 
+                            <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                            {% else %}
+                            <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                            {%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>kilograms</p>
                         </div>
@@ -33,7 +41,14 @@
                 <div class="card primary mb-2 bg-primary text-white">
                     <div class="card-body">
                         <h5 class="card-title">Average Daily Per Capita Consumption ({{ per_capita_year }})</h5>
-                        <h1 class="card-text font-weight-bold">{{ per_kapita_gram_value }}{% if per_kapita_gram_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif per_kapita_gram_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1>
+                        <h1 class="card-text font-weight-bold">{{ per_kapita_gram_value }}
+                            {% if per_kapita_gram_compare > 0 %} 
+                            <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                            {% elif per_kapita_gram_compare < 0 %} 
+                            <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                            {% else %}
+                            <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                            {%endif%}</h1>
                         <div class="card-note w-50 mx-auto rounded-pill bg-warning">
                             <p>grams</p>
                         </div>
@@ -83,7 +98,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <img src="{%static 'assets/Chart1@2x.png' %}" height="324" width="735" alt="">
+                    <img src="{%static 'assets/Chart1@2x.png' %}" height="315" width="735" alt="">
                 </div>
             </div>
         </div>
@@ -271,7 +286,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 3,
+            aspectRatio: 3.15,
             elements: {
                 point: {
                     radius: 2
@@ -449,7 +464,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 3,
+            aspectRatio: 3.15,
             scales: {
                 xAxes: [{
                     stacked: true,
@@ -606,7 +621,7 @@
 
         // Configuration options go here
         options: {
-            aspectRatio: 3,
+            aspectRatio: 3.15,
             scales: {
                 xAxes: [{
                     stacked: true,

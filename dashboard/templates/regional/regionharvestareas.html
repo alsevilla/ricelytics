@@ -2,66 +2,76 @@
 {% load static %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron">
-        <div class="jumbotron-content text-center ">
-            <h2>State of the Rice Sector in the Philippines</h2>
-            <h1>{{title}}</h1>
-            <p>How wide was the accumulated area of the total harvested palay? Explore the estimated overall harvested area, the apportionment of irrigated and non-irrigated farms, and the size of extents in the provinces.</p>
+    <div id="main" class="jumbotron">
+        <div class="jumbotron-content">
+          <div class="row">
+            <div class="col-8">
+              <h2>{{ title2 }}</h2>
+              <h1>{{ title }}</h1>
+              <p><i>What is the total volume of palay produce in the region?</i>
+                <br>Know the latest and historical rice production information and the contribution
+                <br>of each province to the overall quantity</p>
+            </div>
+            <div class="col-4">
+              <div class="w-50 float-right text-center mx-auto rounded-pill bg-light">
+                <h6 class="text-dark pt-2">Population: <span class="font-weight-bold">108.8 MILLION</span> (PSA, 2021)</h6>
+            </div>
+            </div>
+          </div> 
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card-deck mb-2 text-center">
-                <div class="card primary mb-4 bg-alternate text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Irrigated Area Total</h5>
-                        <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">million hectares</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-group text-center">
+                        <div class="card primary mb-2 bg-alternate text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-left">Irrigated Area Total</h5>
+                                <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                    <p class="text-white">million hectares</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card primary mb-2 ml-2 bg-primary text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-left">Average Yield - Year</h5>
+                                <h1 class="card-text font-weight-bold">19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
+                                    <p>million hectares</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card primary mb-2 ml-2 bg-alternate2 text-white">
+                            <div class="card-body">
+                                <h5 class="card-title text-left">Non-Irrigated Area Total</h5>
+                                <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                    <p class="text-white">million hectares</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Region III Average Yield - Year</h5>
-                        <h1 class="card-text font-weight-bold">19.29 <i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>million hectares</p>
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Total accumulated size of area of harvested palay by year (2000-2020)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in million hectares (ha)</h6>
                         </div>
-                    </div>
-                </div>
-                <div class="card primary mb-4 bg-alternate2 text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Non-Irrigated Area Total</h5>
-                        <h1 class="card-text font-weight-bold">14.57 <i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">million hectares</p>
+                        <div class="card-body">
+                            <div><canvas id="ctxAreaStack"></canvas></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
+        <div class="col-6">
             <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by year (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in million hectares (ha)</p>
-                </div>
-                <div class="card-body">
-                    <div><canvas id="ctxAreaStack"></canvas></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Total accumulated size of area of harvested palay by province</h5>
-                    <p class="my-0 font-weight-normal text-muted">in hectares</p>
-                    <span class="my-0 font-weight-normal text-muted"><input type="checkbox" id='checkbox' onclick="toggle()"> Top 20 only</span>
+                <div class="card-header text-left">
+                    <h5 class="my-0 font-weight-bold">Total accumulated size of area of harvested palay by province</h5>
+                    <h6 class="my-0 font-weight-normal text-muted">in hectares</h6>
                 </div>
                 <div class="card-body">
                     <div id='area'><canvas id="ctxTopAreas"></canvas></div>

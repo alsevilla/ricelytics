@@ -1845,7 +1845,8 @@ def incomes(request):
                             FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
                             FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
                             WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s
-                            ORDER BY year ASC""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
+                            ORDER BY year ASC
+                            LIMIT 15 OFFSET 5""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
     agrRows = agrCursor.fetchall() # fetch all data of the executed query
     agrResult = [] # store the values as an array or data dictionary
     for row in agrRows:
@@ -1860,7 +1861,8 @@ def incomes(request):
                         FROM "kpi_costs" "k"
                         FULL JOIN "ids_location" "l" ON "k"."locCode" = "l"."locCode" AND "k"."locType" = "l"."locType"
                         WHERE "k"."locCode" = %s AND "k"."locType" = %s AND year >= %s AND year <= %s
-                        ORDER BY year ASC""", [location_code, location_type, year_start, year_end])
+                        ORDER BY year ASC
+                        LIMIT 15 OFFSET 5""", [location_code, location_type, year_start, year_end])
     acRows = acCursor.fetchall() # fetch all data of the executed query
     acResult = [] # store the values as an array or data dictionary
     for row in acRows:
@@ -1880,7 +1882,8 @@ def incomes(request):
                         FULL JOIN "kpi_prices" "p" ON "y"."locCode" = "p"."locCode" AND "y"."locType" = "p"."locType" AND "y"."year" = "p"."year"
                         FULL JOIN "ids_location" "l" ON "l"."locCode" = "y"."locCode" AND "l"."locType" = "y"."locType"
                         WHERE "y"."locCode" = %s AND "y"."locType" = %s AND "y"."eco" = %s AND "y"."year">= %s AND "y"."year"<=%s
-                        ORDER BY year ASC""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
+                        ORDER BY year ASC
+                        LIMIT 15 OFFSET 5""", [location_code, location_type, ecosystem, year_start, year_end, location_code, location_type, ecosystem, year_start, year_end]) # assign values to %s (apples to apples type)
     anrRows = anrCursor.fetchall() # fetch all data of the executed query
     anrResult = [] # store the values as an array or data dictionary
     for row in anrRows:

@@ -10,7 +10,6 @@
               <h2>{{ title2 }}</h2>
               <h1>{{ title }}</h1>
               <p>What is the status of the rice industry in the country? Explore and get insights about the trend of the key performance indicators of rice production, utilization, and economics.</p>
-
             </div>
             <div class="col">
                 <div class="w-50 float-right rounded-pill bg-light text-center">
@@ -92,98 +91,29 @@
                 </div>
               </div>
           </div>
-          <div class="col-12">
-            <div class="card-group">
-              <div class="card secondary text-center pt-3 pb-3 border-left-0 border-top-0 border-bottom-0 bg-light">
-                <h6 class="card-title "><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Value of Rice Production</a></h6>
-                <h1 class="card-text pt-4">P {{ gva_value }}
-                  {% if gva_compare > 0 %}
-                  <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
-                  {% elif gva_compare < 0 %}
-                  <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
-                  {% else %}
-                  <img class='line' src="{% static 'assets/line_industry.png' %}" >
-                  {%endif%}</h1>
-                <p class="pt-3">BILLION</p>
-              </div>
-              <div class="card secondary text-center pt-3 border-0 bg-light">
-                <h6 class="text-center mb-0"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Percent share to Value of Agricultural Production</a></h6>
-                <div class="card-body py-1"><canvas id="ctxAgriShare"></canvas></div>
-                <!--<h2 class="card-text">20.7%<i class="bi bi-caret-up-fill"></i></h2>-->
-              </div>
-            </div>
-          </div>
           <div class="col-6">
-              <div class="card secondary text-center mt-3 pb-1 border-0 bg-light">
-                    <div class="card-body">
-                      <h6 class="card-title text-center"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Palay Farmgate Price (Dry) per Kilogram</a></h6>
-                      <h2 class="card-text pt-2">P {{ farmgate_value }}
-                        {% if farmgate_compare > 0 %}
-                        <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
-                        {% elif farmgate_compare < 0 %}
-                        <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
-                        {% else %}
-                        <img class='line' src="{% static 'assets/line_industry.png' %}" >
-                        {%endif%}</h2>
-                  </div>
-              </div>
-              <div class="card secondary mb-0 pt-2 text-center border-0 bg-light">
-                <h6 class="text-center mb-2">Wholesale Price per Kilogram</h6>
-              </div>
-              <div class="card-group">
-                <div class="card secondary mb-0 pb-2 text-center border-top-0 border-left-0 border-bottom-0 pt-3 pl-2 bg-light">
-                  <p><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Well-Milled Rice</a></p>
-                  <h3 class="card-text pt-1 pb-1">P {{ wholesaleSp_value }}
-                    {% if wholesaleSp_compare > 0 %}
-                    <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
-                    {% elif wholesaleSp_compare < 0 %}
-                    <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
+            <div class="row">
+              <div class="col-12">
+                <div class="card secondary text-center pt-3 pb-3 border-0 bg-light">
+                  <h6 class="card-title "><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Value of Rice Production</a></h6>
+                  <h1 class="card-text">P {{ gva_value }}
+                    {% if gva_compare > 0 %}
+                    <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                    {% elif gva_compare < 0 %}
+                    <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
                     {% else %}
-                    <img class='line2' src="{% static 'assets/line_industry.png' %}" >
-                    {%endif%}</h3>
+                    <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                    {%endif%}</h1>
+                  <p class="">BILLION</p>
                 </div>
-                <div class="card secondary mb-0 pb-2 text-center border-top-0 border-right-0 border-bottom-0 pt-3 pl-2 bg-light">
-                  <p><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Regular-Milled Rice</a></p>
-                  <h3 class="card-text pt-1 pb-1">P {{ wholesale_value }}
-                    {% if wholesale_compare > 0 %}
-                    <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
-                    {% elif wholesale_compare < 0 %}
-                    <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
-                    {% else %}
-                    <img class='line2' src="{% static 'assets/line_industry.png' %}" >
-                    {%endif%}</h3>
+                <div class="card secondary text-center border-0 bg-light">
+                  <h6 class="text-center mb-0"><a href="{% url 'Valuations' %}" class="text-black stretched-link text-decoration-none">Percent share to Value of Agricultural Production</a></h6>
+                  <div class="card-body py-1"><canvas id="ctxAgriShare"></canvas></div>
+                  <!--<h2 class="card-text">20.7%<i class="bi bi-caret-up-fill"></i></h2>-->
                 </div>
               </div>
-              <div class="card secondary mb-0 pt-4 text-center border-0 bg-light">
-                <h6 class="text-center">Retail Price per Kilogram</h6>
-              </div>
-              <div class="card-group">
-                <div class="card secondary mb-0 pb-3 text-center border-top-0 border-left-0 border-bottom-0 pt-2 pl-2 bg-light">
-                  <p class="card-title pt-1 pb-1"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Well-Milled Rice</a></p>
-                  <h3 class="card-text">P {{ retailSp_value }}
-                    {% if retailSp_compare > 0 %}
-                    <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
-                    {% elif retailSp_compare < 0 %}
-                    <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
-                    {% else %}
-                    <img class='line2' src="{% static 'assets/line_industry.png' %}" >
-                    {%endif%}</h3>
-                </div>
-                <div class="card secondary mb-0 pb-3 text-center border-top-0 border-right-0 border-bottom-0 pt-2 pl-2 bg-light">
-                  <p class="card-title pt-1 pb-1"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Regular-Milled Rice</a></p>
-                  <h3 class="card-text pb-3">P {{ retail_value }}
-                    {% if retail_compare > 0 %}
-                    <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
-                    {% elif retail_compare < 0 %}
-                    <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
-                    {% else %}
-                    <img class='line2' src="{% static 'assets/line_industry.png' %}" >
-                    {%endif%}</h3>
-                </div>
-              </div>
-          </div>
-          <div class="col-6 pb-3">
-              <div class="card secondary text-center border-0 bg-light mt-3">
+              <div class="col-12">
+                <div class="card secondary text-center mt-2 border-0 bg-light">
                   <div class="px-3 pt-3 pb-2 mb-1">
                       <h6 class="card-title text-center"><a href="{% url 'Incomes' %}" class="text-black stretched-link text-decoration-none">Farmer's Net Income</a></h6>
                       <h2 class="card-text pt-2">P {{nr_value}}
@@ -195,7 +125,7 @@
                         <img class='line' src="{% static 'assets/line_industry.png' %}" >
                         {%endif%}
                       </h2>
-                      <p class="pt-3 pb-1">PER HECTARE</p>
+                      <p class="pt-2 pb-1">PER HECTARE</p>
                       <hr>
                       <div class="row py-2">
                         <div class="col-3">
@@ -216,10 +146,10 @@
                   </div>
               </div>
               <div class="col-12 p-0">
-                  <div class="card secondary border-0 bg-light pt-3 mt-3">
-                      <div class="px-3 row">
+                  <div class="card secondary border-0 bg-light mt-2">
+                      <div class="px-3 pt-2 row">
                         <div class="col-4">
-                          <h6 class="text-nowrap pt-4"><a href="{% url 'YieldCost' %}" class="text-black stretched-link text-decoration-none">Cost of Production</a></h6>
+                          <h6 class="text-nowrap pt-4 mt-2"><a href="{% url 'YieldCost' %}" class="text-black stretched-link text-decoration-none">Cost of Production</a></h6>
                         </div>
                         <div class="col-8">
                           <h3 class="pt-3 text-center">P {{ uc_value }}
@@ -235,6 +165,14 @@
                       </div>
                   </div>
               </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 mb-3">
+            <a class="text-decoration-none" href="https://prism.philrice.gov.ph/dataproducts/">
+              <img class="card-img-top" src="{% static 'assets/prism_sample.jpg' %}" height="600"  alt="Card image cap">
+              <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
+            </a>
           </div>
         </div>
       </div>
@@ -251,9 +189,9 @@
           </div>
           <div class="col-6">
             <div class="card-group mb-3 mt-2">
-                <div class="card secondary text-center border-top-0 border-left-0 border-bottom-0 pt-3 pl-2 bg-light">
+                <div class="card secondary text-center border-top-0 border-left-0 border-bottom-0 py-3 pl-2 bg-light">
                   <h6 class="text-left"><a href="{% url 'SupplyUtilization' %}" class="text-black stretched-link text-decoration-none">Total Supply</a></h6>
-                  <h2>{{ supply_value }}
+                  <h2 class="mt-2">{{ supply_value }}
                     {% if supply_compare > 0 %}
                     <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
                     {% elif supply_compare < 0 %}
@@ -261,11 +199,11 @@
                     {% else %}
                     <img class='line' src="{% static 'assets/line_industry.png' %}" >
                     {%endif%}</h2>
-                  <p>MILLION METRIC TONS</p>
+                  <p class="mt-2">MILLION METRIC TONS</p>
                 </div>
-                <div class="card secondary text-center pt-3 pl-2 border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card secondary text-center py-3 pl-2 border-top-0 border-right-0 border-bottom-0 bg-light">
                   <h6 class=" text-left"><a href="{% url 'SupplyUtilization' %}" class="text-black stretched-link text-decoration-none">Total Utilization</a></h6>
-                  <h2>{{ utilization_value }}
+                  <h2 class="mt-2">{{ utilization_value }}
                     {% if utilization_compare > 0 %}
                     <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
                     {% elif utilization_compare < 0 %}
@@ -273,13 +211,13 @@
                     {% else %}
                     <img class='line' src="{% static 'assets/line_industry.png' %}" >
                     {%endif%}</h2>
-                  <p>MILLION METRIC TONS</p>
+                  <p class="mt-2">MILLION METRIC TONS</p>
                 </div>
             </div>
             <div class="card-group mb-3">
-                <div class="card secondary mb-0 text-center border-top-0 border-left-0 border-bottom-0 pt-2 pl-2 bg-light">
-                  <h6 class="card-title text-left"><a href="{% url 'Consumption' %}" class="text-black stretched-link text-decoration-none">Annual Per Capita Consumption</a></h6>
-                  <h2 class="card-text pb-2">{{ lp_value }}
+                <div class="card secondary mb-0 text-center border-top-0 border-left-0 border-bottom-0 py-3 pl-2 bg-light">
+                  <h6 class="text-left"><a href="{% url 'Consumption' %}" class="text-black stretched-link text-decoration-none">Annual Per Capita Consumption</a></h6>
+                  <h2 class="card-text mt-2">{{ lp_value }}
                     {% if lp_compare > 0 %}
                     <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
                     {% elif lp_compare < 0 %}
@@ -287,11 +225,11 @@
                     {% else %}
                     <img class='line' src="{% static 'assets/line_industry.png' %}" >
                     {%endif%}</h2>
-                  <p>KILOGRAMS</p>
+                  <p class="mt-2">KILOGRAMS</p>
                 </div>
-                <div class="card secondary mb-0 text-center pt-2 pl-2 border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card secondary mb-0 text-center py-3 pl-2 border-top-0 border-right-0 border-bottom-0 bg-light">
                   <h6 class="card-title text-left"><a href="{% url 'Consumption' %}" class="text-black stretched-link text-decoration-none">Daily per Capita <br> Consumption</a></h6>
-                  <h2 class="card-text pb-2">{{ nf_value }}
+                  <h2 class="card-text mt-1">{{ nf_value }}
                     {% if nf_compare > 0 %}
                     <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
                     {% elif nf_compare < 0 %}
@@ -299,11 +237,11 @@
                     {% else %}
                     <img class='line' src="{% static 'assets/line_industry.png' %}" >
                     {%endif%}</h2>
-                  <p>GRAMS</p>
+                  <p class="mt-2">GRAMS</p>
                 </div>
             </div>
             <div class="card-group">
-                <div class="card secondary text-center border-top-0 border-left-0 border-bottom-0 pt-2 pl-2 bg-light">
+                <div class="card secondary text-center border-top-0 border-left-0 border-bottom-0 py-3 pl-2 bg-light">
                   <h6 class="card-title text-left"><a href="{% url 'ImportExport' %}" class="text-black stretched-link text-decoration-none">Imported</a></h6>
                   <h2 class="card-text pb-2">{{ import_value }}
                     {% if import_compare > 0 %}
@@ -315,7 +253,7 @@
                     {%endif%}</h2>
                   <p class="pb-1">MILLION METRIC TONS</p>
                 </div>
-                <div class="card secondary text-center pt-2 pl-2 border-top-0 border-right-0 border-bottom-0 bg-light">
+                <div class="card secondary text-center py-3 pl-2 border-top-0 border-right-0 border-bottom-0 bg-light">
                   <h6 class="card-title text-left"><a href="{% url 'ImportExport' %}" class="text-black stretched-link text-decoration-none">Exported</a></h6>
                   <h2 class="card-text pb-2">&lt; {% if export_value >= 0 %} 1{% else %} {{ export_value }} {% endif %}
                     {% if export_compare > 0 %}
@@ -329,12 +267,77 @@
                 </div>
           </div>
         </div>
-        <div class="col-6 mt-2">
-          <a class="text-decoration-none" href="https://prism.philrice.gov.ph/dataproducts/">
-            <div class="card mb-0">
-                <img class="card-img-top" src="{% static 'assets/prism_sample.jpg' %}" height="297"  alt="Card image cap">
+        <div class="col-6">
+            <div class="card secondary text-center mt-2 py-2 border-0 bg-light">
+                  <div class="card-body">
+                    <h6 class="card-title text-center"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Palay Farmgate Price (Dry) per Kilogram</a></h6>
+                    <h2 class="card-text pt-3">P {{ farmgate_value }}
+                      {% if farmgate_compare > 0 %}
+                      <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" >
+                      {% elif farmgate_compare < 0 %}
+                      <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" >
+                      {% else %}
+                      <img class='line' src="{% static 'assets/line_industry.png' %}" >
+                      {%endif%}</h2>
+                </div>
             </div>
-            <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
+            <div class="card secondary text-center border-0 bg-light">
+              <h6 class="text-center mb-3">Wholesale Price per Kilogram</h6>
+            </div>
+            <div class="card-group">
+              <div class="card secondary mb-0 py-3 pl-2 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
+                <p class="py-1"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Well-Milled Rice</a></p>
+                <h3 class="card-text pt-1 pb-1">P {{ wholesaleSp_value }}
+                  {% if wholesaleSp_compare > 0 %}
+                  <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
+                  {% elif wholesaleSp_compare < 0 %}
+                  <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
+                  {% else %}
+                  <img class='line2' src="{% static 'assets/line_industry.png' %}" >
+                  {%endif%}</h3>
+              </div>
+              <div class="card secondary mb-0 py-3 pl-2 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
+                <p class="py-1"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Regular-Milled Rice</a></p>
+                <h3 class="card-text pt-1 pb-1">P {{ wholesale_value }}
+                  {% if wholesale_compare > 0 %}
+                  <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
+                  {% elif wholesale_compare < 0 %}
+                  <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
+                  {% else %}
+                  <img class='line2' src="{% static 'assets/line_industry.png' %}" >
+                  {%endif%}</h3>
+              </div>
+            </div>
+            <div class="card secondary mb-0 py-3 pl-2 text-center border-0 bg-light">
+              <h6 class="text-center">Retail Price per Kilogram</h6>
+            </div>
+            <div class="card-group">
+              <div class="card secondary mb-0 pb-3 text-center border-top-0 border-left-0 border-bottom-0 pt-2 pl-2 bg-light">
+                <p class="py-1"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Well-Milled Rice</a></p>
+                <h3 class="card-text pt-1 pb-1">P {{ retailSp_value }}
+                  {% if retailSp_compare > 0 %}
+                  <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
+                  {% elif retailSp_compare < 0 %}
+                  <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
+                  {% else %}
+                  <img class='line2' src="{% static 'assets/line_industry.png' %}" >
+                  {%endif%}</h3>
+              </div>
+              <div class="card secondary mb-0 pb-3 text-center border-top-0 border-right-0 border-bottom-0 pt-2 pl-2 bg-light">
+                <p class="py-1"><a href="{% url 'Prices' %}" class="text-black stretched-link text-decoration-none">Regular-Milled Rice</a></p>
+                <h3 class="card-text pt-1 pb-1">P {{ retail_value }}
+                  {% if retail_compare > 0 %}
+                  <img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" >
+                  {% elif retail_compare < 0 %}
+                  <img class='arrowdown2' src="{% static 'assets/arrow_industry down.png' %}" >
+                  {% else %}
+                  <img class='line2' src="{% static 'assets/line_industry.png' %}" >
+                  {%endif%}</h3>
+              </div>
+            </div>
+            <div class="card-group">
+              <div class="card secondary mb-0 pb-1 text-center border-0 pt-3 pl-2 bg-light"></div>
+            </div>
           </a>
         </div>
       </div>
