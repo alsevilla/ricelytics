@@ -21,22 +21,31 @@
         <div class="col-6">
             <div class="row">
                 <div class="col-12">
-                    <div class="card-group text-center">
-                        <div class="card farmer primary mb-2 bg-warning text-white">
+                    <div class="card-group farmer text-center" >
+                        <div class="card primary mb-2 text-white" style="background-color: #007FFE;">
                             <div class="card-body">
-                                <h5 class="card-title">Estimated Monthly Income</h5>
-                                <h1 class="card-text font-weight-bold">{{monthlyIncome}}<i class="bi bi-caret-up-fill"></i></h1>
-                                <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                                    <p>per capita</p>
+                                <h6 class="card-title">Transplanting Method</h6>
+                                <h3 class="card-text font-weight-bold">69%<i class="bi bi-caret-up-fill"></i></h3>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                    <p class="mb-0">kg per hectare</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="card primary mb-2 ml-2 bg-warning text-white">
+                        <div class="card primary mb-2 ml-2 text-white" style="background-color: #C45000;">
                             <div class="card-body">
-                                <h5 class="card-title">Above Poverty Threshold</h5>
-                                <h1 class="card-text font-weight-bold">{{abovePovertyShare}}%<i class="bi bi-caret-up-fill"></i></h1>
-                                <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                                    <p>per kilogram</p>
+                                <h6 class="card-title">Average</h6>
+                                <h3 class="card-text font-weight-bold">31%<i class="bi bi-caret-up-fill"></i></h3>
+                                <div class="card-note w-75 mx-auto rounded-pill text-black" style="background-color: #7FFE00;">
+                                    <p class="mb-0">kg per hectare</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card primary mb-2 ml-2 text-white" style="background-color: #007FFE;">
+                            <div class="card-body">
+                                <h6 class="card-title">Direct Seeding Method</h6>
+                                <h3 class="card-text font-weight-bold">31%<i class="bi bi-caret-up-fill"></i></h3>
+                                <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                    <p class="mb-0">kg per hectare</p>
                                 </div>
                             </div>
                         </div>
@@ -45,22 +54,11 @@
                 <div class="col-12">
                     <div class="card mb-2">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Estimated Monthly Income Per Survey Year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
+                            <h5 class="my-0 font-weight-bold">Seeding rate per crop establishment method (1996-2017) in kilogram per hectare</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in kilogram per hectare</h6>
                         </div>
                         <div class="card-body">
-                            <div>{{monthlyIncome_year}}<canvas id="monthlyIncome_year"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card mb-2">
-                        <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Above Poverty Threshold Per Survey Year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
-                        </div>
-                        <div class="card-body">
-                            <div>{{abovePovertyShare_year}}<canvas id=""></canvas></div>
+                            <div><canvas id=""></canvas></div>
                         </div>
                     </div>
                 </div>
@@ -71,10 +69,11 @@
                 <div class="col-12">
                     <div class="card mb-2">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Estimated monthly income and poverty threshold per province</h5>
+                            <h5 class="my-0 font-weight-bold">Seeding rate per crop establishment method in the top 20 rice producing provinces (year) in kilogram per hectare</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in kilogram per hectare</h6>
                         </div>
                         <div class="card-body">
-                            <div>{{monthlyIncome_abovePovertyShare_prov}}<canvas id="monthlyIncome_prov"></canvas></div>
+                            <div><canvas id=""></canvas></div>
                         </div>
                     </div>
                 </div>
@@ -270,12 +269,12 @@
     });
     // CHART 3
 
-    var ctx3 = document.getElementById("monthlyIncome_prov");
+    var ctx3 = document.getElementById("ctxTenurial");
     var myChart3 = new Chart(ctx3, {
         type: 'pie',
         data: {
             datasets: [{
-                data: [18] [80],
+                data: [62, 1, 5, 1, 4, 5],
                 backgroundColor: [
                     '#2138B7', // COLOR 1
                     '#F0EAD6', // COLOR 2

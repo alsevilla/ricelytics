@@ -3,84 +3,203 @@
 {% load mathfilters %}
 {% block content %}
     <!-- Header --->
-      <div id='ey' class="jumbotron">
+    <div id="main" class="jumbotron">
         <div class="jumbotron-content text-left">
-          <div class="row">
-            <div class="col">
-              <h2>{{title2}}</h2>
-              <h1 class="smaller">{{title}}</h1>
+            <div class="row">
+                <div class="col-6">
+                    <h2>{{title2}}</h2>
+                    <h1>{{title}}</h1>
+                    <p><i>How do we characterize the rice farmers in the Philippines?</i> 
+                        <br>Understand the important attributes that contributes to their overall being 
+                        <br>as our producers of rice.</p>
+                </div>
+                <div class="col-6">
+
+                </div>
             </div>
-            <div class="col">
-              <br>
-              
-            </div>
-          </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+        <div class="col-12"> 
+            <div class="farmer card-group text-center text-white">
+                <div class="card primary mb-2" style="background-color: #C45000;">
+                    <a class="text-black stretched-link text-decoration-none" href="{% url 'ProvincialCropEstablishment' %}"></a>
+                        <h5 class="pt-2">Crop Establishment Method</h5>
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-6 border-right pb-3 pt-4">
+                                <h6 class="card-title">TRANSPLANTING</h6>
+                                <h2 class="card-text font-weight-bold">69%<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h2>
+                            </div>
+                            <div class="col-6 pb-3 pt-4">
+                                <h6 class="card-title">DIRECT SEEDING</h6>
+                                <h2 class="card-text font-weight-bold">31%<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h2>
+                            </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="card primary mb-2 ml-3" style="background-color: #C45000;">
+                    <a class="text-black stretched-link text-decoration-none" href="{% url 'ProvincialSeedingRate' %}"></a>
+                        <h5 class="pt-2">Seeding Rate</h5>
+                        <h3 class="card-text font-weight-bold">92.5<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h3>
+                            <div class="row">
+                                <div class="col-6 border-right">
+                                    <h6 class="card-title">TRANSPLANTING</h6>
+                                    <h3 class="card-text font-weight-bold">69.9<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h3>
+                                </div>
+                                <div class="col-6">
+                                    <h6 class="card-title">DIRECT SEEDING</h6>
+                                    <h3 class="card-text font-weight-bold">30.1<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h3>
+                                </div>
+                            </div>
+                            <div class="card-note my-3 w-50 mx-auto rounded-pill" style="background-color: #FFB043;">
+                                <p class="text-white mb-0">KILOGRAMS PER HECTARE</p>
+                            </div>
+                </div>
+                <div class="card primary mb-2 ml-3" style="background-color: #C45000;">
+                    <a class="text-black stretched-link text-decoration-none" href="{% url 'ProvincialFertilizerApplication' %}"></a>
+                        <h5 class="pt-2">Fertilizer Rate</h5>
+                        <h3 class="card-text font-weight-bold">112.62<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h3>
+                            <div class="row">
+                                <div class="col-4 border-right pb-3 mb-1">
+                                    <h6 class="card-title">NITROGEN (N)</h6>
+                                    <h4 class="card-text font-weight-bold">30.1<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h4>
+                                </div>
+                                <div class="col-4 border-right pb-3 mb-1">
+                                    <h6 class="card-title">PHOSPHORUS (P)</h6>
+                                    <h4 class="card-text font-weight-bold">30.1<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h4>
+                                </div>
+                                <div class="col-4 pb-3 mb-1">
+                                    <h6 class="card-title">POTASSIUM (K)</h6>
+                                    <h4 class="card-text font-weight-bold">30.1<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h4>
+                                </div>
+                            </div>
+                            <div class="card-note my-3 w-50 mx-auto rounded-pill" style="background-color: #FFB043;">
+                                <p class="text-white mb-0">KILOGRAMS PER HECTARE</p>
+                            </div>
+                </div>                
+            </div>   
+      </div>
+      <div class="col-12">
+        <div class="farmer mb-2">
             <div class="row">
-                <div class="col-12">
-                    <div class="card-group text-center">
-                        <div class="card farmer primary mb-2 bg-warning text-white">
-                            <div class="card-body">
-                                <h5 class="card-title">Estimated Monthly Income</h5>
-                                <h1 class="card-text font-weight-bold">{{monthlyIncome}}<i class="bi bi-caret-up-fill"></i></h1>
-                                <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                                    <p>per capita</p>
+                <div class="col-6">
+                    <a class="text-black stretched-link text-decoration-none" href="{% url 'ProvincialCroppingCalendar' %}"></a>
+                    <div class="card primary mb-0 text-center border-0 bg-light">
+                        <div class="card-body">
+                            <h5> Cropping Calendar</h5>
+                            <div class="row">
+                                <div class="col-6 border-right">
+                                    <h3 class="card-text font-weight-bold">Dec-Mar</h3>
+                                    <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                        <p class="text-white mb-0">Dry-season</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h3 class="card-text font-weight-bold">Jul-Oct</h3>
+                                    <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                        <p class="text-white mb-0">Wet-season</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card primary mb-2 ml-2 bg-warning text-white">
-                            <div class="card-body">
-                                <h5 class="card-title">Above Poverty Threshold</h5>
-                                <h1 class="card-text font-weight-bold">{{abovePovertyShare}}%<i class="bi bi-caret-up-fill"></i></h1>
-                                <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                                    <p>per kilogram</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <a class="text-black stretched-link text-decoration-none" href="{% url 'ProvincialSeedClass' %}"></a>
+                    <div class="card primary mb-0 text-center border-0 bg-light">
+                        <div class="card-body">
+                            <h5> Seed Class Use</h5>
+                            <div class="row">
+                                <div class="col-6 border-right">
+                                    <h3 class="card-text font-weight-bold">62%</h3>
+                                    <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                        <p class="text-white mb-0">High Quantity</p>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h3 class="card-text font-weight-bold">38%</h3>
+                                    <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                        <p class="text-white mb-0">Low Quality</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card mb-2">
-                        <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Estimated Monthly Income Per Survey Year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
-                        </div>
+                <div class="col-2">    
+                    <a class="text-black stretched-link text-decoration-none" href="{% url 'ProvincialLaborManagement' %}"></a>
+                    <div class="card primary mb-0 text-center border-0 bg-light">
                         <div class="card-body">
-                            <div>{{monthlyIncome_year}}<canvas id="monthlyIncome_year"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card mb-2">
-                        <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Above Poverty Threshold Per Survey Year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
-                        </div>
-                        <div class="card-body">
-                            <div>{{abovePovertyShare_year}}<canvas id=""></canvas></div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
-        <div class="col-6">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-2">
-                        <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Estimated monthly income and poverty threshold per province</h5>
-                        </div>
-                        <div class="card-body">
-                            <div>{{monthlyIncome_abovePovertyShare_prov}}<canvas id="monthlyIncome_prov"></canvas></div>
+                            <h5>Labor</h5>
+                            <h3 class="card-text font-weight-bold">64</h3>
+                            <div class="card-note w-75 mx-auto rounded-pill bg-primary">
+                                <p class="text-white mb-0">Dry-season</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-3 mb-4">
+                <div class="card">
+                    <a class=" stretched-link text-decoration-none" href="{% url 'ProvincialPesticideApplication' %}"></a>
+                    <div class="card-header text-center">
+                        <h5 class="my-0 font-weight-bold">Top 10 Pesticide</h5>
+                        <h6 class="my-0 font-weight-normal text-muted">in percent of farmers</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="prov"><canvas id="ctxTopProv"></canvas></div>
+                        <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 mb-4">
+                <div class="card">
+                    <a class=" stretched-link text-decoration-none" href="{% url 'ProvincialVarietalSelection' %}"></a>
+                    <div class="card-header text-center">
+                        <h5 class="my-0 font-weight-bold">Top 10 Rice Variety</h5>
+                        <h6 class="my-0 font-weight-normal text-muted">in percent of farmers</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="prov"><canvas id="ctxTopProv"></canvas></div>
+                        <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-3 mb-4">
+                <a class=" stretched-link text-decoration-none" href="{% url 'ProvincialFertilizer' %}"></a>
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 font-weight-bold">Rank of fertilizer by Usage</h5>
+                        <h6 class="my-0 font-weight-normal text-muted">in percent of farmers</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="prov"><canvas id="ctxTopProv"></canvas></div>
+                        <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 mb-4">
+                <a class=" stretched-link text-decoration-none" href="{% url 'ProvincialMachine' %}"></a>
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 font-weight-bold">Rank of Machines by Usage</h5>
+                        <h6 class="my-0 font-weight-normal text-muted">in percent of farmers</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="prov"><canvas id="ctxTopProv"></canvas></div>
+                        <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock content %}
 {% block script %}
 <script>
@@ -195,7 +314,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 3,
+            aspectRatio: 2.05,
             legend: {
                 display: false
             },
@@ -242,7 +361,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 3,
+            aspectRatio: 2.05,
             legend: {
                 display: false
             },
@@ -270,12 +389,12 @@
     });
     // CHART 3
 
-    var ctx3 = document.getElementById("monthlyIncome_prov");
+    var ctx3 = document.getElementById("ctxTenurial");
     var myChart3 = new Chart(ctx3, {
         type: 'pie',
         data: {
             datasets: [{
-                data: [18] [80],
+                data: [62, 1, 5, 1, 4, 5],
                 backgroundColor: [
                     '#2138B7', // COLOR 1
                     '#F0EAD6', // COLOR 2
@@ -296,7 +415,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 2,
+            aspectRatio: 2.7,
             legend: {
                 display: false
             },
@@ -351,7 +470,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 2,
+            aspectRatio: 3,
             legend: {
                 display: false
             },
@@ -398,7 +517,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 2,
+            aspectRatio: 2.7,
             legend: {
                 display: false
             },
@@ -445,7 +564,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 2,
+            aspectRatio: 2.7,
             legend: {
                 display: false
             },

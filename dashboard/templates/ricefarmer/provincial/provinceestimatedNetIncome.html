@@ -3,158 +3,81 @@
 {% load mathfilters %}
 {% block content %}
     <!-- Header --->
-    <div id="main" class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>{{title2}}</h2>
-            <h1>{{title}}</h1>
-            <p>How do we characterize the rice farmers in the Philippines? Understand the important attributes that contributes to their overall being as our producers of rice.</p>
+      <div id='ey' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>{{title2}}</h2>
+              <h1 class="smaller">{{title}}</h1>
+            </div>
+            <div class="col">
+              <br>
+              
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
-          <a class="text-black stretched-link text-decoration-none" href="{% url 'RegionEstimatedNetIncome' %}">
-          <div class="card-deck text-center mb-0 text-white">
-              <div class="card primary mb-4 bg-warning">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-6 border-right">
-                        <h5 class="card-title">Estimated Monthly Income</h5>
-                        <h1 class="card-text font-weight-bold">P4,344<i class="bi bi-caret-up-fill text-primary"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">per capita</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-group text-center">
+                        <div class="card farmer primary mb-2 bg-warning text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Estimated Monthly Income</h5>
+                                <h1 class="card-text font-weight-bold">P 4,344<i class="bi bi-caret-up-fill"></i></h1>
+                                <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                    <p>per capita</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-6">
-                        <h5 class="card-title">Above Poverty Threshold</h5>
-                        <h1 class="card-text font-weight-bold">70%<i class="bi bi-caret-up-fill text-primary"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p class="text-white">of farmer-respondents</p>
+                        <div class="card primary mb-2 ml-2 bg-warning text-white">
+                            <div class="card-body">
+                                <h5 class="card-title">Above Poverty Threshold</h5>
+                                <h1 class="card-text font-weight-bold">70%<i class="bi bi-caret-up-fill"></i></h1>
+                                <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                    <p>per kilogram</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-              </div>
-          </div>
-          </a>
+                </div>
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Estimated Monthly Income Per Survey Year</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id=""></canvas></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Above Poverty Threshold Per Survey Year</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</h6>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id=""></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
-        <div class="col-8">
-          <div class="card-group farmer mb-2">
-            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
-              <div class="card-body">
-                <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionAgeSexCivilStatus' %}">Average Age</a></h6>
-                <h2 class="card-text font-weight-bold mb-4">54<i class="bi bi-caret-up-fill"></i></h2>
-                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                    <p class="text-white">years old</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Estimated monthly income and poverty threshold per province</h5>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id=""></canvas></div>
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
-            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
-              <div class="card-body">
-                <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionAgeSexCivilStatus' %}">Gender</a></h6>
-                <div><canvas class="mb-2" id="ctxSex"></canvas></div>
-                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                    <p class="text-white">Male</p>
-                </div>
-              </div>
-            </div>
-            <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
-              <div class="card-body">
-                <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionAgeSexCivilStatus' %}">Civil Status</a></h6>
-                <div><canvas class="mb-2" id="ctxCivil"></canvas></div>
-                <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                    <p class="text-white">Married</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-            <div class="card-group farmer mb-2">
-              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title mb-4 pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFarmAverageSize' %}">Average Farm Size</a></h6>
-                  <h2 class="card-text font-weight-bold mb-4">1.42<i class="bi bi-caret-up-fill"></i></h2>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">Hectares</p>
-                  </div>
-                </div>
-              </div>
-              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFarmAverageSize' %}">Farm Ownership</a></h6>
-                  <div><canvas class="mb-2" id="ctxTenurial"></canvas></div>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">land owners</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card-group farmer mb-2">
-              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFormalEducation' %}">Farm Education</a></h6>
-                  <h2 class="card-text font-weight-bold mb-4">8<i class="bi bi-caret-up-fill"></i></h2>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">Years</p>
-                  </div>
-                </div>
-              </div>
-              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title mb-4 pb-1"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionFormalEducation' %}">Farm Experience</a></h6>
-                  <h2 class="card-text font-weight-bold mb-4">28<i class="bi bi-caret-up-fill"></i></h2>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">Years</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card-group farmer mb-2">
-              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title mb-4 pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionHousehold' %}">Household Size</a></h6>
-                  <h2 class="card-text font-weight-bold mb-4">4<i class="bi bi-caret-up-fill"></i></h2>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">members</p>
-                  </div>
-                </div>
-              </div>
-              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionHousehold' %}">Major Income Source</a></h6>
-                  <div><canvas class="mb-2" id="ctxIncome"></canvas></div>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">rice farming</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-        </div>
-        <div class="col-4">
-            <div class="card-group farmer mb-2">
-              <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionOrganizationTraining' %}">Organization Membership</a></h6>
-                  <div><canvas class="mb-2" id="ctxMembers"></canvas></div>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">Members</p>
-                  </div>
-                </div>
-              </div>
-              <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
-                <div class="card-body">
-                  <h6 class="card-title pb-2"><a class="text-black stretched-link text-decoration-none" href="{% url 'RegionOrganizationTraining' %}">Training Attendance</a></h6>
-                  <div><canvas class="mb-2" id="ctxTraining"></canvas></div>
-                  <div class="card-note w-75 mx-auto rounded-pill bg-warning">
-                      <p class="text-white">Attended Training</p>
-                  </div>
-                </div>
-              </div>
             </div>
         </div>
       </div>

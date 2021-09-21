@@ -20,7 +20,7 @@ urlpatterns = [
     path('National/Incomes', views.incomes, name='Incomes'),
     path('National/YieldCost', views.yieldcost, name='YieldCost'),
     # ################################################# #
-    #             Rice Industry (National)              #
+    #             Rice Industry (Regional)              #
     # ################################################# #
     path('Regional',views.regional, name='Regional'),
     path('Regional/RegionRiceProduction', views.regionriceproduction, name='RegionRiceProduction'),
@@ -31,23 +31,63 @@ urlpatterns = [
     path('Regional/RegionYieldCost', views.regionyieldcost, name = 'RegionYieldCost'),
     path('Regional/RegionPrices', views.regionprices, name = 'RegionPrices'),
     # ################################################# #
+    #             Rice Industry (Provincial)              #
+    # ################################################# #
+    path('Provincial', views.provincial, name = 'Provincial'),
+    path('Provincial/ProvinceProduction', views.provinceproductions, name = 'ProvinceProduction'),
+    path('Provincial/ProvinceAreaHarvested', views.provinceharvestareas, name = 'ProvinceAreaHarvested'),
+    path('Provincial/ProvinceEstYields', views.provinceestyields, name = 'ProvinceEstYields'),
+    path('Provincial/ProvinceIncomes', views.provinceincomes, name = 'ProvinceIncomes'),
+    path('Provincial/ProvinceYieldCost', views.provinceyieldcost, name = 'ProvinceYieldCost'),
+    path('Provincial/ProvincePrices', views.provinceprices, name = 'ProvincePrices'),
+    # ################################################# #
     #             Rice Farmer (National)                #
     # ################################################# #
     path('NationalFarmer/Profile', views.profile, name='Profile'),
     path('NationalFarmer/EstimatedNetIncome', views.estimatedNetIncome, name='EstimatedNetIncome'),
-    path('NationalFarmer/AgeSexCivilStatus', views.agesexcivilstatus, name='AgeSexCivilStatus'),
+    path('NationalFarmer/Age', views.age, name='Age'),
+    path('NationalFarmer/SexAndCivilStatus', views.sexcivilstatus, name='SexAndCivilStatus'),
     path('NationalFarmer/FarmAverageSize', views.farmaveragesize, name='FarmAverageSize'),
     path('NationalFarmer/FormalEducation', views.formalEducation, name='FormalEducation'),
     path('NationalFarmer/Household', views.household, name='Household'),
     path('NationalFarmer/OrganizationTraining', views.organizationTraining, name='OrganizationTraining'),
     # ################################################# #
-    #             Rice Farmer (Regional)                #
+    #             Rice Farmer (Provincial)              #
     # ################################################# #
-    path('RegionalFarmer/RegionProfile', views.regionprofile, name='RegionProfile'),
-    path('RegionalFarmer/RegionEstimatedNetIncome', views.regionestimatedNetIncome, name='RegionEstimatedNetIncome'),
-    path('RegionalFarmer/RegionAgeSexCivilStatus', views.regionagesexcivilstatus, name='RegionAgeSexCivilStatus'),
-    path('RegionalFarmer/RegionFarmAverageSize', views.regionfarmaveragesize, name='RegionFarmAverageSize'),
-    path('RegionalFarmer/RegionFormalEducation', views.regionformalEducation, name='RegionFormalEducation'),
-    path('RegionalFarmer/RegionHousehold', views.regionhousehold, name='RegionHousehold'),
-    path('RegionalFarmer/RegionOrganizationTraining', views.regionorganizationTraining, name='RegionOrganizationTraining'),
+    path('ProvincialFarmer/ProvinceProfile', views.provinceprofile, name='ProvinceProfile'),
+    path('ProvincialFarmer/ProvinceEstimatedNetIncome', views.provinceestimatedNetIncome, name='ProvinceEstimatedNetIncome'),
+    path('ProvincialFarmer/ProvinceAge', views.provinceage, name='ProvinceAge'),
+    path('ProvincialFarmer/ProvinceSexAndCivilStatus', views.provincesexcivilstatus, name='ProvinceSexAndCivilStatus'),
+    path('ProvincialFarmer/ProvinceFarmAverageSize', views.provincefarmaveragesize, name='ProvinceFarmAverageSize'),
+    path('ProvincialFarmer/ProvinceFormalEducation', views.provinceformalEducation, name='ProvinceFormalEducation'),
+    path('ProvincialFarmer/ProvinceHousehold', views.provincehousehold, name='ProvinceHousehold'),
+    path('ProvincialFarmer/ProvinceOrganizationTraining', views.provinceorganizationTraining, name='ProvinceOrganizationTraining'),
+    # ################################################# #
+    #             Rice Practices (National)             #
+    # ################################################# #
+    path('NationalPractices/RicePractices', views.practices, name='RicePractices'),
+    path('NationalPractices/CropEstablishment', views.cropestablishment, name='CropEstablishment'),
+    path('NationalPractices/SeedingRate', views.seedingrate, name='SeedingRate'),
+    path('NationalPractices/FertilizerApplication', views.fertilizerapplication, name='FertilizerApplication'),
+    path('NationalPractices/CroppingCalendar', views.croppingcalendar, name='CroppingCalendar'),
+    path('NationalPractices/SeedClass', views.seedclass, name='SeedClass'),
+    path('NationalPractices/LaborManagement', views.labormanagement, name='LaborManagement'),
+    path('NationalPractices/PesticideApplication', views.pesticideapplication, name='PesticideApplication'),
+    path('NationalPractices/VarietalSelection', views.varietalselection, name='VarietalSelection'),
+    path('NationalPractices/Fertilizer', views.fertilizer, name='Fertilizer'),
+    path('NationalPractices/Machine', views.machine, name='Machine'),
+    # ################################################# #
+    #             Rice Practices (Provincial)           #
+    # ################################################# #
+    path('ProvincialPractices/RicePractices', views.provincepractices, name='ProvincialRicePractices'),
+    path('ProvincialPractices/CropEstablishment', views.provincecropestablishment, name='ProvincialCropEstablishment'),
+    path('ProvincialPractices/SeedingRate', views.provinceseedingrate, name='ProvincialSeedingRate'),
+    path('ProvincialPractices/FertilizerApplication', views.provincefertilizerapplication, name='ProvincialFertilizerApplication'),
+    path('ProvincialPractices/CroppingCalendar', views.provincecroppingcalendar, name='ProvincialCroppingCalendar'),
+    path('ProvincialPractices/SeedClass', views.provinceseedclass, name='ProvincialSeedClass'),
+    path('ProvincialPractices/LaborManagement', views.provincelabormanagement, name='ProvincialLaborManagement'),
+    path('ProvincialPractices/PesticideApplication', views.provincepesticideapplication, name='ProvincialPesticideApplication'),
+    path('ProvincialPractices/VarietalSelection', views.provincevarietalselection, name='ProvincialVarietalSelection'),
+    path('ProvincialPractices/Fertilizer', views.provincefertilizer, name='ProvincialFertilizer'),
+    path('ProvincialPractices/Machine', views.provincemachine, name='ProvincialMachine'),
 ]

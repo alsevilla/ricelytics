@@ -23,36 +23,22 @@
         <div class="col-6">
             <div class="row">
                 <div class="col-12">
-                    <a class="text-black farmer stretched-link text-decoration-none" href="{% url 'EstimatedNetIncome' %}">
+                    <a class="text-black farmer stretched-link text-decoration-none" href="{% url 'ProvinceEstimatedNetIncome' %}">
                         <div class="card-deck text-center text-white">
                             <div class="card primary mb-3 bg-warning">
                                 <div class="card-body">
                                   <div class="row">
                                     <div class="col-6 border-right">
-                                      <h5 class="card-title pb-2">Estimated Monthly Income ({{ monthlyIncomeYear }})</h5>
-                                      <h2 class="card-text font-weight-bold pb-4 pt-2">{{monthlyIncome}}
-                                        {% if monthlyIncomeCompare > 0 %}
-                                        <img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h2>
-                                        {% elif monthlyIncomeCompare < 0 %}
-                                        <img class='arrowdown' src="{% static 'assets/arrow_industry down2.png' %}" ></h2>
-                                        {% else %}
-                                        <img class='line' src="{% static 'assets/line_industry2.png' %}" ></h2>
-                                        {% endif%}  
+                                      <h5 class="card-title pb-2">Estimated Monthly Income</h5>
+                                      <h2 class="card-text font-weight-bold pb-4 pt-2">P3,344<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h2>
                                       <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                                           <p class="text-white">per capita</p>
                                       </div>
                                     </div>
                                     <div class="col-6">
                                       <h5 class="card-title pb-2">Above Poverty Threshold</h5>
-                                      <h2 class="card-text font-weight-bold pb-4 pt-2">{{abovePovertyShare}}%
-                                        {% if abovePovertyShareCompare > 0 %}
-                                        <img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h2>
-                                        {% elif abovePovertyShareCompare < 0 %}
-                                        <img class='arrowdown' src="{% static 'assets/arrow_industry down2.png' %}" ></h2>
-                                        {% else %}
-                                        <img class='line' src="{% static 'assets/line_industry2.png' %}" ></h2>
-                                        {% endif%} 
-                                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                      <h2 class="card-text font-weight-bold pb-4 pt-2">70%<img class='arrowup' src="{% static 'assets/arrow_industry up2.png' %}" ></h2>
+                                      <div class="card-note w-50 mx-auto rounded-pill bg-primary">
                                           <p class="text-white">of farmer-respondents</p>
                                       </div>
                                     </div>
@@ -66,15 +52,8 @@
                     <div class="card-group farmer mb-3">
                         <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title mt-2 mb-4 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'Age' %}">Average Age</a></h6>
-                            <h2 class="card-text font-weight-bold mb-4 pb-3">{{age}}
-                            {% if abovePovertyShareCompare > 0 %}
-                            <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
-                            {% elif abovePovertyShareCompare < 0 %}
-                            <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" ></h2>
-                            {% else %}
-                            <img class='line' src="{% static 'assets/line_industry.png' %}" ></h2>
-                            {% endif%} 
+                            <h6 class="card-title mt-2 mb-4 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceAge' %}">Average Age</a></h6>
+                            <h2 class="card-text font-weight-bold mb-4 pb-3">54<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">years old</p>
                             </div>
@@ -82,7 +61,7 @@
                         </div>
                         <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'SexAndCivilStatus' %}">Gender</a></h6>
+                            <h6 class="card-title pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceSexAndCivilStatus' %}">Gender</a></h6>
                             <div class="pb-3 mb-3"><canvas id="ctxSex"></canvas></div>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">Male</p>
@@ -91,7 +70,7 @@
                         </div>
                         <div class="card primary mb-0 text-center border-0 bg-light">
                             <div class="card-body">
-                              <h6 class="card-title pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'SexAndCivilStatus' %}">Civil Status</a></h6>
+                              <h6 class="card-title pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceSexAndCivilStatus' %}">Civil Status</a></h6>
                               <div class="pb-3 mb-3"><canvas id="ctxCivil"></canvas></div>
                               <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                   <p class="text-white">Married</p>
@@ -104,15 +83,8 @@
                     <div class="card-group farmer mb-3">
                         <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title mt-2 mb-5 pb-4"><a class="text-black stretched-link text-decoration-none" href="{% url 'FarmAverageSize' %}">Average Farm Size</a></h6>
-                            <h2 class="card-text font-weight-bold pb-4 mb-4">{{ aveFarmSize }}
-                                {% if avefarmsize_compare > 0 %}
-                                <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
-                                {% elif avefarmsize_compare < 0 %}
-                                <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" ></h2>
-                                {% else %}
-                                <img class='line' src="{% static 'assets/line_industry.png' %}" ></h2>
-                                {% endif%} 
+                            <h6 class="card-title mt-2 mb-5 pb-4"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceFarmAverageSize' %}">Average Farm Size</a></h6>
+                            <h2 class="card-text font-weight-bold pb-4 mb-4">1.42<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">Hectares</p>
                             </div>
@@ -120,7 +92,7 @@
                         </div>
                         <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title mt-2 mb-4 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'FarmAverageSize' %}">Farm Ownership</a></h6>
+                            <h6 class="card-title mt-2 mb-4 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceFarmAverageSize' %}">Farm Ownership</a></h6>
                             <div class="pb-3 mb-3"><canvas id="ctxTenurial"></canvas></div>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">land owners</p>
@@ -137,15 +109,8 @@
                     <div class="card-group farmer mb-3">
                         <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title mt-2 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'FormalEducation' %}">Farm Education</a></h6>
-                            <h2 class="card-text font-weight-bold mb-4 pb-2">{{yrsSchooling}}
-                                {% if yrsschooling_compare > 0 %}
-                                <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
-                                {% elif yrsschooling_compare < 0 %}
-                                <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" ></h2>
-                                {% else %}
-                                <img class='line' src="{% static 'assets/line_industry.png' %}" ></h2>
-                                {% endif%} 
+                            <h6 class="card-title mt-2 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceFormalEducation' %}">Farm Education</a></h6>
+                            <h2 class="card-text font-weight-bold mb-4 pb-2">8<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">Years</p>
                             </div>
@@ -153,15 +118,8 @@
                         </div>
                         <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title mt-2 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'FormalEducation' %}">Farm Experience</a></h6>
-                            <h2 class="card-text font-weight-bold mb-4 pb-2">{{yrsFarmExp}}
-                                {% if yrsfarmexp_compare > 0 %}
-                                <img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
-                                {% elif yrsfarmexp_compare < 0 %}
-                                <img class='arrowdown' src="{% static 'assets/arrow_industry down.png' %}" ></h2>
-                                {% else %}
-                                <img class='line' src="{% static 'assets/line_industry.png' %}" ></h2>
-                                {% endif%} 
+                            <h6 class="card-title mt-2 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceFormalEducation' %}">Farm Experience</a></h6>
+                            <h2 class="card-text font-weight-bold mb-4 pb-2">28<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">Years</p>
                             </div>
@@ -173,7 +131,7 @@
                     <div class="card-group farmer mb-3">
                         <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title mt-2 pb-4"><a class="text-black stretched-link text-decoration-none" href="{% url 'Household' %}">Household Size</a></h6>
+                            <h6 class="card-title mt-2 pb-4"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceHousehold' %}">Household Size</a></h6>
                             <h2 class="card-text font-weight-bold mb-4 pb-3">4<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">members</p>
@@ -182,7 +140,7 @@
                         </div>
                         <div class="card primary mb-0 text-center border-top-0 border-right-0 border-bottom-0 bg-light">
                           <div class="card-body">
-                            <h6 class="card-title mb-3 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'Household' %}">Major Income Source</a></h6>
+                            <h6 class="card-title mb-3 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceHousehold' %}">Major Income Source</a></h6>
                             <div class="pb-2 mb-2"><canvas id="ctxIncome"></canvas></div>
                             <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                 <p class="text-white">rice farming</p>
@@ -195,7 +153,7 @@
                     <div class="card-group farmer mb-2">
                         <div class="card primary mb-0 text-center border-top-0 border-left-0 border-bottom-0 border-right-0 bg-light">
                             <div class="card-body">
-                              <h6 class="card-title mt-2 mb-4 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'OrganizationTraining' %}">Organization Membership</a></h6>
+                              <h6 class="card-title mt-2 mb-4 pb-3"><a class="text-black stretched-link text-decoration-none" href="{% url 'ProvinceOrganizationTraining' %}">Organization Membership</a></h6>
                               <div class="pb-3 mb-3"><canvas id="ctxMembers"></canvas></div>
                               <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                                   <p class="text-white">Members</p>
@@ -318,14 +276,14 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: ['{{male}}', '{{female}}'],
+                data: [82, 18],
                 backgroundColor: [
                     '#2138B7', // COLOR 1
-                    '#DBF968' // COLOR 2
+                    '#F0EAD6' // COLOR 2
                 ],
                 borderColor: [
                     '#2138B7', // COLOR 1
-                    '#DBF968' // COLOR 2
+                    '#F0EAD6' // COLOR 2
                 ]
             }]
         },
@@ -347,7 +305,7 @@
             },
             elements: {
                 center: {
-                    text: '{{male}}%',
+                    text: '82%',
                     color: '#212529',
                     fontStyle: 'Poppins',
                     sidePadding: 20,
@@ -365,20 +323,14 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: ['{{married}}', '{{single}}', '{{widow}}','{{separated}}'],
+                data: [85, 15],
                 backgroundColor: [
                     '#2138B7', // COLOR 1
-                    '#DBF968', // COLOR 3
-                    '#CF56C0', // COLOR 4
-                    '#4FCEB9', // COLOR 5
-                    '#794486' // COLOR 6
+                    '#F0EAD6' // COLOR 2
                 ],
                 borderColor: [
                     '#2138B7', // COLOR 1
-                    '#DBF968', // COLOR 3
-                    '#CF56C0', // COLOR 4
-                    '#4FCEB9', // COLOR 5
-                    '#794486' // COLOR 6
+                    '#F0EAD6' // COLOR 2
                 ]
             }]
         },
@@ -400,7 +352,7 @@
             },
             elements: {
                 center: {
-                    text: '{{married}}%',
+                    text: '85%',
                     color: '#212529',
                     fontStyle: 'Poppins',
                     sidePadding: 20,
@@ -417,7 +369,7 @@
         type: 'pie',
         data: {
             datasets: [{
-                data: ['{{tstatusOwned}}', '{{tstatusAmort}}','{{tstatusLessee}}', '{{tstatusTenant}}', '{{tstatusOthers}}'],
+                data: [62, 1, 5, 1, 4, 5],
                 backgroundColor: [
                     '#2138B7', // COLOR 1
                     '#F0EAD6', // COLOR 2

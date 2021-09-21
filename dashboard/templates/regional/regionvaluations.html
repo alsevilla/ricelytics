@@ -3,69 +3,82 @@
 {% load mathfilters %}
 {% block content %}
     <!-- Header --->
-    <div class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>{{ title2 }}</h2>
-            <h1>{{ title }}</h1>
-            <p>How much does the rice farming sector contribute to national agricultural account? Learn the value of rice production, and its share in the overall value of agricultural production.</p>
+    <div id="main" class="jumbotron">
+        <div class="jumbotron-content">
+          <div class="row">
+            <div class="col-6">
+              <h2>{{ title2 }}</h2>
+              <h1>{{ title }}</h1>
+              <p><i>How much does the rice farming sector contribute to national agricultural account? </i> 
+                <br> Learn the value of rice production, and its share in the overall value of agricultural production.</p>
+            </div>
+            <div class="col-6">
+              <div class="w-50 float-right text-center mx-auto rounded-pill bg-light">
+                <h6 class="text-dark pt-2">Population: <span class="font-weight-bold">108.8 MILLION</span> (PSA, 2021)</h6>
+            </div>
+            </div>
+          </div> 
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card-deck mb-5 text-center">
-                <div class="card primary mb-5 bg-primary text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">Regional Rice Production Valuation - Year</h5>
-                        <h1 class="card-text font-weight-bold mt-4">19.29 <i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-warning">
-                            <p>Trillion</p>
-                        </div>
-                        <p>(At 2018 Constant Prices)</p>
-                    </div>
-                </div>
-                <div class="card primary mb-5 bg-alternate3">
-                    <div class="card-body">
-                        <div class="row">
-                          <div class="col-6 border-right">
-                            <h6 class="card-title">National Value of Agricultural Production ({{ aff_year }})</h6>
-                              <h1 class="card-text font-weight-bold mt-4" style="margin-left: -10px;">P17,527 <i class="bi bi-caret-up-fill"></i></h1>
-                              <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                  <p class="text-white">Trillion</p>
-                              </div>
-                              <p class="card-title-note">(At 2018 Constant Prices)</p>
-                          </div>
-                          <div class="col-6">
-                            <h6 class="card-title">Percent Share of Rice Production</h6>
-                            <div class="card-body py-1"><i class="bi bi-caret-up-fill"></i><canvas id="GVA"></canvas></div>
-                            <!-- <h1 class="card-text align-middle font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1> -->
-                          </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card primary mb-2 bg-primary text-center text-white">
+                        <div class="card-body">
+                            <h5 class="card-title">Regional Rice Production Valuation - Year</h5>
+                            <h1 class="card-text font-weight-bold mt-4">19.29 <i class="bi bi-caret-up-fill"></i></h1>
+                            <div class="card-note w-50 mx-auto rounded-pill bg-warning">
+                                <p>Trillion</p>
+                            </div>
+                            <h6>(At 2018 Constant Prices)</h6>
                         </div>
                     </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">GVA in Rice Production and GVA in Agriculture, Forestry, and Fishing (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">in billion pesos, At Constant 2018 Prices (PSA, 2021)</p>
-                </div>
-                <div class="card-body mt-4">
-                    <div><canvas id="ctxAgriSector" height="150"></canvas></div>
+                    <div class="card primary mb-2 bg-alternate3 text-center">
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-6 border-right">
+                                <h6 class="card-title">National Value of Agricultural Production ({{ aff_year }})</h6>
+                                <h1 class="card-text font-weight-bold my-4" style="margin-left: -10px;">P17,527 <i class="bi bi-caret-up-fill"></i></h1>
+                                <div class="card-note w-100 mx-auto rounded-pill bg-primary">
+                                    <p class="text-white">Trillion</p>
+                                </div>
+                                <h6 class="card-title-note">(At 2018 Constant Prices)</h6>
+                            </div>
+                            <div class="col-6">
+                                <h6 class="card-title">Percent Share of Rice Production</h6>
+                                <div class="card-body py-1"><i class="bi bi-caret-up-fill"></i><canvas id="GVA"></canvas></div>
+                                <!-- <h1 class="card-text align-middle font-weight-bold">{{ aff_percent }}%{% if aff_percent_compare > 0 %} <i class="bi bi-caret-up-fill"></i> {% elif aff_percent_compare < 0 %} <i class="bi bi-caret-down-fill"></i>{% else %}<i class="bi bi-dash"></i>{%endif%}</h1> -->
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Percent Share of Rice Production to GVA in Agriculture, Forestry, and Fishing and to National GDP (2000-2020)</h5>
-                    <p class="my-0 font-weight-normal text-muted">Percentage (%), At Constant 2018 Prices (PSA, 2021)</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">GVA in Rice Production and GVA in Agriculture, Forestry, and Fishing (2000-2020)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in billion pesos, At Constant 2018 Prices (PSA, 2021)</h6>
+                        </div>
+                        <div class="card-body mt-4">
+                            <div><canvas id="ctxAgriSector" ></canvas></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div><canvas id="ctxAgriShare" height="150"></canvas></div>
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Percent Share of Rice Production to GVA in Agriculture, Forestry, and Fishing and to National GDP (2000-2020)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">Percentage (%), At Constant 2018 Prices (PSA, 2021)</h6>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id="ctxAgriShare"></canvas></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -187,7 +200,7 @@
               enabled: false
             },
             cutoutPercentage: 60,
-            aspectRatio: 1.9,
+            aspectRatio: 2.3,
             legend: {
                 display: false
             },

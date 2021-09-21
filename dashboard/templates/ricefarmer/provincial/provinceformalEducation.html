@@ -9,7 +9,6 @@
             <div class="col-8">
               <h2>{{title2}}</h2>
               <h1 class="smaller">{{title}}</h1>
-              
             </div>
             <div class="col-4">
               <br>
@@ -23,41 +22,17 @@
                 <div class="col-12">
                     <div class="card-group text-center text-white">
                         <div class="card primary mb-2 mr-2 bg-warning">
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-3 mt-3 pt-2">
-                                            <h6 class="card-title text-left text-nowrap">Organization <br> Membership <br>(Year)</h6>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="my-2"><canvas id="ctxSex"></canvas></div>
-                                        </div>
-                                        <div class="col-4 mt-4 pt-2">
-                                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                                <p class="text-white">members</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <h6 class="card-title mt-3">Formal Education (Year)</h6>
+                            <div class="mb-2"><canvas id="ctxSex"></canvas></div>
+                            <div class="card-note mb-3 w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white mb-0">YEARS</p>
                             </div>
                         </div>
-                        <div class="card primary mb-2 bg-warning">
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-3 mt-3 pt-2">
-                                            <h6 class="card-title text-left text-nowrap">Training <br> Attendance <br> (Year)</h6>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="my-2"><canvas id="ctxCivil"></canvas></div>
-                                        </div>
-                                        <div class="col-4 mt-4 pt-2">
-                                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                                <p class="text-white">Attended</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="card primary mb-2 mr-2 bg-warning">
+                            <h6 class="card-title mt-3">Farm Experience (Year)</h6>
+                            <div class="mb-2"><canvas id="ctxCivil"></canvas></div>
+                            <div class="card-note mb-3 w-50 mx-auto rounded-pill bg-primary">
+                                <p class="text-white mb-0">YEARS</p>
                             </div>
                         </div>
                     </div>
@@ -65,8 +40,8 @@
                 <div class="col-12">
                     <div class="card mb-2">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Percentage of farmers who are members of organization per survey year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in percent</h6>
+                            <h5 class="my-0 font-weight-bold">Average years of formal education per survey year</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in years</h6>
                         </div>
                         <div class="card-body">
                             <div><canvas id=""></canvas></div>
@@ -76,8 +51,8 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Percentage of farmers who are attended at least one training per survey year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in percent</h6>
+                            <h5 class="my-0 font-weight-bold">Average years of farming education per survey year</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in years</h6>
                         </div>
                         <div class="card-body">
                             <div><canvas id=""></canvas></div>
@@ -91,8 +66,8 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Organization membership and training attendance of farmers per province</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in</h6>
+                            <h5 class="my-0 font-weight-bold">Average years of formal education and years of farming experience per province</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in years</h6>
                         </div>
                         <div class="card-body">
                             <div><canvas id=""></canvas></div>
@@ -217,7 +192,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.5,
+            aspectRatio: 4.5,
             legend: {
                 display: false
             },
@@ -265,7 +240,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.5,
+            aspectRatio: 4.5,
             legend: {
                 display: false
             },

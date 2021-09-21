@@ -2107,7 +2107,7 @@ def regionareaharvested(request):
     return render(request,'regional/regionharvestareas.html', context)
 def regionestyields(request):
     riceindustry = 'active-title'
-    title = 'Yield per Hectare'
+    title = 'Rice Yield per Hectare'
     title2 = 'State of the Rice Sector in Region III - Central Luzon'
 
     context = {
@@ -2160,6 +2160,93 @@ def regionprices(request):
     'title2':title2,
     }
     return render(request, 'regional/regionprices.html', context)
+
+# ################################################# #
+#             Rice Industry (Provincial)            #
+# ################################################# #
+def provincial(request):
+    riceindustry = 'active-title'
+    title = 'Nueva Ecija'
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'provincial/province.html', context)
+
+def provinceproductions(request):
+    riceindustry = 'active-title'
+    title = 'Palay Production'
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'provincial/provinceproductions.html', context)
+
+def provinceharvestareas(request):
+    riceindustry = 'active-title'
+    title = 'Area Harvested'
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'provincial/provinceharvestareas.html', context)
+
+def provinceestyields(request):
+    riceindustry = 'active-title'
+    title = 'Rice Yield per Hectare'
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'provincial/provinceestyields.html', context)
+
+def provinceincomes(request):
+    riceindustry = 'active-title'
+    title = "Farmer's Income"
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'provincial/provinceincomes.html', context)
+
+def provinceyieldcost(request):
+    riceindustry = 'active-title'
+    title = 'Yield vs. Production Cost'
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'provincial/provinceyieldcost.html', context)
+
+def provinceprices(request):
+    riceindustry = 'active-title'
+    title = 'Market Price'
+    title2 = 'State of Rice Sector in'
+
+    context = {
+    'riceindustry':riceindustry,
+    'title':title,
+    'title2':title2,
+    }
+    return render(request,'provincial/provinceprices.html', context)
 # ################################################# #
 #             Rice Farmer (National)                #
 # ################################################# #
@@ -2169,36 +2256,272 @@ def profile(request):
     title2 = 'Profile of the'
     title = 'Filipino Rice Farmer'
     searchbartype = '2'
+    
+    location_code = '999'
+    location_type = '2'
+    year_start = '1996'
+    year_end = '2020'
+    column_index = 1
+
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id" AS "id", "t1"."location_name" AS "location_name", "t1"."year" AS "year", TO_CHAR(("t1"."value"),'999,999') as "value", ("t1"."value" - "t2"."value") as value_compare, "t1"."abovePovertyShare", ("t1"."abovePovertyShare" - "t2"."abovePovertyShare") AS aps
+                                        FROM(
+                                            SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "i"."year" AS "year", "i"."monthlyIncome" as "value",  "i"."abovePovertyShare" FROM "rb_income" "i" 
+                                            JOIN "ids_location" "l" ON "i"."locCode" = "l"."locCode" AND "i"."locType" = "l"."locType" 
+                                            JOIN "ids_ecosystem" "e" ON "i"."eco" = "e"."eco" 
+                                            WHERE "i"."locCode" = %s AND "i"."locType" = %s AND "i"."year" >= %s AND "i"."year" <= %s  AND "i"."eco" = '2'
+                                            ORDER BY year DESC
+                                            LIMIT 2
+                                        ) "t1"
+                                        INNER JOIN (
+                                            SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "i"."year" AS "year", "i"."monthlyIncome" as "value",  "i"."abovePovertyShare" FROM "rb_income" "i" 
+                                            JOIN "ids_location" "l" ON "i"."locCode" = "l"."locCode" AND "i"."locType" = "l"."locType" 
+                                            JOIN "ids_ecosystem" "e" ON "i"."eco" = "e"."eco" 
+                                            WHERE "i"."locCode" = %s AND "i"."locType" = %s AND "i"."year" >= %s AND "i"."year" <= %s  AND "i"."eco" = '2'
+                                            ORDER BY year DESC
+                                            LIMIT 2
+                                        ) "t2"
+                                        ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
+        monthlyIncome = data.value
+        monthlyIncomeYear = data.year
+        monthlyIncomeCompare = data.value_compare
+        abovePovertyShare = data.abovePovertyShare
+        abovePovertyShareCompare = data.aps
+    
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id", "t1"."location_name", "t1"."year", "t1"."age", "t1"."male", "t1"."female", "t1"."single", "t1"."married", "t1"."widow", "t1"."separated",
+                                        ("t1"."age" - "t2"."age") AS "age_compare", ("t1"."male" - "t2"."male") AS "male_compare", ("t1"."female" - "t2"."female") AS "female_compare", ("t1"."single" - "t2"."single") AS "single_compare",
+                                        ("t1"."married" - "t2"."married") AS "married_compare", ("t1"."widow" - "t2"."widow") AS "widow_compare", ("t1"."separated" - "t2"."separated") AS "separated"
+                                        FROM(
+                                            SELECT "l"."id" as "id", "l"."locName" AS "location_name", "s"."year" AS "year", "s"."age" AS "age", "s"."sexMale" AS "male", "s"."sexFemale" AS "female", 
+                                            "s"."cstatusSingle" AS "single", "s"."cstatusMarried" AS "married", "s"."cstatusWidow" AS "widow", "s"."cstatusSeparated" AS "separated"
+                                            FROM "rb_socio" "s" 
+                                            JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType" 
+                                            JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                                            WHERE "s"."locCode" = %s AND "s"."locType" = %s AND "s"."year" >= %s AND "s"."year" <= %s AND "s"."eco" = '2'
+                                            ORDER BY year DESC 
+                                            LIMIT 2) "t1"
+                                        INNER JOIN (
+                                            SELECT "l"."id" as "id", "l"."locName" AS "location_name", "s"."year" AS "year", "s"."age" AS "age", "s"."sexMale" AS "male", "s"."sexFemale" AS "female", 
+                                            "s"."cstatusSingle" AS "single", "s"."cstatusMarried" AS "married", "s"."cstatusWidow" AS "widow", "s"."cstatusSeparated" AS "separated"
+                                            FROM "rb_socio" "s" 
+                                            JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType" 
+                                            JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                                            WHERE "s"."locCode" = %s AND "s"."locType" = %s AND "s"."year" >= %s AND "s"."year" <= %s AND "s"."eco" = '2'
+                                            ORDER BY year DESC 
+                                            LIMIT 2) "t2"
+                                        ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
+        age = data.age
+        age_compare = data.age_compare
+        male = data.male
+        male_compare = data.male_compare
+        female = data.female
+        female_compare = data.female_compare
+        single = data.single
+        single_compare = data.single_compare
+        married = data.married
+        married_compare = data.married
+        widow = data.widow
+        widow_compare = data.widow_compare
+        separated = data.separated
+    
+    for data in kpi_pay.objects.raw("""SELECT "t1"."id" AS "id", "t1"."location_name", "t1"."year" , "t1"."aveFarmSize", "t1"."tstatusOwned", "t1"."tstatusAmort", "t1"."tstatusLessee","t1"."tstatusTenant", 
+                                        "t1"."tstatusOthers",("t1"."aveFarmSize"- "t2"."aveFarmSize") AS avefarmsize_compare, ("t1"."tstatusOwned" - "t2"."tstatusOwned") AS tstatusowned_compare
+                                        FROM(
+                                            SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "f"."year" AS "year", "f"."aveFarmSize", "f"."tstatusOwned", "f"."tstatusAmort", "f"."tstatusLessee",
+                                            "f"."tstatusTenant", "f"."tstatusOthers"
+                                            FROM "rb_farm" "f" 
+                                            JOIN "ids_location" "l" ON "f"."locCode" = "l"."locCode" AND "f"."locType" = "l"."locType" 
+                                            JOIN "ids_ecosystem" "e" ON "f"."eco" = "e"."eco" 
+                                            WHERE "f"."locCode" = %s AND "f"."locType" = %s AND "f"."year" >= %s AND "f"."year" <= %s AND "f"."eco" = '2'
+                                            ORDER BY year DESC
+                                            LIMIT 2
+                                        ) "t1"
+                                        INNER JOIN(
+                                            SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "f"."year" AS "year", "f"."aveFarmSize", "f"."tstatusOwned", "f"."tstatusAmort", "f"."tstatusLessee",
+                                            "f"."tstatusTenant", "f"."tstatusOthers"
+                                            FROM "rb_farm" "f" 
+                                            JOIN "ids_location" "l" ON "f"."locCode" = "l"."locCode" AND "f"."locType" = "l"."locType" 
+                                            JOIN "ids_ecosystem" "e" ON "f"."eco" = "e"."eco" 
+                                            WHERE "f"."locCode" = %s AND "f"."locType" = %s AND "f"."year" >= %s AND "f"."year" <= %s AND "f"."eco" = '2'
+                                            ORDER BY year DESC
+                                            LIMIT 2
+                                        ) "t2" ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]):
+        aveFarmSize = data.aveFarmSize
+        avefarmsize_compare = data.avefarmsize_compare
+        tstatusOwned = data.tstatusOwned
+        tstatusAmort = data.tstatusAmort
+        tstatusLessee = data.tstatusLessee
+        tstatusTenant = data.tstatusTenant
+        tstatusOthers = data.tstatusOthers
+
+    for data in kpi_pay.objects.raw(""" SELECT "t1"."id" AS "id", "t1"."location_name", "t1"."year" AS "year", "t1"."yrsSchooling", "t1"."yrsFarmExp",
+                                        ( "t1"."yrsSchooling" -  "t2"."yrsSchooling") AS yrsschooling_compare, ("t1"."yrsFarmExp" - "t2"."yrsFarmExp") AS yrsfarmexp_compare
+                                        FROM(
+                                        SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "s"."year" AS "year", "s"."yrsSchooling", "s"."yrsFarmExp"
+                                        FROM "rb_socio" "s" JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                                        WHERE "s"."locCode" = %s AND "s"."locType" = %s AND "s"."year" >= %s AND "s"."year" <= %s AND "s"."eco" = '2'
+                                        ORDER BY year DESC
+                                        ) "t1"
+                                        INNER JOIN (
+                                        SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "s"."year" AS "year", "s"."yrsSchooling", "s"."yrsFarmExp"
+                                        FROM "rb_socio" "s" JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                                        WHERE "s"."locCode" = %s AND "s"."locType" = %s AND "s"."year" >= %s AND "s"."year" <= %s AND "s"."eco" = '2'
+                                        ORDER BY year DESC
+                                        ) "t2"
+                                        ON "t1"."id" = "t2"."id"
+                                        LIMIT 1""", [location_code, location_type, year_start, year_end, location_code, location_type, year_start, year_end]): 
+        yrsSchooling = data.yrsSchooling
+        yrsschooling_compare = data.yrsschooling_compare
+        yrsFarmExp = data.yrsFarmExp
+        yrsfarmexp_compare = data.yrsfarmexp_compare
 
     context = { 'ricefarmer': ricefarmer,
                 'title': title,
                 'title2':title2,
-                'searchbartype': searchbartype,}
+                'searchbartype': searchbartype,
+                'monthlyIncome':monthlyIncome,
+                'monthlyIncomeYear':monthlyIncomeYear,
+                'monthlyIncomeCompare':monthlyIncomeCompare,
+                'abovePovertyShare':abovePovertyShare,
+                'abovePovertyShareCompare':abovePovertyShareCompare,
+                'age':age,
+                'age_compare':age_compare,
+                'male': male,
+                'male_compare': male_compare,
+                'female':female,
+                'female_compare': female_compare,
+                'single': single,
+                'single_compare': single_compare,
+                'married': married,
+                'married_compare': married_compare,
+                'widow' : widow,
+                'widow_compare' : widow_compare,
+                'separated':separated,
+                'aveFarmSize' : aveFarmSize,
+                'avefarmsize_compare': avefarmsize_compare,
+                'tstatusOwned' : tstatusOwned,
+                'tstatusAmort' : tstatusAmort,
+                'tstatusLessee' : tstatusLessee,
+                'tstatusTenant' : tstatusTenant,
+                'tstatusOthers' : tstatusOthers,
+                'yrsSchooling' : yrsSchooling,
+                'yrsschooling_compare' : yrsschooling_compare,
+                'yrsFarmExp' : yrsFarmExp,
+                'yrsfarmexp_compare' : yrsfarmexp_compare,
+                }
     return render(request, 'ricefarmer/profile.html', context)
 def estimatedNetIncome(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the Filipino Rice Farmer'
     title = 'Estimated Net Income'
+    location_code = '999'
+    location_type = '2'
+    year_start = '2000'
+    year_end = '2020'
+    column_index = 1
+
+
+    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "i"."year" AS "year", "i"."monthlyIncome" as "value" FROM "rb_income" "i" 
+                                        JOIN "ids_location" "l" ON "i"."locCode" = "l"."locCode" AND "i"."locType" = "l"."locType" 
+                                        JOIN "ids_ecosystem" "e" ON "i"."eco" = "e"."eco" 
+                                        WHERE "i"."locCode" = '999' AND "i"."locType" = '2' AND "i"."year" >='2000' AND "i"."year" <='2020'  AND "i"."eco" = '2'
+                                        ORDER BY year DESC
+                                        LIMIT 1"""): 
+        monthlyIncome = data.value
+        monthlyIncomeYear = data.year
+
+    
+    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS id,"l"."locName" AS "location_name", "i"."year" AS "year", "i"."abovePovertyShare" as "value" 
+                                        FROM "rb_income" "i" JOIN "ids_location" "l" ON "i"."locCode" = "l"."locCode" AND "i"."locType" = "l"."locType" 
+                                        JOIN "ids_ecosystem" "e" ON "i"."eco" = "e"."eco" 
+                                        WHERE "i"."locCode" = '999' AND "i"."locType" = '2' AND "i"."year" = '2017' AND "i"."eco" = '2'"""): 
+        abovePovertyShare = data.value
+        abovePovertyShareYear = data.year
+
+    
+    
+    yuCursor1 = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    yuCursor1.execute("""SELECT "i"."year" AS "year", "i"."monthlyIncome" as "value"
+                        FROM "rb_income" "i" JOIN "ids_location" "l" ON "i"."locCode" = "l"."locCode" AND "i"."locType" = "l"."locType"
+                        JOIN "ids_ecosystem" "e" ON "i"."eco" = "e"."eco"
+                        WHERE "i"."locCode" = '999' AND "i"."locType" = '2' AND "i"."year" >= '1990' AND "i"."year" <= '2020' AND "i"."eco" = '2' ORDER BY "i"."year" ASC""")
+    yuRows = yuCursor1.fetchall()# fetch all data of the executed query
+    yuResult = []# store the values as an array or data dictionary
+    yuKeys = ('year', 'value')#keys to be used
+    for row in yuRows:
+        yuResult.append(dict(zip(yuKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    monthlyIncome_year = json.dumps(yuResult, cls=DecimalEncoder)# dumps the data as a json
+
+    yuCursor2 = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    yuCursor2.execute("""SELECT "i"."year" AS "year", "i"."abovePovertyShare" as "value"
+                        FROM "rb_income" "i" JOIN "ids_location" "l" ON "i"."locCode" = "l"."locCode" AND "i"."locType" = "l"."locType"
+                        JOIN "ids_ecosystem" "e" ON "i"."eco" = "e"."eco" 
+                        WHERE "i"."locCode" = '999' AND "i"."locType" = '2' AND "i"."year" >= '1990' AND "i"."year" <= '2020' AND "i"."eco" = '2' ORDER BY "i"."year" ASC""")
+    yuRows = yuCursor2.fetchall()# fetch all data of the executed query
+    yuResult = []# store the values as an array or data dictionary
+    yuKeys = ('year','value')#keys to be used
+    for row in yuRows:
+        yuResult.append(dict(zip(yuKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    abovePovertyShare_year = json.dumps(yuResult, cls=DecimalEncoder)# dumps the data as a json
+
+    yuCursor3 = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    yuCursor3.execute("""SELECT "l"."locName" AS "location_name", "r"."locName" AS "region", "i"."monthlyIncome" as "monthlyIncome", "i"."abovePovertyShare" as "abovePovertyShare"
+                        FROM "rb_income" "i" JOIN "ids_location" "l" ON "i"."locCode" = "l"."locCode" AND "i"."locType" = "l"."locType"
+                        JOIN (SELECT "locCode", "locType", "locName", "sort" 
+                        FROM "ids_location" WHERE "locType" = '1' ORDER BY "sort" ASC) r ON "r"."locCode" = "l"."parent"
+                        JOIN "ids_ecosystem" "e" ON "i"."eco" = "e"."eco" 
+                        WHERE "i"."locCode" != '999' AND "i"."locType" = '2' AND "i"."year" >= '1990' AND "i"."year" <= '2020' AND "i"."eco" = '2' ORDER BY "r"."sort" ASC, "l"."locName" ASC, "i"."eco" DESC""")
+    yuRows = yuCursor3.fetchall()# fetch all data of the executed query
+    yuResult = []# store the values as an array or data dictionary
+    yuKeys = ('locName','region','monthlyIncome','abovePovertyShare')#keys to be used
+    for row in yuRows:
+        yuResult.append(dict(zip(yuKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    monthlyIncome_abovePovertyShare_prov = json.dumps(yuResult, cls=DecimalEncoder)# dumps the data as a json
+
     context = {
-    'ricefarmer':ricefarmer,
-    'title2': title2,
-    'title':title,
-    }
+            'ricefarmer':ricefarmer,
+            'title2': title2,
+            'title':title,
+            'monthlyIncome':monthlyIncome,
+            'monthlyIncomeYear':monthlyIncomeYear,
+            'abovePovertyShare': abovePovertyShare,
+            'abovePovertyShareYear': abovePovertyShareYear,
+            'monthlyIncome_year': monthlyIncome_year,
+            'abovePovertyShare_year': abovePovertyShare_year,
+            'monthlyIncome_abovePovertyShare_prov': monthlyIncome_abovePovertyShare_prov,
+        }
     return render(request,'ricefarmer/estimatedNetIncome.html', context)
-def agesexcivilstatus(request):
+def age(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the Filipino Rice Farmer'
-    title = 'Age, Sex and Civil Status'
+    title = 'Age'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
     }
-    return render(request, 'ricefarmer/agesexcivilstatus.html', context)
+    return render(request, 'ricefarmer/age.html', context)
+def sexcivilstatus(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer'
+    title = 'Sex and Civil Status'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/sexcivilstatus.html', context)
 def farmaveragesize(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the Filipino Rice Farmer'
-    title = 'Farm Average Size and Farm Ownership'
+    title = 'Farm Size and Ownership'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
@@ -2209,12 +2532,82 @@ def formalEducation(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the Filipino Rice Farmer'
     title = 'Formal Education and Farming Experience'
+
+    location_code = '999'
+    location_type = '2'
+    year_start = '2000'
+    year_end = '2020'
+    column_index = 1
+
+    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "s"."year" AS "year", "s"."yrsSchooling" as "value"
+                                        FROM "rb_socio" "s" JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                                        WHERE "s"."locCode" = '999' AND "s"."locType" = '2' AND "s"."year" = '2017' AND "s"."eco" = '2'"""): 
+        yrsSchooling = data.value
+        yrsSchoolingYear = data.year
+    
+    for data in kpi_pay.objects.raw(""" SELECT "l"."id" AS "id", "l"."locName" AS "location_name", "s"."year" AS "year", "s"."yrsFarmExp" as "value"
+                                        FROM "rb_socio" "s" JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                                        JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco"
+                                        WHERE "s"."locCode" = '999' AND "s"."locType" = '2' AND "s"."year" = '2017' AND "s"."eco" = '2'"""): 
+        yrsFarmExp = data.value
+        yrsFarmExpYear = data.year
+
+    yuCursor = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    yuCursor.execute("""SELECT "s"."year" AS "year", "s"."yrsSchooling" as "value" 
+                        FROM "rb_socio" "s" JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                        JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                        WHERE "s"."locCode" = '999' AND "s"."locType" = '2' AND "s"."year" >= '1990' AND "s"."year" <= '2020' AND "s"."eco" = '2' ORDER BY "s"."year" ASC""")
+    yuRows = yuCursor.fetchall()# fetch all data of the executed query
+    yuResult = []# store the values as an array or data dictionary
+    yuKeys = ('year','value')#keys to be used
+    for row in yuRows:
+        yuResult.append(dict(zip(yuKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    yrsSchooling_year = json.dumps(yuResult, cls=DecimalEncoder)# dumps the data as a json
+    
+    yuCursor = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    yuCursor.execute("""SELECT "s"."year" AS "year", "s"."yrsFarmExp" as "value" 
+                        FROM "rb_socio" "s" JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                        JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                        WHERE "s"."locCode" = '999' AND "s"."locType" = '2' AND "s"."year" >= '1990' AND "s"."year" <= '2020' AND "s"."eco" = '2' ORDER BY "s"."year" ASC""")
+    yuRows = yuCursor.fetchall()# fetch all data of the executed query
+    yuResult = []# store the values as an array or data dictionary
+    yuKeys = ('year','value')#keys to be used
+    for row in yuRows:
+        yuResult.append(dict(zip(yuKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    yrsFarmExp_year = json.dumps(yuResult, cls=DecimalEncoder)# dumps the data as a json
+
+    yuCursor = connection.cursor() # Connection cursor to postgres
+    # Execute query (same Raw query execution as the precedent)
+    yuCursor.execute("""SELECT "l"."locName" AS "location_name", "r"."locName" AS "region", "s"."year" AS "year", "s"."yrsSchooling" AS "yrsSchooling", "s"."yrsFarmExp" AS "yrsFarmExp"
+                        FROM "rb_socio" "s" JOIN "ids_location" "l" ON "s"."locCode" = "l"."locCode" AND "s"."locType" = "l"."locType"
+                        JOIN (SELECT "locCode", "locType", "locName", "sort" 
+                        FROM "ids_location" WHERE "locType" = '1' ORDER BY "sort" ASC) r ON "r"."locCode" = "l"."parent" 
+                        JOIN "ids_ecosystem" "e" ON "s"."eco" = "e"."eco" 
+                        WHERE "s"."locCode" != '999' AND "s"."locType" = '2' AND "s"."year" >= '1990' AND "s"."year" <= '2020' AND "s"."eco" = '2' ORDER BY "r"."sort" ASC, "l"."locName" ASC, "s"."eco" DESC""")
+    yuRows = yuCursor.fetchall()# fetch all data of the executed query
+    yuResult = []# store the values as an array or data dictionary
+    yuKeys = ('location_name','region','year','yrsSchooling', 'yrsFarmExp')#keys to be used
+    for row in yuRows:
+        yuResult.append(dict(zip(yuKeys,row))) # append all aeRows data with the keys defined above to a data dictionary
+    yrsFarmExp_yrsSchooling_prov = json.dumps(yuResult, cls=DecimalEncoder)# dumps the data as a json
+
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
+    'yrsSchooling':yrsSchooling,
+    'yrsSchoolingYear':yrsSchoolingYear,
+    'yrsSchooling_year': yrsSchooling_year,
+    'yrsFarmExp': yrsFarmExp,
+    'yrsFarmExpYear': yrsFarmExpYear,
+    'yrsFarmExp_year': yrsFarmExp_year,
+    'yrsFarmExp_yrsSchooling_prov': yrsFarmExp_yrsSchooling_prov,
     }
     return render(request, 'ricefarmer/formalEducation.html', context)
+    
 def household(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the Filipino Rice Farmer'
@@ -2228,7 +2621,7 @@ def household(request):
 def organizationTraining(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the Filipino Rice Farmer'
-    title = 'Household Size and Source of Income'
+    title = 'Organizarion and Training Engagement'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
@@ -2236,22 +2629,22 @@ def organizationTraining(request):
     }
     return render(request, 'ricefarmer/organizationTraining.html',context)
 # ################################################# #
-#             Rice Farmer (Regional)                #
+#             Rice Farmer (Provincial)              #
 # ################################################# #
-def regionprofile(request):
+def provinceprofile(request):
     ricefarmer = 'active-title'
     title2 = 'Profile of the Rice Farmers in'
-    title = 'Region III - Central Luzon'
+    title = 'Nueva Ecija'
 
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
     }
-    return render(request,'ricefarmer/regional/regionprofile.html', context)
-def regionestimatedNetIncome(request):
+    return render(request,'ricefarmer/provincial/province.html', context)
+def provinceestimatedNetIncome(request):
     ricefarmer = 'active-title'
-    title2 = 'Profile of the Filipino Rice Farmer'
+    title2 = 'Profile of the Filipino Rice Farmer in Nueva Ecija'
     title = 'Estimated Net Income'
 
     context = {
@@ -2259,54 +2652,334 @@ def regionestimatedNetIncome(request):
     'title2': title2,
     'title':title,
     }
-    return render(request,'ricefarmer/regional/regionestimatedNetIncome.html', context)
-def regionagesexcivilstatus(request):
+    return render(request,'ricefarmer/provincial/provinceestimatedNetIncome.html', context)
+def provinceage(request):
     ricefarmer = 'active-title'
-    title2 = 'Profile of the FIlipino Rice Farmers in Region III - Central Luzon'
-    title = 'Age, Sex and Civil Status'
+    title2 = 'Profile of the Filipino Rice Farmer in Nueva Ecija'
+    title = 'Age'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
     }
-    return render(request, 'ricefarmer/regional/regionagesexcivilstatus.html', context)
-def regionfarmaveragesize(request):
+    return render(request, 'ricefarmer/provincial/provinceage.html', context)
+def provincesexcivilstatus(request):
     ricefarmer = 'active-title'
-    title2 = 'Profile of the Filipino Rice Farmer'
+    title2 = 'Profile of the Filipino Rice Farmer in Nueva Ecija'
+    title = 'Sex and Civil Status'
+    context = {
+    'ricefarmer':ricefarmer,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'ricefarmer/provincial/provincesexcivilstatus.html', context)
+def provincefarmaveragesize(request):
+    ricefarmer = 'active-title'
+    title2 = 'Profile of the Filipino Rice Farmer in Nueva Ecija'
     title = 'Farm Average Size and Farm Ownership'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
     }
-    return render(request, 'ricefarmer/regional/regionfarmaveragesize.html', context)
-def regionformalEducation(request):
+    return render(request, 'ricefarmer/provincial/provincefarmaveragesize.html', context)
+def provinceformalEducation(request):
     ricefarmer = 'active-title'
-    title2 = 'Profile of the Filipino Rice Farmer'
+    title2 = 'Profile of the Filipino Rice Farmer in Nueva Ecija'
     title = 'Formal Education and Farming Experience'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
     }
-    return render(request, 'ricefarmer/regional/regionformalEducation.html', context)
-def regionhousehold(request):
+    return render(request, 'ricefarmer/provincial/provinceformalEducation.html', context)
+def provincehousehold(request):
     ricefarmer = 'active-title'
-    title2 = 'Profile of the Filipino Rice Farmer'
+    title2 = 'Profile of the Filipino Rice Farmer in Nueva Ecija'
     title = 'Household Size and Source of Income'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
     }
-    return render(request, 'ricefarmer/regional/regionhousehold.html', context)
-def regionorganizationTraining(request):
+    return render(request, 'ricefarmer/provincial/provincehousehold.html', context)
+def provinceorganizationTraining(request):
     ricefarmer = 'active-title'
-    title2 = 'Profile of the Filipino Rice Farmer'
+    title2 = 'Profile of the Filipino Rice Farmer in Nueva Ecija'
     title = 'Household Size and Source of Income'
     context = {
     'ricefarmer':ricefarmer,
     'title2': title2,
     'title':title,
     }
-    return render(request, 'ricefarmer/regional/regionorganizationTraining.html',context)
+    return render(request, 'ricefarmer/provincial/provinceorganizationTraining.html',context)
+
+# ################################################# #
+#             Rice Practices (National)             #
+# ################################################# #
+def practices(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in'
+    title = 'The Philippines'
+    searchbartype = '3'
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    'searchbartype':searchbartype,
+    }
+    return render(request, 'practices/practices.html',context)
+
+def cropestablishment(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Crop Establishment Method'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/cropestablishment.html',context)
+
+def seedingrate(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Seeding Rate'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/seedingrate.html',context)
+
+def fertilizerapplication(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Fertilizer Application'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/fertilizerapplication.html',context)
+
+def croppingcalendar(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Cropping Calendar'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/croppingcalendar.html',context)
+
+def seedclass(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Seed Class Usage'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/seedclass.html',context)
+
+def labormanagement(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Labor Management'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/labormanagement.html',context)
+
+def pesticideapplication(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Pesticide Application'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/pesticideapplication.html',context)
+
+def varietalselection(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Varietal Selection'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/varietalselection.html',context)
+
+def fertilizer(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Fertilizer Type'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/fertilizer.html',context)
+
+def machine(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in the Philippines'
+    title = 'Use of Machines'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/machine.html',context)
+# ################################################# #
+#             Rice Practices (Provincial)           #
+# ################################################# #
+def provincepractices(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in'
+    title = 'Nueva Ecija'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincepractices.html',context)
+
+def provincecropestablishment(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Crop Establishment Method'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincecropestablishment.html',context)
+
+def provinceseedingrate(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Seeding Rate'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provinceseedingrate.html',context)
+
+def provincefertilizerapplication(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Fertilizer Application'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincefertilizerapplication.html',context)
+
+def provincecroppingcalendar(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Cropping Calendar'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincecroppingcalendar.html',context)
+
+def provinceseedclass(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Seed Class Usage'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provinceseedclass.html',context)
+
+def provincelabormanagement(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Labor Management'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincelabormanagement.html',context)
+
+def provincepesticideapplication(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Pesticide Application'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincepesticideapplication.html',context)
+
+def provincevarietalselection(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Varietal Selection'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincevarietalselection.html',context)
+
+def provincefertilizer(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Fertilizer Type'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincefertilizer.html',context)
+
+def provincemachine(request):
+    ricepractice = 'active-title'
+    title2 = 'Rice Farming Practices in Nueva Ecija'
+    title = 'Use of Machines'
+
+    context = {
+    'ricepractice':ricepractice,
+    'title2': title2,
+    'title':title,
+    }
+    return render(request, 'practices/provincial/provincemachine.html',context)

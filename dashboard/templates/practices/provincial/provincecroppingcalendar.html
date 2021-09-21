@@ -3,69 +3,93 @@
 {% load mathfilters %}
 {% block content %}
     <!-- Header --->
-    <div id="main" class="jumbotron">
-        <div class="jumbotron-content text-center">
-            <h2>{{title2}}</h2>
-            <h1>{{title}}</h1>
-            <p>How do we characterize the rice farmers in the Philippines? Understand the important attributes that contributes to their overall being as our producers of rice.</p>
+      <div id='ey' class="jumbotron">
+        <div class="jumbotron-content text-left">
+          <div class="row">
+            <div class="col">
+              <h2>{{title2}}</h2>
+              <h1 class="smaller">{{title}}</h1>
+            </div>
+            <div class="col">
+              <br>
+              
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
-        <div class="col">
-            <div class="card-deck mb-2 text-center">
-                <div class="card farmer primary mb-4 bg-warning text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Formal Education (2017)</h5>
-                        <h1 class="card-text font-weight-bold">8<i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p>years</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-group farmer text-center" >
+                        <div class="card primary mb-2 text-white" style="background-color: #C45000;">
+                            <div class="card-body">
+                                <h6 class="card-title">Major Planting and Harvesting Month for Dry Season</h6>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="card-text font-weight-bold">December</h3>
+                                        <div class="card-note w-75 mx-auto rounded-pill text-black" style="background-color: #7FFE00;">
+                                            <p class="mb-0">planting month</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <h3 class="card-text font-weight-bold">March</h3>
+                                        <div class="card-note w-75 mx-auto rounded-pill text-black" style="background-color: #7FFE00;">
+                                            <p class="mb-0">harvesting month</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card primary mb-4 bg-warning text-white">
-                    <div class="card-body">
-                        <h5 class="card-title p-2">Farming Experience (2017)</h5>
-                        <h1 class="card-text font-weight-bold">28<i class="bi bi-caret-up-fill"></i></h1>
-                        <div class="card-note w-50 mx-auto rounded-pill bg-primary">
-                            <p>years</p>
+                <div class="col-12">
+                    <div class="card-group farmer text-center" >
+                        <div class="card primary mb-2 text-white" style="background-color: #C45000;">
+                            <div class="card-body">
+                                <h6 class="card-title">Major Planting and Harvesting Month for Wet Season</h6>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="card-text font-weight-bold">July</h3>
+                                        <div class="card-note w-75 mx-auto rounded-pill text-black" style="background-color: #7FFE00;">
+                                            <p class="mb-0">planting month</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <h3 class="card-text font-weight-bold">October</h3>
+                                        <div class="card-note w-75 mx-auto rounded-pill text-black" style="background-color: #7FFE00;">
+                                            <p class="mb-0">harvesting month</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Cropping schedule, all months, percentage (First, second and third crop), All ecosystems, (2016-2017)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id=""></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
-      </div>
-      <div class="row">
-          <div class="col">
-              <div class="card mb-4">
-                  <div class="card-header text-center">
-                      <h5 class="my-0 p-2">Average Years of Formal Education Per Survey Year</h5>
-                      <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
-                  </div>
-                  <div class="card-body">
-                      <div><canvas id=""></canvas></div>
-                  </div>
-              </div>
-          </div>
-          <div class="col">
-            <div class="card mb-4">
-                <div class="card-header text-center">
-                    <h5 class="my-0 p-2">Average Years of Farming Experience Per Survey Year</h5>
-                    <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-2">
+                        <div class="card-header text-left">
+                            <h5 class="my-0 font-weight-bold">Top planting and harvesting month (first, second and third crop) in the top 20 rice producing provinces (2016-2017)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div><canvas id=""></canvas></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div><canvas id=""></canvas></div>
-                </div>
-            </div>
-          </div>
-      </div>
-      <div class="col">
-        <div class="card mb-4">
-            <div class="card-header text-center">
-                <h5 class="my-0 p-2">Average Years of Formal Education and Years of Farming Experience per Province (Latest Survey Year)</h5>
-                <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
-            </div>
-            <div class="card-body">
-                <div><canvas id=""></canvas></div>
             </div>
         </div>
       </div>

@@ -6,13 +6,15 @@
       <div id='ey' class="jumbotron">
         <div class="jumbotron-content text-left">
           <div class="row">
-            <div class="col-8">
+            <div class="col">
               <h2>{{title2}}</h2>
               <h1 class="smaller">{{title}}</h1>
-              
+              <p><i>How do we characterize the rice farmers in the Philippines?</i>
+                <br>Understand the important attributes that contributes to their overall being as our producers of rice.</p>
             </div>
-            <div class="col-4">
+            <div class="col">
               <br>
+              
             </div>
           </div>
         </div>
@@ -21,63 +23,23 @@
         <div class="col-6">
             <div class="row">
                 <div class="col-12">
-                    <div class="card-group text-center text-white">
-                        <div class="card primary mb-2 mr-2 bg-warning">
+                    <div class="card-deck text-center">
+                        <div class="card farmer primary mb-2 bg-warning text-white">
                             <div class="card-body">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-3 mt-3 pt-2">
-                                            <h6 class="card-title text-left text-nowrap">Organization <br> Membership <br>(Year)</h6>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="my-2"><canvas id="ctxSex"></canvas></div>
-                                        </div>
-                                        <div class="col-4 mt-4 pt-2">
-                                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                                <p class="text-white">members</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <h5 class="card-title">Average Age</h5>
+                                <h1 class="card-text font-weight-bold">54<i class="bi bi-caret-up-fill"></i></h1>
+                                <div class="card-note w-50 mx-auto rounded-pill bg-primary">
+                                    <p>years old</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card primary mb-2 bg-warning">
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-3 mt-3 pt-2">
-                                            <h6 class="card-title text-left text-nowrap">Training <br> Attendance <br> (Year)</h6>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="my-2"><canvas id="ctxCivil"></canvas></div>
-                                        </div>
-                                        <div class="col-4 mt-4 pt-2">
-                                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                                <p class="text-white">Attended</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card mb-2">
-                        <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Percentage of farmers who are members of organization per survey year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in percent</h6>
-                        </div>
-                        <div class="card-body">
-                            <div><canvas id=""></canvas></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="card mb-4">
-                        <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Percentage of farmers who are attended at least one training per survey year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in percent</h6>
+                        <div class="card-header text-center">
+                            <h5 class="my-0 p-2">Average age and age range per survey year</h5>
+                            <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
                         </div>
                         <div class="card-body">
                             <div><canvas id=""></canvas></div>
@@ -90,9 +52,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
-                        <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Organization membership and training attendance of farmers per province</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in</h6>
+                        <div class="card-header text-center">
+                            <h5 class="my-0 p-2">Age Information of Rice Farmers per Province (2017)</h5>
+                            <p class="my-0 font-weight-normal text-muted">in Philippine Peso (PSA, 2020)</p>
                         </div>
                         <div class="card-body">
                             <div><canvas id=""></canvas></div>
@@ -100,8 +62,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+          </div>
       </div>
+      
 {% endblock content %}
 {% block script %}
 <script>
@@ -202,7 +165,6 @@
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels:['Male','Female'],
             datasets: [{
                 data: [82, 18],
                 backgroundColor: [
@@ -217,7 +179,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.5,
+            aspectRatio: 1.3,
             legend: {
                 display: false
             },
@@ -234,7 +196,7 @@
             elements: {
                 center: {
                     text: '82%',
-                    color: '#ffffff',
+                    color: '#212529',
                     fontStyle: 'Poppins',
                     sidePadding: 20,
                     minFontSize: 12,
@@ -250,7 +212,6 @@
     var myChart2 = new Chart(ctx2, {
         type: 'pie',
         data: {
-            labels:['Male','Female'],
             datasets: [{
                 data: [85, 15],
                 backgroundColor: [
@@ -265,7 +226,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.5,
+            aspectRatio: 1.3,
             legend: {
                 display: false
             },
@@ -282,7 +243,7 @@
             elements: {
                 center: {
                     text: '85%',
-                    color: '#ffffff',
+                    color: '#212529',
                     fontStyle: 'Poppins',
                     sidePadding: 20,
                     minFontSize: 12,

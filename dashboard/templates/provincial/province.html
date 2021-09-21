@@ -26,7 +26,7 @@
               <div class="card-group text-center text-white">
                 <div class="card secondary mb-2 bg-primary">
                     <div class="card-body">
-                        <h4 class="card-title text-left"><a href="{% url 'RegionRiceProduction' %}" class="text-white stretched-link text-decoration-none">Palay Production (Year)</a></h4>
+                        <h4 class="card-title text-left"><a href="{% url 'ProvinceProduction' %}" class="text-white stretched-link text-decoration-none">Palay Production (Year)</a></h4>
                         <h1 class="card-text font-weight-semibold">12.34<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
                         <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                             <h5 class="text-white">MILLION METRIC TONS</h5>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="card secondary mb-2 ml-2 bg-primary">
                     <div class="card-body">
-                        <h4 class="card-title text-left"><a href="{% url 'RegionAreaHarvested' %}" class="text-white stretched-link text-decoration-none">Area Harvested (Year)</a></h4>
+                        <h4 class="card-title text-left"><a href="{% url 'ProvinceAreaHarvested' %}" class="text-white stretched-link text-decoration-none">Area Harvested (Year)</a></h4>
                         <h1 class="card-text font-weight-semibold">5.67<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
                         <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                             <h5 class="text-white">MILLION HECTARES</h5>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="card secondary mb-2 ml-2 bg-primary">
                     <div class="card-body">
-                        <h4 class="card-title text-left"><a href="{% url 'RegionEstYields' %}" class="text-white stretched-link text-decoration-none">Yield per Hectare (Year)</a></h4>
+                        <h4 class="card-title text-left"><a href="{% url 'ProvinceEstYields' %}" class="text-white stretched-link text-decoration-none">Yield per Hectare (Year)</a></h4>
                         <h1 class="card-text font-weight-semibold">8.90<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h1>
                         <div class="card-note w-75 mx-auto rounded-pill bg-warning">
                             <h5 class="text-white">TONS PER HECTARE</h5>
@@ -56,13 +56,13 @@
           <div class="col-6">
             <div class="card secondary text-center border-0 bg-light mb-2">
               <div class="px-3 pt-4 pb-4">
-                  <h6 class="card-title text-center"><a href="{% url 'RegionIncomes' %}" class="text-black stretched-link text-decoration-none">Farmer's Net Income</a></h6>
+                  <h6 class="card-title text-center"><a href="{% url 'ProvinceIncomes' %}" class="text-black stretched-link text-decoration-none">Farmer's Net Income</a></h6>
                   <h2 class="card-text mt-3">P 21,237<i class="bi bi-caret-down-fill"></i></h2>
                   <p class="mt-2 pt-2">PER HECTARE</p>
                   <hr>
                   <div class="row py-2">
                     <div class="col-4">
-                      <h6 class="text-left text-nowrap pt-1"><a href="{% url 'RegionIncomes' %}" class="text-black stretched-link text-decoration-none">Gross Income</a></h6>
+                      <h6 class="text-left text-nowrap pt-1"><a href="{% url 'ProvinceIncomes' %}" class="text-black stretched-link text-decoration-none">Gross Income</a></h6>
                     </div>
                     <div class="col-4">
                       <h3 class="text-center">P 11.20 <i class="bi bi-caret-down-fill"></i></h3>
@@ -76,7 +76,7 @@
           </div>
           <div class="col-6">
             <div class="card secondary border-0 bg-light pt-3 mb-2">
-              <h6 class="text-center pt-1"><a href="{% url 'RegionYieldCost' %}" class="text-black stretched-link text-decoration-none">Cost of Production</a></h6>
+              <h6 class="text-center pt-1"><a href="{% url 'ProvinceYieldCost' %}" class="text-black stretched-link text-decoration-none">Cost of Production</a></h6>
               <h2 class="text-center mt-1">P 11.20 <i class="bi bi-caret-down-fill"></i></h2>
               <p class="text-center mt-2 pb-2">PER HECTARE</p>
 
@@ -88,7 +88,7 @@
           <div class="col-12 mb-3">
             <div class="card secondary text-center border-0 bg-light">
                   <div class="card-body">
-                    <h6 class="card-title text-center mt-2"><a href="{% url 'RegionPrices' %}" class="text-black stretched-link text-decoration-none">Palay Farmgate Price (Dry) per Kilogram</a></h6>
+                    <h6 class="card-title text-center mt-2"><a href="{% url 'ProvincePrices' %}" class="text-black stretched-link text-decoration-none">Palay Farmgate Price (Dry) per Kilogram</a></h6>
                     <h2 class="card-text py-2">P 11.20<img class='arrowup' src="{% static 'assets/arrow_industry up.png' %}" ></h2>
                 </div>
             </div>
@@ -99,7 +99,7 @@
               <div class="card secondary py-2 mb-0 pl-2 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
                 <div class="row py-3">
                   <div class="col-5">
-                    <h6 class="pt-2"><a href="{% url 'RegionPrices' %}" class="text-black stretched-link text-decoration-none">WELL-MILLED RICE</a></h6>
+                    <h6 class="pt-2"><a href="{% url 'ProvincePrices' %}" class="text-black stretched-link text-decoration-none">WELL-MILLED RICE</a></h6>
                   </div>
                   <div class="col-7">
                     <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
@@ -109,7 +109,7 @@
               <div class="card secondary py-2 mb-0 pl-2 text-center border-0 bg-light">
                 <div class="row py-3">
                   <div class="col-5">
-                    <h6 class="pt-2"><a href="{% url 'RegionPrices' %}" class="text-black stretched-link text-decoration-none">REGULAR MILLED RICE</a></h6>
+                    <h6 class="pt-2"><a href="{% url 'ProvincePrices' %}" class="text-black stretched-link text-decoration-none">REGULAR MILLED RICE</a></h6>
                   </div>
                   <div class="col-7">
                     <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
@@ -124,7 +124,7 @@
               <div class="card secondary py-2 mb-0 pl-2 text-center border-top-0 border-left-0 border-bottom-0 bg-light">
                 <div class="row py-3">
                   <div class="col-5">
-                    <h6 class="pt-2"><a href="{% url 'RegionPrices' %}" class="text-black stretched-link text-decoration-none">WELL-MILLED RICE</a></h6>
+                    <h6 class="pt-2"><a href="{% url 'ProvincePrices' %}" class="text-black stretched-link text-decoration-none">WELL-MILLED RICE</a></h6>
                   </div>
                   <div class="col-7">
                     <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
@@ -134,7 +134,7 @@
               <div class="card secondary py-2 mb-0 pl-2 text-center border-0 bg-light">
                 <div class="row py-3">
                   <div class="col-5">
-                    <h6 class="pt-2"><a href="{% url 'RegionPrices' %}" class="text-black stretched-link text-decoration-none">REGULAR MILLED RICE</a></h6>
+                    <h6 class="pt-2"><a href="{% url 'ProvincePrices' %}" class="text-black stretched-link text-decoration-none">REGULAR MILLED RICE</a></h6>
                   </div>
                   <div class="col-7">
                     <h3 class="card-text">P 11.20<img class='arrowup2' src="{% static 'assets/arrow_industry up.png' %}" ></h3>
@@ -151,24 +151,10 @@
       </div>
       <div class="col-6">
         <div class="row">
-          <div class="col-12 mb-2">
-            <div class="card-group">
-                <div class="card secondary text-center py-3 border-left-0 border-top-0 border-bottom-0 bg-light">
-                  <h6 class="card-title mt-2"><a href="{% url 'RegionValuations' %}" class="text-black stretched-link text-decoration-none">Value of Rice Production</a></h6>
-                  <h1 class="card-text mt-3">P 369.205 <i class="bi bi-caret-up-fill"></i></h1>
-                  <p class="mt-2">BILLION</p>
-                </div>
-                <div class="card secondary pt-3 text-center border-0 bg-light">
-                  <h6 class="text-center mt-2"><a href="{% url 'RegionValuations' %}" class="text-black stretched-link text-decoration-none">Percent share to Value of Agricultural Production</a></h6>
-                  <canvas id="ctxAgriShare"></canvas>
-                  <!--<h2 class="card-text">20.7%<i class="bi bi-caret-up-fill"></i></h2>-->
-                </div>
-              </div>
-            </div>
             <div class="col-12">
               <a class="text-decoration-none" href="https://prism.philrice.gov.ph/dataproducts/">
                 <div class="card">
-                    <img class="card-img-top" height="595px" width="auto" src="{% static 'assets/prism_sample.jpg' %}" alt="Card image cap">
+                    <img class="card-img-top" height="772px" width="auto" src="{% static 'assets/prism_sample.jpg' %}" alt="Card image cap">
                 </div>
                 <div class="card-footer bg-primary text-white text-center">PRISM Rice Area</div>
               </a>

@@ -3,84 +3,43 @@
 {% load mathfilters %}
 {% block content %}
     <!-- Header --->
-      <div id='ey' class="jumbotron">
+    <div id="main" class="jumbotron">
         <div class="jumbotron-content text-left">
-          <div class="row">
-            <div class="col-8">
-              <h2>{{title2}}</h2>
-              <h1 class="smaller">{{title}}</h1>
-              
+            <div class="row">
+                <div class="col-6">
+                    <h2>{{title2}}</h2>
+                    <h1>{{title}}</h1>
+                </div>
+                <div class="col-6">
+
+                </div>
             </div>
-            <div class="col-4">
-              <br>
-            </div>
-          </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-6">
+          <div class="col-6">
             <div class="row">
-                <div class="col-12">
-                    <div class="card-group text-center text-white">
-                        <div class="card primary mb-2 mr-2 bg-warning">
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-3 mt-3 pt-2">
-                                            <h6 class="card-title text-left text-nowrap">Organization <br> Membership <br>(Year)</h6>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="my-2"><canvas id="ctxSex"></canvas></div>
-                                        </div>
-                                        <div class="col-4 mt-4 pt-2">
-                                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                                <p class="text-white">members</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card primary mb-2 bg-warning">
-                            <div class="card-body">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-3 mt-3 pt-2">
-                                            <h6 class="card-title text-left text-nowrap">Training <br> Attendance <br> (Year)</h6>
-                                        </div>
-                                        <div class="col-5">
-                                            <div class="my-2"><canvas id="ctxCivil"></canvas></div>
-                                        </div>
-                                        <div class="col-4 mt-4 pt-2">
-                                            <div class="card-note w-100 mx-auto rounded-pill bg-primary">
-                                                <p class="text-white">Attended</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-12">
                     <div class="card mb-2">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Percentage of farmers who are members of organization per survey year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in percent</h6>
+                            <h5 class="my-0 font-weight-bold">Types of fertilizer applied (year) </h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in percent of farmers</h6>
                         </div>
                         <div class="card-body">
-                            <div><canvas id=""></canvas></div>
+                            <div id="prov"><canvas id="ctxTopProv"></canvas></div>
+                            <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
                         </div>
-                    </div>
+                    </div>  
                 </div>
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Percentage of farmers who are attended at least one training per survey year</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in percent</h6>
+                            <h5 class="my-0 font-weight-bold">Types of fertilizer applied (year range)</h5>
+                            <h6 class="my-0 font-weight-normal text-muted">in percent of farmers</h6>
                         </div>
                         <div class="card-body">
-                            <div><canvas id=""></canvas></div>
+                            <div id="prov"><canvas id="ctxTopProv"></canvas></div>
+                            <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
                         </div>
                     </div>
                 </div>
@@ -89,19 +48,19 @@
         <div class="col-6">
             <div class="row">
                 <div class="col-12">
-                    <div class="card mb-4">
+                    <div class="card">
                         <div class="card-header text-left">
-                            <h5 class="my-0 font-weight-bold">Organization membership and training attendance of farmers per province</h5>
-                            <h6 class="my-0 font-weight-normal text-muted">in</h6>
+                            <h5 class="my-0 font-weight-bold">Top 3 fertilizer-type applied in the top 20 rice producing provinces (year)</h5>
                         </div>
                         <div class="card-body">
-                            <div><canvas id=""></canvas></div>
+                            <div id="prov"><canvas id="ctxTopProv"></canvas></div>
+                            <div id="prov2" style='display: none'><canvas id="ctxTopProv2"></canvas></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
+    </div>
 {% endblock content %}
 {% block script %}
 <script>
@@ -202,7 +161,6 @@
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels:['Male','Female'],
             datasets: [{
                 data: [82, 18],
                 backgroundColor: [
@@ -217,7 +175,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.5,
+            aspectRatio: 2.05,
             legend: {
                 display: false
             },
@@ -234,7 +192,7 @@
             elements: {
                 center: {
                     text: '82%',
-                    color: '#ffffff',
+                    color: '#212529',
                     fontStyle: 'Poppins',
                     sidePadding: 20,
                     minFontSize: 12,
@@ -250,7 +208,6 @@
     var myChart2 = new Chart(ctx2, {
         type: 'pie',
         data: {
-            labels:['Male','Female'],
             datasets: [{
                 data: [85, 15],
                 backgroundColor: [
@@ -265,7 +222,7 @@
         },
         options: {
             cutoutPercentage: 60,
-            aspectRatio: 1.5,
+            aspectRatio: 2.05,
             legend: {
                 display: false
             },
@@ -282,7 +239,7 @@
             elements: {
                 center: {
                     text: '85%',
-                    color: '#ffffff',
+                    color: '#212529',
                     fontStyle: 'Poppins',
                     sidePadding: 20,
                     minFontSize: 12,
@@ -291,5 +248,209 @@
             }
         }
     });
+    // CHART 3
+
+    var ctx3 = document.getElementById("ctxTenurial");
+    var myChart3 = new Chart(ctx3, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [62, 1, 5, 1, 4, 5],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2.7,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '62%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 4
+
+    var ctx4 = document.getElementById("ctxIncome");
+    var myChart4 = new Chart(ctx4, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [84, 1, 5, 1, 4, 5],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6', // COLOR 2
+                    '#DBF968', // COLOR 3
+                    '#CF56C0', // COLOR 4
+                    '#4FCEB9', // COLOR 5
+                    '#794486' // COLOR 6
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 3,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '84%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 5
+
+    var ctx5 = document.getElementById("ctxTraining");
+    var myChart = new Chart(ctx5, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [65, 35],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2.7,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '65%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 25
+                }
+            }
+        }
+    });
+
+    // CHART 6
+
+    var ctx6 = document.getElementById("ctxMembers");
+    var myChart = new Chart(ctx6, {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [58, 42],
+                backgroundColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ],
+                borderColor: [
+                    '#2138B7', // COLOR 1
+                    '#F0EAD6' // COLOR 2
+                ]
+            }]
+        },
+        options: {
+            cutoutPercentage: 60,
+            aspectRatio: 2.7,
+            legend: {
+                display: false
+            },
+            layout: {
+                padding: {
+                    bottom: 2
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                labels: false
+            },
+            elements: {
+                center: {
+                    text: '58%',
+                    color: '#212529',
+                    fontStyle: 'Poppins',
+                    sidePadding: 20,
+                    minFontSize: 12,
+                    lineHeight: 10
+                }
+            }
+        }
+    });
+
 </script>
 {% endblock script %}

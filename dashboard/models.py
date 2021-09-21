@@ -203,7 +203,7 @@ class rb_socio(models.Model):
         db_table = 'rb_socio'
 
 class kpi_pop(models.Model):
-    locCode = locCode = models.SmallIntegerField()
+    locCode = models.SmallIntegerField()
     locType = models.CharField(max_length=1, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
     population = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
@@ -212,7 +212,7 @@ class kpi_pop(models.Model):
         db_table = 'kpi_pop'
 
 class rb_ycost(models.Model):
-    locCode = locCode = models.SmallIntegerField()
+    locCode = models.SmallIntegerField()
     locType = models.CharField(max_length=1, null=True, blank=True)
     year = models.CharField(max_length=4, null=True, blank=True)
     yieldEst = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
@@ -220,3 +220,143 @@ class rb_ycost(models.Model):
     
     class Meta:
         db_table = 'rb_ycost'
+
+class rb_cropest(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    transplant = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    wetDirect = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    dryDirect = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    totalDirect = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    bothMethod = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    transSeedingRate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    directSeedingRate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    aveSeedingRate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    
+    class Meta:
+        db_table = 'rb_cropest'
+
+class rb_cropsched(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    month = models.DecimalField(max_digits=2, decimal_places=0, null=True, blank=True)
+    plant1 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    plant2 = models.DecimalField(max_digits=10, decimal_places=0,null=True, blank=True)
+    plant3 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    harv1 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    harv2 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    harv3 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_cropsched'
+
+class rb_cropsched(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    month = models.DecimalField(max_digits=2, decimal_places=0, null=True, blank=True)
+    plant1 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    plant2 = models.DecimalField(max_digits=10, decimal_places=0,null=True, blank=True)
+    plant3 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    harv1 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    harv2 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    harv3 = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_cropsched'
+
+class rb_fertgrade(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    rank = models.DecimalField(max_digits=2, decimal_places=0, null=True, blank=True)
+    grade = models.CharField(max_length=500, null=True, blank=True)
+    percent = models.DecimalField(max_digits=10, decimal_places=0,null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_fertgrade'
+
+class rb_fertilizer(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    nPerHa = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    pPerHa = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    kPerHa = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
+    fertPerHa = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_fertilizer'
+
+class rb_labor(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    totalLabor = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    preHarvest = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    harvThreshing = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
+    postHarvest = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
+    permLabor = models.DecimalField(max_digits=10, decimal_places=2,null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_labor'
+
+class rb_machine(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    adoptionRHandtractor = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    adoptionFTiller = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    adoptionMicrotiller = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    adoptionDrumseeder = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    adoptionTransplanter = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    adoptionReaper = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    adoptionCHarvester = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_machine'
+
+class rb_pest(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    rank = models.DecimalField(max_digits=2, decimal_places=0, null=True, blank=True)
+    brand = models.CharField(max_length=500, null=True, blank=True)
+    percent = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_pest'
+
+class rb_seedclass(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    hybrid = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    highInbred = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    goodSeeds = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+    farmerSeeds = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_seedclass'
+
+class rb_variety(models.Model):
+    locCode = models.SmallIntegerField()
+    locType = models.CharField(max_length=1, null=True, blank=True)
+    year = models.CharField(max_length=4, null=True, blank=True)
+    eco = models.CharField(max_length=1, null=True, blank=True)
+    rank = models.DecimalField(max_digits=2, decimal_places=0, null=True, blank=True)
+    variety = models.CharField(max_length=500, null=True, blank=True)
+    percent = models.DecimalField(max_digits=10, decimal_places=0, null=True, blank=True)
+
+    class Meta:
+        db_table = 'rb_variety'

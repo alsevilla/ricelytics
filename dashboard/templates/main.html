@@ -34,9 +34,11 @@
             <h2 class="{{ricefarmer}}">RICE FARMER</h2>
           </div>
         </a>
+        <a href="{% url 'RicePractices' %}">
           <div class="menu-bar-title pb-4 pt-4 ">
-            <h2 class="{{casestudies}}">CASE STUDIES</h2>
+            <h2 class="{{ricepractice}}">RICE PRACTICES</h2>
           </div>
+        </a>
         </div>
         <br><br><br>
         <div class="menu-bar-contact mt-5 ml-3 pl-4">
@@ -81,7 +83,7 @@
             </div>
         </div>
         <a class="btn btn-info rounded-pill mr-4" href="{% url 'Regional' %}" role="button">Get Data</a>
-        <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
+        <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="{% url 'Provincial' %}" role="button">Clear Filter</a>
       </div>
       <div>
         <a class="btn" href="#"><i class="bi bi-box-arrow-in-down"></i></a>
@@ -112,7 +114,39 @@
                 <button class="dropdown-item" type="button">Province</button>
             </div>
         </div>
-        <a class="btn btn-info rounded-pill mr-4" href="{% url 'RegionProfile' %}" role="button">Get Data</a>
+        <a class="btn btn-info rounded-pill mr-4" href="{% url 'ProvinceProfile' %}" role="button">Get Data</a>
+        <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
+      </div>
+      <div>
+        <a class="btn" href="#"><i class="bi bi-box-arrow-in-down"></i></a>
+        <a class="btn" onclick="pdf()" href="#"><i class="bi bi-printer-fill"></i>  </ion-icon></a>
+      </div>
+    </nav>
+    {% elif searchbartype == '3' %}
+    <nav class="nav navbar navbar-expand-lg navbar-light justify-content-between">
+      <div class="row">
+        <a class="btn btn-warning ml-3 text-white" href="" role="button"><i class="bi bi-house-fill"></i> National</a>
+        <div class="dropdown ml-4 mr-4">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Region
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+                <button class="dropdown-item" type="button">Region</button>
+            </div>
+        </div>
+        <div class="dropdown mr-4">
+            <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Province
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+                <button class="dropdown-item" type="button">Province</button>
+            </div>
+        </div>
+        <a class="btn btn-info rounded-pill mr-4" href="{% url 'ProvincialRicePractices' %}" role="button">Get Data</a>
         <a class="btn border-info rounded-pill btn-light mr-4 text-info" href="#" role="button">Clear Filter</a>
       </div>
       <div>

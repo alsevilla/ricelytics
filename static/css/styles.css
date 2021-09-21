@@ -305,6 +305,18 @@ div#impexport:before {
 
 }
 
+.farmer .card.primary h3 {
+  margin-left: -15px;
+  font-size: 48px;
+
+}
+
+.farmer .card.primary h4 {
+  margin-left: -15px;
+  font-size: 30px;
+
+}
+
 /* .card.primary p {
     font-family: 'Poppins' !important;
     font-weight: 300;
